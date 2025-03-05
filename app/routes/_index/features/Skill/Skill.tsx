@@ -10,7 +10,7 @@ const skills = [
     },
     {
         name: "Remix",
-        icon: "public/images/remix-run-fill-2.png",
+        icon: "/images/remix-run-fill-2.png",
         level: 3
     },
     {

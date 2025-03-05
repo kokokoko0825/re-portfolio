@@ -37,7 +37,7 @@ export default function App(): ReactNode {
 
 export const links: LinksFunction = () => {
   return [
-    { rel: "icon", href: "/favicon.ico", type: "image/x-ico" },
+    { rel: "icon", href: "public/images/koshi.png", type: "image/png" },
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
     {
       rel: "preconnect",
@@ -56,7 +56,7 @@ export const meta: MetaFunction = () => {
     { charSet: "utf-8" },
     { name: "viewport", content: "width=device-width, initial-scale=1" },
     { title: "Koshi Quest(仮)" },
-    { rel: "icon", href: "public/favicon.ico" },
+    { rel: "icon", href: "public/images/koshi.png" },
     { name: "description", content: "エンジニアKoshiのポートフォリオ" },
     { name: "robots", content: "index, follow" },
     { name: "og:title", content: "Koshi Quest(仮)" },

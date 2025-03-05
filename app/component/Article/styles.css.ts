@@ -29,7 +29,7 @@ export const thumbnail = style({
     height: "133px",
     backgroundSize: "cover",
     backgroundPosition: "center",
-    backgroundColor: "#f0f0f0",
+    //backgroundColor: "#f0f0f0",
 });
 
 export const content = style({

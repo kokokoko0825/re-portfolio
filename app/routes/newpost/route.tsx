@@ -27,18 +27,19 @@ export default function NewBlog() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        let url = "";
         if (thumbnail) {
             const storage = getStorage();
             const storageRef = ref(storage, `thumbnails/${thumbnail.name}`);
             await uploadBytes(storageRef, thumbnail);
-            const url = await getDownloadURL(storageRef);
+            url = await getDownloadURL(storageRef);
             setThumbnailUrl(url);
         }
 
         await addDoc(collection(db, "blogPosts"), {
             title,
             content,
-            thumbnail: thumbnailUrl,
+            thumbnail: url,
             createdAt: new Date().toISOString(),
         });
 
