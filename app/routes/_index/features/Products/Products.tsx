@@ -25,7 +25,7 @@ export const Products = (): ReactNode => {
     }, []);
 
     return (
-        <div id="product" className={styles.products}>
+        <div id="products" className={styles.products}>
             <div className={styles.subtitleFrame}>
                 <div className={styles.subTitle}>Products</div>
             </div>
