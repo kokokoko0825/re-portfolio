@@ -57,10 +57,10 @@ export const meta: MetaFunction = () => {
     { name: "viewport", content: "width=device-width, initial-scale=1" },
     { title: "Koshi Quest" },
     { rel: "icon", href: "/images/account_icon_v2.jpg" },
-    { name: "description", content: "エンジニアKoshiのポートフォリオ" },
+    { name: "description", content: "エンジニアkokokoko0825のポートフォリオ" },
     { name: "robots", content: "index, follow" },
     { name: "og:title", content: "Koshi Quest" },
-    { name: "og:description", content: "エンジニアKoshiのポートフォリオ" },
+    { name: "og:description", content: "エンジニアkokokoko0825のポートフォリオ" },
     { name: "og:url", content: "https://kokokoko0825.pages.dev" },
     { name: "og:image", content: "https://kokokoko0825.pages.dev/ogp.png" },
     {
@@ -71,7 +71,7 @@ export const meta: MetaFunction = () => {
     { name: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: "Koshi Quest" },
-    { name: "twitter:description", content: "エンジニアKoshiのポートフォリオ" },
+    { name: "twitter:description", content: "エンジニアkokokoko0825のポートフォリオ" },
     {
       name: "twitter:image",
       content: "https://kokokoko0825.pages.dev/ogp.png",
