@@ -3,10 +3,11 @@ import { vars } from "../../styles/theme.css";
 
 export const frame = style({
     display: "flex",
+    width: "100%",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    padding: "100px 40px",
+    padding: "100px 0",
     gap: "10px",
 });
 
@@ -70,7 +71,8 @@ export const menu = style({
 
 export const form = style({
     display: "flex",
-    width: "80%",
+    width: "100%",
     height: "800px",
     padding: "10px 0",
+    justifySelf: "stretch",
 });
