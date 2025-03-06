@@ -1,37 +1,28 @@
 import { useEffect, useState } from "react";
-import { db } from "../../firebaseConfig";
+import { db } from "../firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import { Link, useParams } from "@remix-run/react";
 import "zenn-content-css";
 import * as styles from "./styles.css";
-import { renderMarkdown } from "../../../utils/markdown";
-type BlogPost = {
+import { renderMarkdown } from "../../utils/markdown";
+type ProductPost = {
     title: string;
     content: string;
     createdAt: string;
     thumbnail: string;
 };
 
-export default function BlogPost() {
-    const { blogId } = useParams();
-    const [post, setPost] = useState<BlogPost | null>(null);
+export default function ProductPost() {
+    const { productId } = useParams();
+    const [post, setPost] = useState<ProductPost | null>(null);
 
     useEffect(() => {
         const fetchPost = async () => {
-            if (blogId) {
-                try {
-                    console.log("Fetching blogId:", blogId);
-
-                    const docRef = doc(db, "blogPosts", blogId);
-                    const docSnap = await getDoc(docRef);
-
-                    console.log("Doc exists:", docSnap.exists());
-                    
-                    if (docSnap.exists()) {
-                        setPost(docSnap.data() as BlogPost);
-                    }
-                } catch (error) {
-                    console.error("データの取得に失敗しました:", error);
+            if (productId) {
+                const docRef = doc(db, "productPosts", productId);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    setPost(docSnap.data() as ProductPost);
                 }
             }
         };
@@ -42,7 +33,7 @@ export default function BlogPost() {
         import("zenn-embed-elements").then((module) => {
             // 必要に応じてモジュールを使用
         });
-    }, [blogId]);
+    }, [productId]);
 
     if (!post) return <div>Loading...</div>;
 

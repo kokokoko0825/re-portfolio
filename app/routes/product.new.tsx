@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { db } from "../../firebaseConfig";
+import { db } from "../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useDropzone } from "react-dropzone";
 import * as styles from "./styles.css";
 
-export default function NewBlog() {
+export default function NewProduct() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [thumbnail, setThumbnail] = useState<File | null>(null);
@@ -37,7 +37,7 @@ export default function NewBlog() {
             setThumbnailUrl(url);
         }
 
-        await addDoc(collection(db, "blogPosts"), {
+        await addDoc(collection(db, "productPosts"), {
             title,
             content,
             thumbnail: url,
@@ -52,7 +52,7 @@ export default function NewBlog() {
 
     return (
         <div className={styles.frame}>
-            <div className={styles.subTitle}>Create New Blog</div>
+            <div className={styles.subTitle}>Create New Product</div>
             <form onSubmit={handleSubmit} style={{ width: "80%", justifySelf: "stretch" }}>
                 <input
                     type="text"

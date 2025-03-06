@@ -16,7 +16,7 @@ export const Products = (): ReactNode => {
                 description: doc.data().content.substring(0, 100), // content の一部を説明として使用
                 thumbnailUrl: doc.data().thumbnail,
                 date: doc.data().createdAt,
-                url: `/${doc.id}`
+                url: `/product/${doc.id}`
             })) as ArticleData[];
             setArticles(postsData);
         };

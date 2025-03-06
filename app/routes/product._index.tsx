@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { db } from "../../firebaseConfig";
+import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
-import { ArticleList, ArticleData } from "../../component/Article/ArticleList";
+import { ArticleList, ArticleData } from "../component/Article/ArticleList";
 import * as styles from "./styles.css";
 import { Link } from "@remix-run/react";
 export default function ProductIndex() {
