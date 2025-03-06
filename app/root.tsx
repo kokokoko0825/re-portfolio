@@ -16,7 +16,7 @@ export function Layout({ children }: { children: React.ReactNode }): ReactNode {
   return (
     <html lang="ja">
       <head>
-
+        <meta name="google-site-verification" content="brDkeRhoxktrjCiqqUefNlNyOKLGHk0Cik9q9MzLv2E" />
         <Meta />
         <Links />
         <title>Koshi Quest(仮)</title>
