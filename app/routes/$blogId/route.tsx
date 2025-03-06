@@ -19,10 +19,19 @@ export default function BlogPost() {
     useEffect(() => {
         const fetchPost = async () => {
             if (blogId) {
-                const docRef = doc(db, "blogPosts", blogId);
-                const docSnap = await getDoc(docRef);
-                if (docSnap.exists()) {
-                    setPost(docSnap.data() as BlogPost);
+                try {
+                    console.log("Fetching blogId:", blogId);
+
+                    const docRef = doc(db, "blogPosts", blogId);
+                    const docSnap = await getDoc(docRef);
+
+                    console.log("Doc exists:", docSnap.exists());
+                    
+                    if (docSnap.exists()) {
+                        setPost(docSnap.data() as BlogPost);
+                    }
+                } catch (error) {
+                    console.error("データの取得に失敗しました:", error);
                 }
             }
         };

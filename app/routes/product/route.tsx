@@ -16,7 +16,7 @@ export default function ProductIndex() {
                 description: doc.data().content.substring(0, 100), // content の一部を説明として使用
                 thumbnailUrl: doc.data().thumbnail,
                 date: doc.data().createdAt,
-                url: `/product/${doc.id}`
+                url: `/${doc.id}`
             })) as ArticleData[];
             setPosts(postsData);
         };
