@@ -10,8 +10,12 @@ export const Profile = (): ReactNode => {
             <div className={styles.profileFrame}>
                 <div className={styles.icon}></div>
                 <div className={styles.aboutMe}>
-                    <div className={styles.text}>高専の電子情報工学科でプログラミングを4年間学んできました。<br />
-                        Webサイト作成やWebアプリ開発などフロントエンドの開発に興味があります。</div>
+                    <div className={styles.text}>
+                        高専の電子情報工学科でプログラミングを4年間学んできました。<br />
+                        Webサイト作成やWebアプリ開発などフロントエンドの開発に興味があります。<br />
+                        現在はTSやRemix,Next.jsなどを勉強中です。<br />
+                        将来はバックエンドも行えるフルスタックエンジニアを目指しています。
+                    </div>
                     <div className={styles.link}>
                         <div className={styles.linkItem}>
                             <div className={styles.github}></div>

@@ -8,7 +8,7 @@ export function About(): ReactNode {
                 <div className={styles.title}>about this site</div>
             </div>
             <div className={styles.contentFrame}>
-                <div className={styles.text}>ここはKoshiの制作物やスキル、ブログが見れるポートフォリオ。<br></br><br />Koshiを知る旅へ出かけよう!!</div>
+                <div className={styles.text}>ここはKoshiの制作物やスキル、ブログが見れるポートフォリオです。<br></br><br />まだまだ発展途上ですが、ぜひ楽しんで見ていってください。</div>
             </div>
         </div>
     );

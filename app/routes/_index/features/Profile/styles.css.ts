@@ -68,8 +68,9 @@ export const text = style({
 
 export const link = style({
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
     alignItems: "flex-start",
+    gap: "10px",
 });
 
 export const linkItem = style({

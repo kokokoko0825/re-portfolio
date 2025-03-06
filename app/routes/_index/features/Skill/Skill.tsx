@@ -9,42 +9,6 @@ const skills = [
         level: 3
     },
     {
-        name: "Remix",
-        icon: "/images/remix-run-fill-2.png",
-        level: 3
-    },
-    {
-        name: "React",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
-        level: 3
-    },
-
-    {
-        name: "Python",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
-        level: 2
-    },
-    {
-        name: "AWS",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg",
-        level: 1
-    },
-    {
-        name: "Cloudflare",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cloudflare/cloudflare-original.svg",
-        level: 2
-    },
-    {
-        name: "C++",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg",
-        level: 4
-    },
-    {
-        name: "C#",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg",
-        level: 2
-    },
-    {
         name: "css",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original-wordmark.svg",
         level: 3
@@ -55,18 +19,18 @@ const skills = [
         level: 3
     },
     {
-        name: "docker",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-plain-wordmark.svg",
-        level: 1
-    },
-    {
-        name: "Figma",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg",
+        name: "C++",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg",
         level: 3
     },
     {
-        name: "Firebase",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-plain-wordmark.svg",
+        name: "Python",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
+        level: 2
+    },
+    {
+        name: "C#",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg",
         level: 2
     },
     {
@@ -75,20 +39,46 @@ const skills = [
         level: 2
     },
     {
+        name: "Remix",
+        icon: "/images/remix-run-fill-2.png",
+        level: 3
+    },
+    {
+        name: "React",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
+        level: 2
+    },
+    {
         name: "Next.js",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg",
         level: 2
     },
     {
-        name: "Node.js",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg",
+        name: "Figma",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg",
+        level: 3
+    },
+    {
+        name: "Cloudflare",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cloudflare/cloudflare-original.svg",
         level: 2
     },
     {
-        name: "Unity",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg",
+        name: "Firebase",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-plain-wordmark.svg",
         level: 2
     },
+    {
+        name: "AWS",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg",
+        level: 1
+    },
+    {
+        name: "Docker",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg",
+        level: 1
+    },
+    
 
 
 
@@ -103,7 +93,7 @@ export const Skill = (): ReactNode => {
                 <div className={styles.subTitle}>Skill</div>
             </div>
             <SkillSheet skills={skills} />;
-            <div className={styles.text}>このスキルシートは<br />★1:授業などで触る程度<br />★2:AIを半分以上使わなければ開発ができない<br />★3:AIをあまり使わなくても開発ができる<br />★4:調べなくても開発ができる<br />★5:つよつよエンジニア<br />という評価分けになっています。</div>
+            <div className={styles.text}>このスキルシートは<br />★1:授業などで触る程度<br />★2:勉強中<br />★3:それなりに開発をしている<br />★4:詰まらずに開発ができる<br />★5:つよつよエンジニア<br />という評価分けになっています。</div>
         </div>
     );
 };

@@ -29,6 +29,7 @@ export const subTitle = style({
 
 export const productList = style({
     display: "flex",
-    maxWidth: "60%",
+    width: "60%",
     flexWrap: "wrap",
+    justifyContent: "center",
 });
