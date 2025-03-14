@@ -23,14 +23,15 @@ export const ArticleList = ({ articles }: ArticleListProps): ReactNode => {
                 <p>記事がありません</p>
             ) : (
                 articles.map((article) => (
-                    <Article
-                        key={article.id}
-                        title={article.title}
-                        description={article.description}
-                        thumbnailUrl={article.thumbnailUrl}
-                        date={article.date}
-                        url={article.url}
-                    />
+                    <div key={article.id} className={styles.articleWrapper}>
+                        <Article
+                            title={article.title}
+                            description={article.description}
+                            thumbnailUrl={article.thumbnailUrl}
+                            date={article.date}
+                            url={article.url}
+                        />
+                    </div>
                 ))
             )}
         </div>

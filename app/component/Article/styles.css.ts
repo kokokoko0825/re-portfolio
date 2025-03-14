@@ -4,38 +4,57 @@ import { vars } from "~/styles/theme.css";
 export const article = style({
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     borderRadius: "8px",
     overflow: "hidden",
     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-    padding: "20px 40px",
-    //margin: "16px 0",
+    padding: "20px",
     backgroundColor: vars.color.background,
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
-    //maxWidth: "800px",
-    width: "40%",
+    width: "100%",
     border: "4px solid white",
-    alignSelf: "stretch",
+    height: "400px",
+    boxSizing: "border-box",
 
     ":hover": {
         transform: "translateY(-5px)",
         boxShadow: "0 10px 15px rgba(0, 0, 0, 0.1)",
+    },
+    '@media': {
+        'screen and (max-width: 767px)': {
+            width: "100%",
+            height: "400px",
+        },
+        'screen and (max-width: 1020px) and (min-width: 768px)': {
+            width: "100%",
+        }
     }
 });
 
 export const thumbnail = style({
     width: "80%",
-    height: "133px",
+    height: "160px",
     backgroundSize: "cover",
     backgroundPosition: "center",
-    //backgroundColor: "#f0f0f0",
+    marginBottom: "10px",
+    '@media': {
+        'screen and (max-width: 767px)': {
+            height: "160px",
+        },
+        'screen and (max-width: 1020px) and (min-width: 768px)': {
+            height: "160px",
+        }
+    }
 });
 
 export const content = style({
     width: "100%",
     padding: "16px",
     overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+    height: "calc(100% - 160px - 10px)",
 });
 
 export const title = style({
@@ -59,10 +78,16 @@ export const description = style({
     lineHeight: "1.5",
     marginBottom: "16px",
     overflow: "hidden",
+    display: "-webkit-box",
+    WebkitLineClamp: 3,
+    WebkitBoxOrient: "vertical",
+    textOverflow: "ellipsis",
+    maxHeight: "72px",
 });
 
 export const readMore = style({
-    display: "inline-block",
+    display: "flex",
+    justifyContent: "center",
     padding: "8px 16px",
     backgroundColor: "#3498db",
     color: "#fff",
@@ -78,12 +103,40 @@ export const readMore = style({
 
 export const articleList = style({
     display: "flex",
-    width: "auto",
-    //minWidth: "60%",
-    padding: "10px",
-    alignItems: "center",
-    justifyContent: "center",
-    alignContent: "center",
-    gap: "15px",
+    width: "100%",
+    alignItems: "stretch",
+    justifyContent: "space-between",
+    gap: "5px",
+    flexDirection: "row",
     flexWrap: "wrap",
+    '@media': {
+        'screen and (max-width: 767px)': {
+            width: "100%",
+            justifyContent: "center",
+            gap: "5px",
+        },
+        'screen and (max-width: 1020px) and (min-width: 768px)': {
+            justifyContent: "space-between",
+        }
+    }
+});
+
+export const articleWrapper = style({
+    width: "calc(50% - 15px)",
+    marginBottom: "10px",
+    boxSizing: "border-box",
+    '@media': {
+        'screen and (max-width: 767px)': {
+            width: "100%",
+            marginBottom: "20px",
+        }
+    }
+});
+
+export const articleLink = style({
+    textDecoration: "none",
+    color: "inherit",
+    display: "block",
+    width: "100%",
+    height: "100%",
 });

@@ -34,6 +34,11 @@ export const subTitle = style({
     fontSize: "40px",
     fontStyle: "normal",
     fontWeight: "400",
+    '@media': {
+        'screen and (max-width: 767px)': {
+            fontSize: "30px"
+        }
+    }
 });
 
 export const thumbnail = style({
@@ -58,6 +63,11 @@ export const text = style({
     fontWeight: "400",
     lineHeight: "normal",
     overflowWrap: "break-word",
+    '@media': {
+        "screen and (maw-width: 767px)": {
+            fontSize: "16px",
+        }
+    }
 });
 
 export const menu = style({

@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import * as styles from "./styles.css";
+import { Link } from "@remix-run/react";
 
 interface ArticleProps {
     title: string;
@@ -32,18 +33,18 @@ const formatDate = (dateString: string): string => {
 
 export const Article = ({ title, description, thumbnailUrl, date, url }: ArticleProps): ReactNode => {
     return (
-        <div className={styles.article}>
-            <div className={styles.thumbnail} style={thumbnailUrl ? { backgroundImage: `url(${thumbnailUrl})` } : undefined}></div>
-            <div className={styles.content}>
-                <h3 className={styles.title}>{title}</h3>
-                {date && <div className={styles.date}>{formatDate(date)}</div>}
-                <p className={styles.description}>{description}</p>
-                {url && (
-                    <a href={url} className={styles.readMore}>
+        <Link to={url ?? ""} className={styles.articleLink}>
+            <div className={styles.article}>
+                <div className={styles.thumbnail} style={thumbnailUrl ? { backgroundImage: `url(${thumbnailUrl})` } : undefined}></div>
+                <div className={styles.content}>
+                    <h3 className={styles.title}>{title}</h3>
+                    {date && <div className={styles.date}>{formatDate(date)}</div>}
+                    <p className={styles.description}>{description}</p>
+                    <div className={styles.readMore}>
                         続きを読む
-                    </a>
-                )}
+                    </div>
+                </div>
             </div>
-        </div>
+        </Link>
     );
 }

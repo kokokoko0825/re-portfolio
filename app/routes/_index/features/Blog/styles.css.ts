@@ -32,4 +32,6 @@ export const blogList = style({
     width: "60%",
     flexWrap: "wrap",
     justifyContent: "center",
+    padding: "0 20px",
+    boxSizing: "border-box",
 });

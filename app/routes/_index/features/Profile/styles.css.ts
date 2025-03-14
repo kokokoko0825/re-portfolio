@@ -35,6 +35,13 @@ export const profileFrame = style({
     border: "4px solid white",
     borderRadius: "10px",
     background: vars.color.background,
+    '@media': {
+        'screen and (max-width: 767px)': {
+            flexDirection: "column",
+        },
+        'screen and (max-width: 1020px) and (min-width: 768px)': {
+        }
+    }
 });
 
 export const icon = style({
