@@ -92,7 +92,7 @@ export const Skill = (): ReactNode => {
             <div className={styles.subtitleFrame}>
                 <div className={styles.subTitle}>Skill</div>
             </div>
-            <SkillSheet skills={skills} />;
+            <SkillSheet skills={skills} />
             <div className={styles.text}>このスキルシートは<br />★1:授業などで触る程度<br />★2:勉強中<br />★3:それなりに開発をしている<br />★4:詰まらずに開発ができる<br />★5:つよつよエンジニア<br />という評価分けになっています。</div>
         </div>
     );

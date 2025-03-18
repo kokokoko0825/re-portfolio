@@ -49,7 +49,7 @@ export default function BlogPost() {
     return (
         <div className={styles.frame}>
             <div className={styles.menu}>
-                <Link className={styles.text} to="/"> 戻る</Link>
+                <Link className={styles.contentsText} to="/"> 戻る</Link>
             </div>
             <div className={styles.titleFrame}>
                 <div className={styles.subTitle}>{post.title}</div>
@@ -58,7 +58,7 @@ export default function BlogPost() {
                 <img className={styles.img} src={post.thumbnail} alt={post.title} />
             </div>
             <p>{post.createdAt}</p>
-            <div className={styles.text} dangerouslySetInnerHTML={{ __html: renderMarkdown(post.content) }} />
+            <div className={styles.contentsText} dangerouslySetInnerHTML={{ __html: renderMarkdown(post.content) }} />
         </div>
     );
 }

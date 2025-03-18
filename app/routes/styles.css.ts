@@ -76,7 +76,7 @@ export const menu = style({
     alignItems: "center",
     padding: "10px 0",
     gap: "10px",
-    width: "100%",
+    width: "60%",
 });
 
 export const form = style({
@@ -85,4 +85,21 @@ export const form = style({
     height: "800px",
     padding: "10px 0",
     justifySelf: "stretch",
+});
+
+export const contentsText = style({
+    color: vars.color.lightText,
+    width: "60%",
+    textAlign: "left",
+    fontFamily: vars.typography.fontFamily.jap,
+    fontSize: "20px",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "normal",
+    overflowWrap: "break-word",
+    '@media': {
+        "screen and (maw-width: 767px)": {
+            fontSize: "16px",
+        }
+    }
 });
