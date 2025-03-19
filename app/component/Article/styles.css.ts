@@ -14,7 +14,7 @@ export const article = style({
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
     width: "100%",
     border: "4px solid white",
-    height: "400px",
+    height: "auto",
     boxSizing: "border-box",
 
     ":hover": {
@@ -24,7 +24,7 @@ export const article = style({
     '@media': {
         'screen and (max-width: 767px)': {
             width: "100%",
-            height: "400px",
+            height: "auto",
         },
         'screen and (max-width: 1020px) and (min-width: 768px)': {
             width: "100%",

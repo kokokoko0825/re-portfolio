@@ -34,6 +34,15 @@ export const skillCard = style({
     ":hover": {
         transform: "translateY(-5px)",
     },
+    '@media': {
+        'screen and (max-width: 767px)': {
+            width: "auto",
+            height: "auto",
+        },
+        'screen and (max-width: 1020px) and (min-width: 768px)': {
+            width: "auto",
+        }
+    }
 });
 
 export const skillIcon = style({
