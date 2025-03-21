@@ -1,15 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { db } from "../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useDropzone } from "react-dropzone";
 import * as styles from "./styles.css";
+import { useNavigate } from "@remix-run/react";
+import { checkLoginState } from "./admin";
 
 export default function NewBlog() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [thumbnail, setThumbnail] = useState<File | null>(null);
     const [thumbnailUrl, setThumbnailUrl] = useState("");
+    const navigate = useNavigate();
+
+    // ページ読み込み時にログイン状態をチェック
+    useEffect(() => {
+        // クライアントサイドでのみ実行されるようにする
+        if (typeof window !== "undefined") {
+            const isLoggedIn = checkLoginState();
+            if (!isLoggedIn) {
+                // ログインしていない場合は管理者ログインページにリダイレクト
+                navigate("/admin");
+            }
+        }
+    }, [navigate]);
 
     const onDrop = (acceptedFiles: File[]) => {
         console.log("ファイルがドロップされました:", acceptedFiles);
