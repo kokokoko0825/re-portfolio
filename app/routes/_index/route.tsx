@@ -8,6 +8,7 @@ import { Blog } from "./features/Blog/Blog";
 import { Layout } from "./features/Layout/Layout";
 import { Link } from "@remix-run/react";
 import { Header } from "~/component/Header/Header";
+import { Footer } from "~/component/Footer/Footer";
 
 export const meta: MetaFunction = () => {
     return [
@@ -26,6 +27,7 @@ export default function Index() {
             <Products />
             <Skill />
             <Blog />
+            <Footer/>
         </Layout>
     );
 }

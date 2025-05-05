@@ -29,11 +29,6 @@ const skills = [
         level: 2
     },
     {
-        name: "C#",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg",
-        level: 2
-    },
-    {
         name: "JavaScript",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
         level: 2
@@ -42,16 +37,6 @@ const skills = [
         name: "Remix",
         icon: "/images/remix-run-fill-2.png",
         level: 3
-    },
-    {
-        name: "React",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
-        level: 2
-    },
-    {
-        name: "Next.js",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg",
-        level: 2
     },
     {
         name: "Figma",
@@ -67,16 +52,6 @@ const skills = [
         name: "Firebase",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-plain-wordmark.svg",
         level: 2
-    },
-    {
-        name: "AWS",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg",
-        level: 1
-    },
-    {
-        name: "Docker",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg",
-        level: 1
     },
     
 
