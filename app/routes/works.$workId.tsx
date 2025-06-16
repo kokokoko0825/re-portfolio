@@ -8,10 +8,10 @@ export default function BlogId() {
         <div className={styles.frame}>
             <Header />
             <div className={styles.blogId}>
-                <small>投稿日: 2025-00-00,  編集日: 2025-00-00,  tag[ #markdown, #poem]</small>
+                <small>投稿日: 2025-00-00,  編集日: 2025-00-00</small>
                 <div className={styles.thumbnail}>
-                    <span>🧑‍🎓</span>
-                    <h1>Article Title</h1>
+                    <img src="/public/images/icon.jpg" alt="thumbnail" />
+                    <h1>Work Title</h1>
                 </div>
                 <div className={styles.textFrame}>
                     <p> #test post<br />
@@ -34,7 +34,7 @@ export default function BlogId() {
                     ブログにはTwitterとか他の人のブログとかを埋め込めるようにしたい。</p>
                 </div>
                 <div className={styles.backFrame}>
-                    <Link to="/blog">
+                    <Link to="/works">
                         <small>Back</small>
                     </Link>
             </div>

@@ -1,1 +1,0 @@
-export { About as features } from "./About";

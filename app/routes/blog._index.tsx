@@ -1,11 +1,20 @@
-import { Outlet, Link } from "@remix-run/react";
+import { Header } from "../component/Header/Header";
+import { Footer } from "../component/Footer/Footer";
+import * as styles from "./styles.css";
+import { BlogItem } from "../component/blogItem";
 
-export default function BlogLayout() {
+export default function Blog() {
     return (
-        <div>
-            <Link to="/blog">Blog</Link>
-            <Link to="/blog/new">新規作成</Link> | <Link to="/blog/list">一覧</Link>
-            <Outlet />
+        <div className={styles.frame}>
+            <Header />
+            <div className={styles.blog}>
+                <h1>Blog</h1>
+                <BlogItem />
+                <BlogItem />
+                <BlogItem />
+                <BlogItem />
+            </div>
+            <Footer />
         </div>
     );
 }

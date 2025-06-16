@@ -6,100 +6,91 @@ export const frame = style({
     width: "100%",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
-    padding: "100px 0",
-    gap: "10px",
+    gap: "30px",
 });
 
-export const titleFrame = style({
+export const about = style({
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "10px 0",
+    padding: "120px 10px 10px 10px",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "30px",
+})
+
+export const blog = style({
+    display: "flex",
+    padding: "120px 10px 10px 10px",
+    flexDirection: "column",
+    alignItems: "flex-start",
     gap: "10px",
-    borderBottom: "4px solid #541BFF",
-});
+})
 
-export const title = style({
-    color: vars.color.lightText,
-    fontFamily: vars.typography.fontFamily.jap,
-    fontSize: "70px",
-    fontStyle: "normal",
-    fontWeight: "400",
-});
+export const works = style({
+    display: "flex",
+    padding: "120px 10px 10px 10px",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "10px",
+})
 
-export const subTitle = style({
-    color: vars.color.lightText,
-    fontFamily: vars.typography.fontFamily.jap,
-    fontSize: "40px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    '@media': {
-        'screen and (max-width: 767px)': {
-            fontSize: "30px"
-        }
-    }
-});
+export const blogId = style({
+    display: "flex",
+    width: "800px",
+    padding: "100px 10px 10px 10px",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "30px",
+})
+
+export const section = style({
+    display: "flex",
+    padding: "10px",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "10px",
+})
+
+export const list = style({
+    display: "flex",
+    padding: "10px",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "10px",
+})
+
+export const workList = style({
+    display: "flex",
+    width: "750px",
+    alignItems: "flex-start",
+    alignContent: "flex-start",
+    gap: "40px",
+    flexWrap: "wrap",
+})
 
 export const thumbnail = style({
-    maxWidth: "50%",
-    height: "auto",
-    objectFit: "contain",
-});
-
-export const img = style({
-    width: "100%",
-    height: "auto",
-    objectFit: "contain",
-});
-
-export const text = style({
-    color: vars.color.lightText,
-    width: "60%",
-    textAlign: "center",
-    fontFamily: vars.typography.fontFamily.jap,
-    fontSize: "20px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal",
-    overflowWrap: "break-word",
-    '@media': {
-        "screen and (maw-width: 767px)": {
-            fontSize: "16px",
-        }
-    }
-});
-
-export const menu = style({
     display: "flex",
-    justifyContent: "flex-start",
+    padding: "20px, 10px",
+    flexDirection: "column",
+    justifyContent: "center",
     alignItems: "center",
-    padding: "10px 0",
-    gap: "10px",
-    width: "60%",
-});
+    gap: "20px",
+    alignSelf: "stretch",
+    borderBottom: `2px solid ${vars.color.borderColor}`,
+})
 
-export const form = style({
+export const textFrame = style({
     display: "flex",
-    width: "100%",
-    height: "800px",
-    padding: "10px 0",
-    justifySelf: "stretch",
-});
+    width: "600px",
+    alignItems: "flex-start",
+    alignContent: "flex-start",
+    gap: "10px",
+    flexWrap: "wrap",
+})
 
-export const contentsText = style({
-    color: vars.color.lightText,
-    width: "60%",
-    textAlign: "left",
-    fontFamily: vars.typography.fontFamily.jap,
-    fontSize: "20px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "normal",
-    overflowWrap: "break-word",
-    '@media': {
-        "screen and (maw-width: 767px)": {
-            fontSize: "16px",
-        }
-    }
-});
+export const backFrame = style({
+    display: "flex",
+    padding: "10px",
+    alignItems: "flex-start",
+    gap: "10px",
+    alignSelf: "stretch",
+})

@@ -1,1 +1,0 @@
-export { Skill as features } from "./Skill";
