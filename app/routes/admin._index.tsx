@@ -1,0 +1,30 @@
+import { Header } from "../component/Header/Header";
+import { Footer } from "../component/Footer/Footer";
+import * as styles from "./styles.css";
+import { Link } from "@remix-run/react";
+
+export default function Admin() {
+    return (
+        <div className={styles.frame}>
+            <Header />
+            <div className={styles.admin}>
+                <h1>Admin</h1>
+                <div className={styles.adminSelect}>
+                    <Link to="/admin/blog">
+                        <div className={styles.adminSection}>
+                            <span>📚</span>
+                            <h2>Blog</h2>
+                        </div>
+                    </Link>
+                    <Link to="/admin/works">
+                        <div className={styles.adminSection}>
+                            <span>💻</span>
+                            <h2>Works</h2>
+                        </div>
+                    </Link>
+                </div>
+            </div>
+            <Footer />
+        </div>
+    );
+}

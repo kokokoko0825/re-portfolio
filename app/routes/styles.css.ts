@@ -50,6 +50,14 @@ export const login = style({
     gap: "50px",
 })
 
+export const admin = style({
+    display: "flex",
+    padding: "120px 10px",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "150px",
+})
+
 export const section = style({
     display: "flex",
     padding: "10px",
@@ -111,4 +119,23 @@ export const loginCard = style({
     gap: "30px",
     borderRadius: "10px",
     border: `2px solid ${vars.color.borderColor}`,
+})
+
+export const adminSelect = style({
+    display: "flex",
+    padding: "10px",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    gap: "150px",
+    alignSelf: "stretch",
+})
+
+export const adminSection = style({
+    display: "flex",
+    padding: "10px",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "10px",
+    alignSelf: "stretch",
 })
