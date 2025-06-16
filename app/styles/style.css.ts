@@ -104,3 +104,24 @@ globalStyle("span", {
     lineHeight: "normal",
     color: vars.color.text,
 })
+
+globalStyle("input", {
+    width: "330px",
+    height: "30px",
+    borderRadius: "10px",
+    fontFamily: "Inter",
+    fontSize: "16px",
+    fontStyle: "normal",
+    fontWeight: 400,
+    lineHeight: "normal",
+    color: vars.color.background,
+})
+
+globalStyle("button", {
+    display: "flex",
+    padding: "10px 30px",
+    alignItems: "flex-start",
+    gap :"10px",
+    borderRadius: "10px",
+    background: vars.color.text,
+})

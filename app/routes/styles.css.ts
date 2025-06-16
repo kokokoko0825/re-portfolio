@@ -42,6 +42,14 @@ export const blogId = style({
     gap: "30px",
 })
 
+export const login = style({
+    display: "flex",
+    padding: "120px 10px 10px 10px",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "50px",
+})
+
 export const section = style({
     display: "flex",
     padding: "10px",
@@ -93,4 +101,14 @@ export const backFrame = style({
     alignItems: "flex-start",
     gap: "10px",
     alignSelf: "stretch",
+})
+
+export const loginCard = style({
+    display: "flex",
+    padding: "50px 30px",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "30px",
+    borderRadius: "10px",
+    border: `2px solid ${vars.color.borderColor}`,
 })
