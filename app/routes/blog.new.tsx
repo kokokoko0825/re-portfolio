@@ -3,8 +3,7 @@ import { Footer } from "../component/Footer/Footer";
 import * as styles from "./styles.css";
 import { useState } from "react";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { db, storage } from "../firebaseConfig";
+import { db } from "../firebaseConfig";
 
 export default function AdminBlogNew() {
     const [formData, setFormData] = useState({
@@ -14,7 +13,6 @@ export default function AdminBlogNew() {
         tag: "",
         content: ""
     });
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleInputChange = (field: string, value: string) => {
@@ -22,26 +20,6 @@ export default function AdminBlogNew() {
             ...prev,
             [field]: value
         }));
-    };
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            setSelectedFile(file);
-            // ファイル名をthumbnailフィールドに設定
-            handleInputChange("thumbnail", file.name);
-        }
-    };
-
-    const uploadFileToStorage = async (file: File): Promise<string> => {
-        const timestamp = Date.now();
-        const fileName = `${timestamp}_${file.name}`;
-        const storageRef = ref(storage, `thumbnails/${fileName}`);
-        
-        const snapshot = await uploadBytes(storageRef, file);
-        const downloadURL = await getDownloadURL(snapshot.ref);
-        
-        return downloadURL;
     };
 
     const handleSubmit = async () => {
@@ -52,15 +30,8 @@ export default function AdminBlogNew() {
 
         setIsLoading(true);
         try {
-            let thumbnailURL = "";
-            
-            // ファイルが選択されている場合はStorageにアップロード
-            if (selectedFile) {
-                thumbnailURL = await uploadFileToStorage(selectedFile);
-            }
-
             const blogData = {
-                thumbnail: thumbnailURL, // StorageのURLを保存
+                thumbnail: formData.thumbnail, // 絵文字をそのまま保存
                 title: formData.title,
                 description: formData.description,
                 tag: formData.tag,
@@ -81,7 +52,6 @@ export default function AdminBlogNew() {
                 tag: "",
                 content: ""
             });
-            setSelectedFile(null);
         } catch (error) {
             console.error("エラーが発生しました: ", error);
             alert("保存中にエラーが発生しました");
@@ -95,18 +65,12 @@ export default function AdminBlogNew() {
             <AdminHeader />
             <div className={styles.adminnewCreate}>
                 <input 
-                    type="file" 
-                    placeholder="thumbnail" 
+                    type="text" 
+                    placeholder="thumbnail (絵文字)" 
                     value={formData.thumbnail}
-                    onChange={handleFileChange}
-                    accept="image/*"
+                    onChange={(e) => handleInputChange("thumbnail", e.target.value)}
                     style={{fontSize: "96px", width: "auto", height: "auto", textAlign: "center", border: "none", background: "none", color: "#DEDBFF"}} 
                 />
-                {selectedFile && (
-                    <div style={{color: "#DEDBFF", fontSize: "14px", margin: "10px 0"}}>
-                        選択されたファイル: {selectedFile.name}
-                    </div>
-                )}
                 <div className={styles.title}>
                     <input 
                         type="text" 
