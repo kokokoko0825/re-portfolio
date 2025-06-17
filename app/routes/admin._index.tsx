@@ -1,4 +1,4 @@
-import { Header } from "../component/Header/Header";
+import { AdminHeader } from "../component/adminHeader/adminHeader";
 import { Footer } from "../component/Footer/Footer";
 import * as styles from "./styles.css";
 import { Link } from "@remix-run/react";
@@ -6,7 +6,7 @@ import { Link } from "@remix-run/react";
 export default function Admin() {
     return (
         <div className={styles.frame}>
-            <Header />
+            <AdminHeader />
             <div className={styles.admin}>
                 <h1>Admin</h1>
                 <div className={styles.adminSelect}>

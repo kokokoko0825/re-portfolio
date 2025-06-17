@@ -58,6 +58,14 @@ export const admin = style({
     gap: "150px",
 })
 
+export const adminManagement = style({
+    display: "flex",
+    padding: "120px 10px",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "30px",
+})
+
 export const section = style({
     display: "flex",
     padding: "10px",
@@ -138,4 +146,23 @@ export const adminSection = style({
     alignItems: "center",
     gap: "10px",
     alignSelf: "stretch",
+})
+
+export const newCreate = style({
+    display: "flex",
+    padding: "10px",
+    justifyContent: "flex-end",
+    alignItems: "flex-start",
+    gap: "10px",
+    alignSelf: "stretch",
+})
+
+export const adminWorksList = style({
+    display: "flex",
+    width: "750px",
+    padding: "27px 33px",
+    alignItems: "flex-start",
+    alignContent: "flex-start",
+    flexWrap: "wrap",
+    gap: "40px",
 })
