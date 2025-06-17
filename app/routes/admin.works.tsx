@@ -11,7 +11,7 @@ export default function AdminWorks() {
             <div className={styles.adminManagement}>
                 <h1>Worksの管理</h1>
                 <div className={styles.newCreate}>
-                    <Link to="/admin/works/new">
+                    <Link to="/work/new">
                         <button>New Create</button>
                     </Link>
                 </div>

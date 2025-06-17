@@ -11,7 +11,7 @@ export default function AdminBlog() {
             <div className={styles.adminManagement}>
                 <h1>Blogの管理</h1>
                 <div className={styles.newCreate}>
-                    <Link to="/admin/blog/new">
+                    <Link to="/blog/new">
                         <button>New Create</button>
                     </Link>
                 </div>

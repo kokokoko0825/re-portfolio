@@ -66,6 +66,15 @@ export const adminManagement = style({
     gap: "30px",
 })
 
+export const adminnewCreate = style({
+    display: "flex",
+    width: "760px",
+    padding: "100px 10px 0px 10px",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "10px",
+})
+
 export const section = style({
     display: "flex",
     padding: "10px",
@@ -165,4 +174,24 @@ export const adminWorksList = style({
     alignContent: "flex-start",
     flexWrap: "wrap",
     gap: "40px",
+})
+
+export const title = style({
+    display: "flex",
+    padding: "10px",
+    alignItems: "center",
+    gap: "10px",
+    alignSelf: "stretch",
+    borderBottom: `2px solid ${vars.color.borderColor}`,
+    fontSize: "36px",
+})
+
+export const description = style({
+    display: "flex",
+    padding: "10px",
+    alignItems: "center",
+    gap: "10px",
+    alignSelf: "stretch",
+    borderBottom: `2px solid ${vars.color.borderColor}`,
+    fontSize: "24px",
 })
