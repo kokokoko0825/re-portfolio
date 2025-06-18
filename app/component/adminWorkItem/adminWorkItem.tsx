@@ -13,9 +13,9 @@ interface AdminWorkItemProps {
 export function AdminWorkItem({ id, thumbnail, title, description }: AdminWorkItemProps): ReactNode {
     return (
         <div className={styles.adminWorkItem}>
-            <WorksItem thumbnail={thumbnail} title={title} description={description} />
+            <WorksItem id={id} thumbnail={thumbnail} title={title} description={description} />
             <div className={styles.adminItemIcon}>
-                <Link to={`/admin/work/${id}`}>
+                <Link to={`/work/edit/${id}`}>
                     <h1>✏️</h1>
                 </Link>
                 <h1>🗑️</h1>

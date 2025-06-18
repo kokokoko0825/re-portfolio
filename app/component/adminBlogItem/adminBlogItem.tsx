@@ -13,9 +13,9 @@ interface AdminBlogItemProps {
 export function AdminBlogItem({ id, title, updatedAt }: AdminBlogItemProps): ReactNode {
     return (
         <div className={styles.adminBlogItem}>
-            <BlogItem title={title} updatedAt={updatedAt} />
+            <BlogItem id={id} title={title} updatedAt={updatedAt} />
             <div className={styles.adminItemIcon}>
-                <Link to={`/admin/blog/${id}`}>
+                <Link to={`/blog/edit/${id}`}>
                     <h1>✏️</h1>
                 </Link>
                 <h1>🗑️</h1>
