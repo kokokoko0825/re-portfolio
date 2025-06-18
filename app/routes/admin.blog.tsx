@@ -6,9 +6,11 @@ import { AdminBlogItem } from "../component/adminBlogItem/adminBlogItem";
 import { useState, useEffect } from "react";
 import { collection, getDocs, orderBy, query, Timestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import { ProtectedRoute } from "../component/ProtectedRoute/ProtectedRoute";
 
 interface BlogData {
     id: string;
+    number: number;
     title: string;
     updatedAt: Timestamp;
 }
@@ -21,7 +23,7 @@ export default function AdminBlog() {
         try {
             const blogsQuery = query(
                 collection(db, "blogs"),
-                orderBy("updatedAt", "desc")
+                orderBy("number", "desc")
             );
             const querySnapshot = await getDocs(blogsQuery);
             
@@ -30,6 +32,7 @@ export default function AdminBlog() {
                 const data = doc.data();
                 blogsData.push({
                     id: doc.id,
+                    number: data.number || 0,
                     title: data.title || "",
                     updatedAt: data.updatedAt || null
                 });
@@ -52,36 +55,38 @@ export default function AdminBlog() {
     };
 
     return (
-        <div className={styles.frame}>
-            <AdminHeader />
-            <div className={styles.adminManagement}>
-                <h1>Blogの管理</h1>
-                <div className={styles.newCreate}>
-                    <Link to="/blog/new">
-                        <button>New Create</button>
-                    </Link>
+        <ProtectedRoute>
+            <div className={styles.frame}>
+                <AdminHeader />
+                <div className={styles.adminManagement}>
+                    <h1>Blogの管理</h1>
+                    <div className={styles.newCreate}>
+                        <Link to="/blog/new">
+                            <button>New Create</button>
+                        </Link>
+                    </div>
+                    {isLoading ? (
+                        <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
+                            読み込み中...
+                        </div>
+                    ) : blogs.length === 0 ? (
+                        <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
+                            ブログ記事がありません
+                        </div>
+                    ) : (
+                        blogs.map((blog) => (
+                            <AdminBlogItem 
+                                key={blog.id}
+                                id={blog.id}
+                                title={blog.title}
+                                updatedAt={blog.updatedAt}
+                                onDelete={handleDelete}
+                            />
+                        ))
+                    )}
                 </div>
-                {isLoading ? (
-                    <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
-                        読み込み中...
-                    </div>
-                ) : blogs.length === 0 ? (
-                    <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
-                        ブログ記事がありません
-                    </div>
-                ) : (
-                    blogs.map((blog) => (
-                        <AdminBlogItem 
-                            key={blog.id}
-                            id={blog.id}
-                            title={blog.title}
-                            updatedAt={blog.updatedAt}
-                            onDelete={handleDelete}
-                        />
-                    ))
-                )}
+                <Footer />
             </div>
-            <Footer />
-        </div>
+        </ProtectedRoute>
     );
 }

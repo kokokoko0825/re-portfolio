@@ -6,6 +6,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import { ReactNode } from "react";
+import { AuthProvider } from "./contexts/AuthContext";
 
 import "app/styles/globals.css";
 import { LinksFunction, MetaFunction } from "@remix-run/cloudflare";
@@ -31,7 +32,11 @@ export function Layout({ children }: { children: React.ReactNode }): ReactNode {
 }
 
 export default function App(): ReactNode {
-  return <Outlet />;
+  return (
+    <AuthProvider>
+      <Outlet />
+    </AuthProvider>
+  );
 }
 
 

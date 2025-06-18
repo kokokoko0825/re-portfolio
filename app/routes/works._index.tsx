@@ -8,6 +8,7 @@ import { db } from "../firebaseConfig";
 
 interface WorkData {
     id: string;
+    number: number;
     thumbnail: string;
     title: string;
     description: string;
@@ -22,7 +23,7 @@ export default function Works() {
             try {
                 const worksQuery = query(
                     collection(db, "works"),
-                    orderBy("updatedAt", "desc")
+                    orderBy("number", "desc")
                 );
                 const querySnapshot = await getDocs(worksQuery);
                 
@@ -31,6 +32,7 @@ export default function Works() {
                     const data = doc.data();
                     worksData.push({
                         id: doc.id,
+                        number: data.number || 0,
                         thumbnail: data.thumbnail || "",
                         title: data.title || "",
                         description: data.description || ""

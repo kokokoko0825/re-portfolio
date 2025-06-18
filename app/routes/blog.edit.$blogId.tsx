@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { useParams, useNavigate } from "@remix-run/react";
-import { Timestamp } from "firebase/firestore";
+import { ProtectedRoute } from "../component/ProtectedRoute/ProtectedRoute";
 
 export default function AdminBlogEdit() {
     const { blogId } = useParams();
@@ -101,70 +101,74 @@ export default function AdminBlogEdit() {
 
     if (isInitialLoading) {
         return (
-            <div className={styles.frame}>
-                <AdminHeader />
-                <div className={styles.adminnewCreate}>
-                    <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
-                        読み込み中...
+            <ProtectedRoute>
+                <div className={styles.frame}>
+                    <AdminHeader />
+                    <div className={styles.adminnewCreate}>
+                        <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
+                            読み込み中...
+                        </div>
                     </div>
+                    <Footer />
                 </div>
-                <Footer />
-            </div>
+            </ProtectedRoute>
         );
     }
 
     return (
-        <div className={styles.frame}>
-            <AdminHeader />
-            <div className={styles.adminnewCreate}>
-                <input 
-                    type="text" 
-                    placeholder="thumbnail (絵文字)" 
-                    value={formData.thumbnail}
-                    onChange={(e) => handleInputChange("thumbnail", e.target.value)}
-                    style={{fontSize: "96px", width: "auto", height: "auto", textAlign: "center", border: "none", background: "none", color: "#DEDBFF"}} 
-                />
-                <div className={styles.title}>
+        <ProtectedRoute>
+            <div className={styles.frame}>
+                <AdminHeader />
+                <div className={styles.adminnewCreate}>
                     <input 
                         type="text" 
-                        placeholder="title"  
-                        value={formData.title}
-                        onChange={(e) => handleInputChange("title", e.target.value)}
-                        style={{fontSize: "36px", width: "100%", height: "auto", background: "none", border: "none", color: "#DEDBFF"}}
+                        placeholder="thumbnail (絵文字)" 
+                        value={formData.thumbnail}
+                        onChange={(e) => handleInputChange("thumbnail", e.target.value)}
+                        style={{fontSize: "96px", width: "auto", height: "auto", textAlign: "center", border: "none", background: "none", color: "#DEDBFF"}} 
+                    />
+                    <div className={styles.title}>
+                        <input 
+                            type="text" 
+                            placeholder="title"  
+                            value={formData.title}
+                            onChange={(e) => handleInputChange("title", e.target.value)}
+                            style={{fontSize: "36px", width: "100%", height: "auto", background: "none", border: "none", color: "#DEDBFF"}}
+                        />
+                    </div>
+                    <div className={styles.description}>
+                        <input 
+                            type="text" 
+                            placeholder="description" 
+                            value={formData.description}
+                            onChange={(e) => handleInputChange("description", e.target.value)}
+                            style={{fontSize: "24px", width: "100%", height: "auto", background: "none", border: "none", color: "#DEDBFF"}}
+                        />
+                    </div>
+                    <div className={styles.description}>
+                        <input 
+                            type="text" 
+                            placeholder="tag" 
+                            value={formData.tag}
+                            onChange={(e) => handleInputChange("tag", e.target.value)}
+                            style={{fontSize: "20px", width: "100%", height: "auto", background: "none", border: "none", color: "#DEDBFF"}}
+                        />
+                    </div>
+                    <textarea 
+                        placeholder="content" 
+                        value={formData.content}
+                        onChange={(e) => handleInputChange("content", e.target.value)}
+                        style={{fontSize: "20px", width: "100%", height: "560px", background: "#DEDBFF", border: "none", color: "#2C2E47", borderRadius: "10px"}}
                     />
                 </div>
-                <div className={styles.description}>
-                    <input 
-                        type="text" 
-                        placeholder="description" 
-                        value={formData.description}
-                        onChange={(e) => handleInputChange("description", e.target.value)}
-                        style={{fontSize: "24px", width: "100%", height: "auto", background: "none", border: "none", color: "#DEDBFF"}}
-                    />
-                </div>
-                <div className={styles.description}>
-                    <input 
-                        type="text" 
-                        placeholder="tag" 
-                        value={formData.tag}
-                        onChange={(e) => handleInputChange("tag", e.target.value)}
-                        style={{fontSize: "20px", width: "100%", height: "auto", background: "none", border: "none", color: "#DEDBFF"}}
-                    />
-                </div>
-                <textarea 
-                    placeholder="content" 
-                    value={formData.content}
-                    onChange={(e) => handleInputChange("content", e.target.value)}
-                    style={{fontSize: "20px", width: "100%", height: "560px", background: "#DEDBFF", border: "none", color: "#2C2E47", borderRadius: "10px"}}
-                />
+                <button 
+                    onClick={handleSubmit}
+                    disabled={isLoading}
+                >
+                    {isLoading ? "更新中..." : "更新"}
+                </button>
+                <Footer />
             </div>
-            <button 
-                onClick={handleSubmit}
-                disabled={isLoading}
-            >
-                {isLoading ? "更新中..." : "更新"}
-            </button>
-            <Footer />
-        </div>
+        </ProtectedRoute>
     );
 } 

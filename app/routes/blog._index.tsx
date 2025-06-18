@@ -8,6 +8,7 @@ import { db } from "../firebaseConfig";
 
 interface BlogData {
     id: string;
+    number: number;
     title: string;
     thumbnail: string;
     updatedAt: Timestamp;
@@ -22,7 +23,7 @@ export default function Blog() {
             try {
                 const blogsQuery = query(
                     collection(db, "blogs"),
-                    orderBy("updatedAt", "desc")
+                    orderBy("number", "desc")
                 );
                 const querySnapshot = await getDocs(blogsQuery);
                 
@@ -31,6 +32,7 @@ export default function Blog() {
                     const data = doc.data();
                     blogsData.push({
                         id: doc.id,
+                        number: data.number || 0,
                         title: data.title || "",
                         thumbnail: data.thumbnail || "",
                         updatedAt: data.updatedAt || null

@@ -20,6 +20,6 @@ export const adminHomeIcon = style({
 export const adminLinkList = style({
     display: "flex",
     padding: "10px 50px",
-    alignItems: "flex-start",
+    alignItems: "center",
     gap: "30px",
 })
