@@ -4,9 +4,8 @@ import * as styles from "./styles.css";
 import { Link } from "@remix-run/react";
 import { AdminBlogItem } from "../component/adminBlogItem/adminBlogItem";
 import { useState, useEffect } from "react";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, Timestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-import { Timestamp } from "firebase/firestore";
 
 interface BlogData {
     id: string;

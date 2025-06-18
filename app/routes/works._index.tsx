@@ -66,6 +66,7 @@ export default function Works() {
                         works.map((work) => (
                             <WorksItem 
                                 key={work.id}
+                                id={work.id}
                                 thumbnail={work.thumbnail}
                                 title={work.title}
                                 description={work.description}

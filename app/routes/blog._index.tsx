@@ -3,13 +3,13 @@ import { Footer } from "../component/Footer/Footer";
 import * as styles from "./styles.css";
 import { BlogItem } from "../component/blogItem";
 import { useState, useEffect } from "react";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, Timestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-import { Timestamp } from "firebase/firestore";
 
 interface BlogData {
     id: string;
     title: string;
+    thumbnail: string;
     updatedAt: Timestamp;
 }
 
@@ -32,6 +32,7 @@ export default function Blog() {
                     blogsData.push({
                         id: doc.id,
                         title: data.title || "",
+                        thumbnail: data.thumbnail || "",
                         updatedAt: data.updatedAt || null
                     });
                 });
@@ -64,6 +65,7 @@ export default function Blog() {
                     blogs.map((blog) => (
                         <BlogItem 
                             key={blog.id}
+                            id={blog.id}
                             title={blog.title}
                             updatedAt={blog.updatedAt}
                         />
