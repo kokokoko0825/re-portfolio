@@ -2,12 +2,10 @@ import { Header } from "../component/Header/Header";
 import { Footer } from "../component/Footer/Footer";
 import * as styles from "./styles.css";
 import { Link, useParams } from "@remix-run/react";
-import MarkdownIt from "markdown-it";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-
-const md = new MarkdownIt();
+import { renderMarkdownWithTwitterEmbed, initializeTwitterEmbeds } from "../utils/markdownRenderer";
 
 interface BlogData {
     id: string;
@@ -23,6 +21,7 @@ export default function BlogId() {
     const [blogData, setBlogData] = useState<BlogData | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const fetchBlogData = async () => {
@@ -59,6 +58,16 @@ export default function BlogId() {
 
         fetchBlogData();
     }, [blogId]);
+
+    // コンテンツが更新された後にTwitter埋め込みを初期化
+    useEffect(() => {
+        if (blogData && contentRef.current) {
+            // 少し遅延を入れてDOMが更新されるのを待つ
+            setTimeout(() => {
+                initializeTwitterEmbeds();
+            }, 100);
+        }
+    }, [blogData]);
 
     // 日付フォーマット関数
     const formatDate = (timestamp: Timestamp | null) => {
@@ -115,7 +124,11 @@ export default function BlogId() {
                     <h1>{blogData.title}</h1>
                 </div>
                 <div className={styles.textFrame}>
-                    <div className="znc" dangerouslySetInnerHTML={{ __html: md.render(blogData.content) }} />
+                    <div 
+                        ref={contentRef}
+                        className="znc" 
+                        dangerouslySetInnerHTML={renderMarkdownWithTwitterEmbed(blogData.content)} 
+                    />
                 </div>
                 <div className={styles.backFrame}>
                     <Link to="/blog">
