@@ -18,36 +18,40 @@ export default function AdminWorks() {
     const [works, setWorks] = useState<WorkData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchWorks = async () => {
-            try {
-                const worksQuery = query(
-                    collection(db, "works"),
-                    orderBy("updatedAt", "desc")
-                );
-                const querySnapshot = await getDocs(worksQuery);
-                
-                const worksData: WorkData[] = [];
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    worksData.push({
-                        id: doc.id,
-                        thumbnail: data.thumbnail || "",
-                        title: data.title || "",
-                        description: data.description || ""
-                    });
+    const fetchWorks = async () => {
+        try {
+            const worksQuery = query(
+                collection(db, "works"),
+                orderBy("updatedAt", "desc")
+            );
+            const querySnapshot = await getDocs(worksQuery);
+            
+            const worksData: WorkData[] = [];
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                worksData.push({
+                    id: doc.id,
+                    thumbnail: data.thumbnail || "",
+                    title: data.title || "",
+                    description: data.description || ""
                 });
-                
-                setWorks(worksData);
-            } catch (error) {
-                console.error("作品の取得に失敗しました:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
+            });
+            
+            setWorks(worksData);
+        } catch (error) {
+            console.error("作品の取得に失敗しました:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
+    useEffect(() => {
         fetchWorks();
     }, []);
+
+    const handleDelete = (deletedId: string) => {
+        setWorks(prev => prev.filter(work => work.id !== deletedId));
+    };
 
     return (
         <div className={styles.frame}>
@@ -76,6 +80,7 @@ export default function AdminWorks() {
                                 thumbnail={work.thumbnail}
                                 title={work.title}
                                 description={work.description}
+                                onDelete={handleDelete}
                             />
                         ))
                     )}

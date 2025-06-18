@@ -17,35 +17,39 @@ export default function AdminBlog() {
     const [blogs, setBlogs] = useState<BlogData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchBlogs = async () => {
-            try {
-                const blogsQuery = query(
-                    collection(db, "blogs"),
-                    orderBy("updatedAt", "desc")
-                );
-                const querySnapshot = await getDocs(blogsQuery);
-                
-                const blogsData: BlogData[] = [];
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    blogsData.push({
-                        id: doc.id,
-                        title: data.title || "",
-                        updatedAt: data.updatedAt || null
-                    });
+    const fetchBlogs = async () => {
+        try {
+            const blogsQuery = query(
+                collection(db, "blogs"),
+                orderBy("updatedAt", "desc")
+            );
+            const querySnapshot = await getDocs(blogsQuery);
+            
+            const blogsData: BlogData[] = [];
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                blogsData.push({
+                    id: doc.id,
+                    title: data.title || "",
+                    updatedAt: data.updatedAt || null
                 });
-                
-                setBlogs(blogsData);
-            } catch (error) {
-                console.error("ブログ記事の取得に失敗しました:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
+            });
+            
+            setBlogs(blogsData);
+        } catch (error) {
+            console.error("ブログ記事の取得に失敗しました:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
+    useEffect(() => {
         fetchBlogs();
     }, []);
+
+    const handleDelete = (deletedId: string) => {
+        setBlogs(prev => prev.filter(blog => blog.id !== deletedId));
+    };
 
     return (
         <div className={styles.frame}>
@@ -72,6 +76,7 @@ export default function AdminBlog() {
                             id={blog.id}
                             title={blog.title}
                             updatedAt={blog.updatedAt}
+                            onDelete={handleDelete}
                         />
                     ))
                 )}
