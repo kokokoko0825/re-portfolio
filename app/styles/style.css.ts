@@ -125,3 +125,12 @@ globalStyle("button", {
     borderRadius: "10px",
     background: vars.color.text,
 })
+
+globalStyle("code", {
+    fontFamily: "Inter",
+    fontSize: "18px",
+    fontStyle: "normal",
+    fontWeight: 400,
+    lineHeight: "normal",
+    color: vars.color.text,
+})

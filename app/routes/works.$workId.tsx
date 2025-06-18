@@ -5,7 +5,7 @@ import { Link, useParams } from "@remix-run/react";
 import { useState, useEffect, useRef } from "react";
 import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-import { renderMarkdownWithTwitterEmbed, initializeTwitterEmbeds } from "../utils/markdownRenderer";
+import { renderMarkdownWithEmbeds, initializeAllEmbeds } from "../utils/markdownRenderer";
 
 interface WorkData {
     id: string;
@@ -59,17 +59,17 @@ export default function BlogId() {
         fetchWorkData();
     }, [workId]);
 
-    // コンテンツが更新された後にTwitter埋め込みを初期化
+    // コンテンツが更新された後に埋め込みを初期化
     useEffect(() => {
         if (workData && contentRef.current) {
             // 少し遅延を入れてDOMが更新されるのを待つ
             setTimeout(() => {
-                initializeTwitterEmbeds();
+                initializeAllEmbeds();
             }, 100);
         }
     }, [workData]);
 
-    // 日付フォーマット関数
+    // FirestoreのTimestampを日付文字列に変換
     const formatDate = (timestamp: Timestamp | null) => {
         if (!timestamp) return "";
         
@@ -100,8 +100,8 @@ export default function BlogId() {
             <div className={styles.frame}>
                 <Header />
                 <div className={styles.blogId}>
-                    <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
-                        {error || "作品が見つかりません"}
+                    <div style={{color: "#ff6b6b", textAlign: "center", padding: "20px"}}>
+                        {error || "エラーが発生しました"}
                     </div>
                     <div className={styles.backFrame}>
                         <Link to="/works">
@@ -127,14 +127,14 @@ export default function BlogId() {
                     <div 
                         ref={contentRef}
                         className="znc" 
-                        dangerouslySetInnerHTML={renderMarkdownWithTwitterEmbed(workData.content)} 
+                        dangerouslySetInnerHTML={renderMarkdownWithEmbeds(workData.content)} 
                     />
                 </div>
                 <div className={styles.backFrame}>
                     <Link to="/works">
                         <small>Back</small>
                     </Link>
-            </div>
+                </div>
             </div>
             <Footer />
         </div>

@@ -20,7 +20,7 @@ export function Layout({ children }: { children: React.ReactNode }): ReactNode {
         <meta name="google-site-verification" content="brDkeRhoxktrjCiqqUefNlNyOKLGHk0Cik9q9MzLv2E" />
         <Meta />
         <Links />
-        <title>Koshi Quest(仮)</title>
+        <title>kokokoko0825</title>
       </head>
       <body>
         {children}
@@ -60,27 +60,27 @@ export const meta: MetaFunction = () => {
   return [
     { charSet: "utf-8" },
     { name: "viewport", content: "width=device-width, initial-scale=1" },
-    { title: "Koshi Quest" },
-    { rel: "icon", href: "/images/account_icon_v2.jpg" },
-    { name: "description", content: "エンジニアkokokoko0825のポートフォリオ" },
+    { title: "kokokoko0825" },
+    { rel: "icon", href: "/images/icon.jpg" },
+    { name: "description", content: "Koshi Tanakaのポートフォリオ" },
     { name: "robots", content: "index, follow" },
-    { name: "og:title", content: "Koshi Quest" },
-    { name: "og:description", content: "エンジニアkokokoko0825のポートフォリオ" },
+    { name: "og:title", content: "kokokoko0825" },
+    { name: "og:description", content: "Koshi Tanakaのポートフォリオ" },
     { name: "og:url", content: "https://kokokoko0825.pages.dev" },
     { name: "og:image", content: "https://kokokoko0825.pages.dev/ogp.png" },
     {
       property: "og:image:url",
       content: "https://kokokoko0825.pages.dev/ogp.png",
     },
-    { property: "og:image:alt", content: "Koshi Quest" },
+    { property: "og:image:alt", content: "kokokoko0825" },
     { name: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:title", content: "Koshi Quest" },
-    { name: "twitter:description", content: "エンジニアkokokoko0825のポートフォリオ" },
+    { name: "twitter:title", content: "kokokoko0825" },
+    { name: "twitter:description", content: "Koshi Tanakaのポートフォリオ" },
     {
       name: "twitter:image",
       content: "https://kokokoko0825.pages.dev/ogp.png",
     },
-    { name: "twitter:image:alt", content: "Koshi Quest" },
+    { name: "twitter:image:alt", content: "kokokoko0825" },
   ];
 };

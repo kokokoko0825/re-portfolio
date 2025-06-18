@@ -20,7 +20,9 @@ export default function About() {
                 <div className={styles.section}>
                     <h1>Career</h1>
                     <div className={styles.list}>
+                        {/*
                         <p>2026 - 現在  株式会社セゾンテクノロジー</p>
+                        */}
                         <p>2021 - 2026  鈴鹿高専 電子情報工学科</p>
                     </div>
                 </div>
