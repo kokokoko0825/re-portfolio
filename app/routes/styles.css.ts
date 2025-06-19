@@ -72,7 +72,7 @@ export const blogId = style({
     "@media": {
         "(max-width: 768px)": {
             width: "auto",
-            padding: "57px 10px 0px 10px",
+            padding: "77px 10px 0px 10px",
             gap: "20px",
             alignSelf: "stretch",
         }

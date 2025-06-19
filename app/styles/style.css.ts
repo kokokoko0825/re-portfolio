@@ -70,7 +70,7 @@ globalStyle("Link", {
     }
 });
 
-// わからない
+// 多分Headerのリンク
 globalStyle("a", {
     fontFamily: "Inter",
     fontSize: "24px",
@@ -82,6 +82,13 @@ globalStyle("a", {
     textDecorationLine: "none",
     textDecorationColor: vars.color.text,
 })
+globalStyle("a", {
+    "@media": {
+        "(max-width: 768px)": {
+            fontSize: "20px",
+        }
+    }
+});
 
 // default
 globalStyle("p", {
