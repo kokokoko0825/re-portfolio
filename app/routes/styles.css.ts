@@ -32,9 +32,9 @@ export const about = style({
 
 export const blog = style({
     display: "flex",
-    padding: "120px 10px 10px 10px",
+    padding: "120px 0px 0px 10px",
     flexDirection: "column",
-    alignItems: "flex-start",
+    alignItems: "center",
     gap: "10px",
     "@media": {
         "(max-width: 768px)": {
@@ -72,7 +72,7 @@ export const blogId = style({
     "@media": {
         "(max-width: 768px)": {
             width: "auto",
-            padding: "77px 10px 0px 10px",
+            padding: "75px 10px 0px 10px",
             gap: "20px",
             alignSelf: "stretch",
         }

@@ -9,10 +9,12 @@ export const adminBlogItem = style({
     "@media": {
         "(max-width: 768px)": {
             display: "flex",
+            width: "100%",
             padding: "10px 0px",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "flex-end",
+            alignSelf: "stretch",
             gap: "10px",
         }
     }

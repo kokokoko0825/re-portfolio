@@ -14,8 +14,8 @@ export function WorksItem({ id, thumbnail, title, description }: WorksItemProps)
         <Link to={`/works/${id}`}>
             <div className={styles.worksItem}>
                 <img src={thumbnail || "/public/images/icon.jpg"} alt="thumbnail" />
-                <h2>{title}</h2>
-                <small>{description}</small>
+                <h2 style={{wordBreak: "break-word"}}>{title}</h2>
+                <small style={{wordBreak: "break-word"}}>{description}</small>
             </div>
         </Link>
     );

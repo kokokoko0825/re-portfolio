@@ -33,6 +33,7 @@ export default function About() {
                         <li>C++</li>
                         <li>Python</li>
                         <li>Remix</li>
+                        <li>Figma</li>
                     </ul>
                 </div>
             </div>
