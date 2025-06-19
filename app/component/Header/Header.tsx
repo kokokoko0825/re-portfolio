@@ -1,73 +1,42 @@
-import { useState, ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import * as styles from "./styles.css";
-import { Menu } from "../Menu/Menu";
+import { Link } from "@remix-run/react";
+import { useMenu } from "../../contexts/MenuContext";
+import { MobileMenu } from "../MobileMenu/MobileMenu";
 
 export function Header(): ReactNode {
-    const [menuOpen, setMenuOpen] = useState(false);
-
-    const toggleMenu = () => {
-        setMenuOpen(!menuOpen);
-    };
-
-    const smoothScroll = (e: MouseEvent): void => {
-        e.preventDefault();
-        const targetElement = e.currentTarget as HTMLAnchorElement;
-        const href = targetElement.getAttribute("href");
-        if (!href) return;
-
-        const target = document.querySelector(href) as HTMLElement | null;
-        if (!target) return;
-
-        const position = target.getBoundingClientRect().top + window.scrollY;
-
-        window.scrollTo({
-            top: position,
-            behavior: "smooth",
-        });
-    };
-
-    useEffect(() => {
-        const buttons = document.querySelectorAll<HTMLAnchorElement>(`.${styles.menuItem}`);
-
-        buttons.forEach((button) => {
-            button.addEventListener("click", smoothScroll);
-        });
-
-        return () => {
-            buttons.forEach((button) => {
-                button.removeEventListener("click", smoothScroll);
-            });
-        };
-    }, []);
-
-    const handleButtonClick = () => {
-        console.log("ボタンがクリックされました");
-        toggleMenu();
-    };
+    const { toggleMenu } = useMenu();
 
     return (
         <>
             <div className={styles.header}>
-                {menuOpen && (
-                    <div className={styles.menu}>
-                        <Menu />
-                    </div>
-                )}
-                <button className={styles.menuButton} onClick={handleButtonClick}>
-                    {menuOpen ? (
-                        <div className={styles.closeButton}>
-                            <div className={styles.closeButtonLine1}></div>
-                            <div className={styles.closeButtonLine2}></div>
-                        </div>
-                    ) : (
-                        <>
-                            <div className={styles.menuButtonLine}></div>
-                            <div className={styles.menuButtonLine}></div>
-                            <div className={styles.menuButtonLine}></div>
-                        </>
-                    )}
-                </button>
+                <div className={styles.homeIcon}>
+                    <Link to="/">
+                        <h1>🐶🐱</h1>
+                    </Link>
+                </div>
+                <div className={styles.linkList} style={{textDecoration: "none"}}>
+                    <Link to="/">Home</Link>
+                    <Link to="/about">About</Link>
+                    <Link to="/blog">Blog</Link>
+                    <Link to="/works">Works</Link>
+                </div>
+                <div 
+                    className={styles.hamburgerIcon} 
+                    onClick={toggleMenu} 
+                    role="button" 
+                    tabIndex={0} 
+                    aria-label="Open menu" 
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            toggleMenu();
+                        }
+                    }}
+                >
+                    <img src="/images/humberger.svg" alt="Menu" style={{width: "25.9px", height: "17px"}}/>
+                </div>
             </div>
+            <MobileMenu />
         </>
     );
 }

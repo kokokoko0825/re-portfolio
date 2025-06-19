@@ -1,1 +1,0 @@
-export { Hero as features } from "./Hero";

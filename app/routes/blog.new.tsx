@@ -1,94 +1,145 @@
-import { useState, useEffect } from "react";
-import { db } from "../firebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { useDropzone } from "react-dropzone";
+import { AdminHeader } from "../component/adminHeader/adminHeader";
+import { Footer } from "../component/Footer/Footer";
 import * as styles from "./styles.css";
-import { useNavigate } from "@remix-run/react";
-import { checkLoginState } from "./admin";
+import { useState } from "react";
+import { collection, addDoc, serverTimestamp, getDocs, orderBy, query } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+import { ProtectedRoute } from "../component/ProtectedRoute/ProtectedRoute";
 
-export default function NewBlog() {
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
-    const [thumbnail, setThumbnail] = useState<File | null>(null);
-    const [thumbnailUrl, setThumbnailUrl] = useState("");
-    const navigate = useNavigate();
+export default function AdminBlogNew() {
+    const [formData, setFormData] = useState({
+        thumbnail: "",
+        title: "",
+        description: "",
+        tag: "",
+        content: ""
+    });
+    const [isLoading, setIsLoading] = useState(false);
 
-    // ページ読み込み時にログイン状態をチェック
-    useEffect(() => {
-        // クライアントサイドでのみ実行されるようにする
-        if (typeof window !== "undefined") {
-            const isLoggedIn = checkLoginState();
-            if (!isLoggedIn) {
-                // ログインしていない場合は管理者ログインページにリダイレクト
-                navigate("/admin");
+    const handleInputChange = (field: string, value: string) => {
+        setFormData(prev => ({
+            ...prev,
+            [field]: value
+        }));
+    };
+
+    const getNextBlogNumber = async (): Promise<number> => {
+        try {
+            const blogsQuery = query(
+                collection(db, "blogs"),
+                orderBy("number", "desc")
+            );
+            const querySnapshot = await getDocs(blogsQuery);
+            
+            if (querySnapshot.empty) {
+                return 1; // 最初の記事
             }
-        }
-    }, [navigate]);
-
-    const onDrop = (acceptedFiles: File[]) => {
-        console.log("ファイルがドロップされました:", acceptedFiles);
-        if (acceptedFiles.length > 0) {
-            setThumbnail(acceptedFiles[0]);
+            
+            // 最新の記事のナンバーを取得して+1
+            const latestBlog = querySnapshot.docs[0];
+            const latestNumber = latestBlog.data().number || 0;
+            return latestNumber + 1;
+        } catch (error) {
+            console.error("次のナンバーの取得に失敗しました:", error);
+            return 1; // エラーの場合は1から開始
         }
     };
 
-    const { getRootProps, getInputProps } = useDropzone({
-        onDrop,
-        accept: {
-            'image/*': []
-        },
-        maxFiles: 1
-    });
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        let url = "";
-        if (thumbnail) {
-            const storage = getStorage();
-            const storageRef = ref(storage, `thumbnails/${thumbnail.name}`);
-            await uploadBytes(storageRef, thumbnail);
-            url = await getDownloadURL(storageRef);
-            setThumbnailUrl(url);
+    const handleSubmit = async () => {
+        if (!formData.title || !formData.content) {
+            alert("タイトルとコンテンツは必須です");
+            return;
         }
 
-        await addDoc(collection(db, "blogPosts"), {
-            title,
-            content,
-            thumbnail: url,
-            createdAt: new Date().toISOString(),
-        });
+        setIsLoading(true);
+        try {
+            const nextNumber = await getNextBlogNumber();
+            
+            const blogData = {
+                number: nextNumber, // ナンバリングを追加
+                thumbnail: formData.thumbnail, // 絵文字をそのまま保存
+                title: formData.title,
+                description: formData.description,
+                tag: formData.tag,
+                content: formData.content,
+                createdAt: serverTimestamp(),
+                updatedAt: serverTimestamp()
+            };
 
-        setTitle("");
-        setContent("");
-        setThumbnail(null);
-        setThumbnailUrl("");
+            const docRef = await addDoc(collection(db, "blogs"), blogData);
+            console.log("ブログが正常に保存されました。ID: ", docRef.id, "ナンバー: ", nextNumber);
+            alert("ブログが正常に保存されました！");
+            
+            // フォームをリセット
+            setFormData({
+                thumbnail: "",
+                title: "",
+                description: "",
+                tag: "",
+                content: ""
+            });
+        } catch (error) {
+            console.error("エラーが発生しました: ", error);
+            alert("保存中にエラーが発生しました");
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
-        <div className={styles.frame}>
-            <div className={styles.subTitle}>Create New Blog</div>
-            <form onSubmit={handleSubmit} style={{ width: "80%", justifySelf: "stretch" }}>
-                <input
-                    type="text"
-                    placeholder="Title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    required
-                />
-                <div {...getRootProps()} style={{ border: '2px dashed #ccc', padding: '20px', textAlign: 'center', width: "auto", justifySelf: "stretch" }}>
-                    <input {...getInputProps()} />
-                    {thumbnail ? <p>{thumbnail.name}</p> : <p>Drag & drop a thumbnail here, or click to select one</p>}
+        <ProtectedRoute>
+            <div className={styles.frame}>
+                <AdminHeader />
+                <div className={styles.adminnewCreate}>
+                    <input 
+                        type="text" 
+                        placeholder="thumbnail (絵文字)" 
+                        value={formData.thumbnail}
+                        onChange={(e) => handleInputChange("thumbnail", e.target.value)}
+                        className={styles.adminThumbnailInput}
+                    />
+                    <div className={styles.title}>
+                        <input 
+                            type="text" 
+                            placeholder="title"  
+                            value={formData.title}
+                            onChange={(e) => handleInputChange("title", e.target.value)}
+                            className={styles.adminTitleInput}
+                        />
+                    </div>
+                    <div className={styles.description}>
+                        <input 
+                            type="text" 
+                            placeholder="description" 
+                            value={formData.description}
+                            onChange={(e) => handleInputChange("description", e.target.value)}
+                            className={styles.adminDescriptionInput}
+                        />
+                    </div>
+                    <div className={styles.description}>
+                        <input 
+                            type="text" 
+                            placeholder="tag" 
+                            value={formData.tag}
+                            onChange={(e) => handleInputChange("tag", e.target.value)}
+                            className={styles.adminDescriptionInput}
+                        />
+                    </div>
+                    <textarea 
+                        placeholder="content" 
+                        value={formData.content}
+                        onChange={(e) => handleInputChange("content", e.target.value)}
+                        className={styles.adminTextareaInput}
+                    />
                 </div>
-                <textarea
-                    className={styles.form}
-                    placeholder="Content"
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    required
-                />
-                <button type="submit">Submit</button>
-            </form>
-        </div>
+                <button 
+                    onClick={handleSubmit}
+                    disabled={isLoading}
+                >
+                    {isLoading ? "保存中..." : "保存"}
+                </button>
+                <Footer />
+            </div>
+        </ProtectedRoute>
     );
 }

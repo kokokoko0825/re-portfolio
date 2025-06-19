@@ -1,1 +1,0 @@
-export { BackGround as features } from "./BackGround";

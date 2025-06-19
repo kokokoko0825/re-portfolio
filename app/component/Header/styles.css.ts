@@ -1,116 +1,109 @@
 import { vars } from "~/styles/theme.css";
-import { style, keyframes } from "@vanilla-extract/css";
+import { style, globalStyle } from "@vanilla-extract/css";
 
-const menuSlideIn = keyframes({
-    from: {
-        opacity: 0,
-        transform: "translateX(100%)",
-    },
-    to: {
-        opacity: 1,
-        transform: "translateX(0)",
-    },
-});
-
-export const header = style({
+export const header = style ({
     display: "flex",
-    padding: "14px 0",
-    justifyContent: "flex-end",
+    width: "100%",
+    justifyContent: "space-between",
     alignItems: "center",
-    gap: "10px",
+    borderBottom: `2px solid ${vars.color.borderColor}`,
+    background: vars.color.background,
+    boxSizing: "content-box",
+    position: "fixed",
+})
+
+export const homeIcon = style({
+    display: "flex",
+    padding: "10px 0px 10px 30px",
+})
+
+export const linkList = style({
+    display: "flex",
+    padding: "10px 50px",
+    alignItems: "flex-start",
+    gap: "30px",
+    "@media": {
+        "screen and (max-width: 768px)": {
+            display: "none"
+        }
+    }
+})
+
+export const hamburgerIcon = style({
+    display: "none",
+    padding: "10px 30px",
+    cursor: "pointer",
+    color: vars.color.text,
+    alignItems: "center",
+    justifyContent: "center",
+    "@media": {
+        "screen and (max-width: 768px)": {
+            display: "flex"
+        }
+    }
+})
+
+export const mobileMenu = style({
     position: "fixed",
     top: 0,
-    width: "100%",
-    zIndex: 1000,
-    backgroundColor: vars.color.background,
-});
-
-export const menuButton = style({
-    width: "60px",
-    height: "60px",
-    backgroundColor: "transparent",
-    border: "none",
-    cursor: "pointer",
+    right: 0,
+    width: "70%",
+    height: "100vh",
+    background: vars.color.background,
+    borderLeft: `2px solid ${vars.color.borderColor}`,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-around",
-    alignItems: "center",
-    padding: "0.5rem",
-    marginRight: "20px",
-    boxSizing: "border-box",
-    zIndex: 1000,
-    '@media': {
-        'screen and (max-width: 720px)': {
-            width: "40px",
-            height: "40px",
-        }
-    }
-});
+    padding: "20px",
+    transform: "translateX(100%)",
+    transition: "transform 0.3s ease-in-out",
+    zIndex: 1000
+})
 
-export const menuButtonLine = style({
-    width: "100%",
-    height: "0.25rem",
-    backgroundColor: vars.color.lightText,
-});
-
-export const menu = style({
-    position: "absolute",
-    top: "100%",
-    width: "auto",
-    padding: "0 20px",
-    flexDirection: "column",
-    justifyContent: "space-around",
-    alignItems: "center",
-    backgroundColor: vars.color.background,
-    boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
-    animation: `${menuSlideIn} 0.3s ease-out forwards`,
-    zIndex: 1001,
-});
-
-export const menuItem = style({
-    padding: "1rem",
-    borderBottom: `1px solid ${vars.color.lightText}`,
-    color: vars.color.lightText,
-    textAlign: "center",
-    cursor: "pointer",
-    ":hover": {
-        backgroundColor: vars.color.lightText,
-        color: vars.color.background,
-    },
-    '@media': {
-        'screen and (max-width: 720px)': {
-            fontSize: "0.625rem",
-        }
-    }
-});
+export const mobileMenuOpen = style({
+    transform: "translateX(0)"
+})
 
 export const closeButton = style({
+    alignSelf: "flex-end",
+    background: "none",
+    border: "none",
+    color: vars.color.text,
+    fontSize: "24px",
+    cursor: "pointer",
+    marginBottom: "20px"
+})
+
+export const mobileMenuLinks = style({
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: "column",
+    gap: "20px",
+    padding: "20px"
+})
+
+// グローバルスタイルでリンクのスタイリングを行う
+globalStyle(`${mobileMenuLinks} a`, {
+    color: vars.color.text,
+    textDecoration: "none",
+    fontSize: "20px",
+    fontWeight: "bold",
+    transition: "opacity 0.2s ease"
+})
+
+globalStyle(`${mobileMenuLinks} a:hover`, {
+    opacity: 0.8
+})
+
+export const mobileMenuOverlay = style({
+    position: "fixed",
+    top: 0,
+    left: 0,
     width: "100%",
     height: "100%",
-    position: "relative",
-});
+    background: "rgba(0, 0, 0, 0.5)",
+    zIndex: 999,
+    display: "none"
+})
 
-export const closeButtonLine = style({
-    position: "absolute",
-    width: "100%",
-    height: "0.25rem",
-    backgroundColor: vars.color.lightText,
-    transformOrigin: "center",
-});
-
-export const closeButtonLine1 = style([
-    closeButtonLine,
-    {
-        transform: "rotate(45deg)",
-    },
-]);
-
-export const closeButtonLine2 = style([
-    closeButtonLine,
-    {
-        transform: "rotate(-45deg)",
-    },
-]);
+export const mobileMenuOverlayOpen = style({
+    display: "block"
+})
