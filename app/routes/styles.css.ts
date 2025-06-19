@@ -162,13 +162,15 @@ export const list = style({
 
 export const workList = style({
     display: "flex",
-    width: "750px",
+    maxWidth: "750px",
     alignItems: "flex-start",
     alignContent: "flex-start",
     gap: "40px",
     flexWrap: "wrap",
     "@media": {
         "(max-width: 768px)": {
+            width: "100%",
+            boxSizing: "border-box",
             padding: "10px",
             gap: "20px",
             flexDirection: "column",
@@ -198,14 +200,15 @@ export const thumbnail = style({
 
 export const textFrame = style({
     display: "flex",
-    width: "600px",
+    maxWidth: "600px",
     alignItems: "flex-start",
     alignContent: "flex-start",
     gap: "10px",
     flexWrap: "wrap",
     "@media": {
         "(max-width: 768px)": {
-            width: "390px",
+            width: "100%",
+            boxSizing: "border-box",
             padding: "0px 30px",
         }
     }
