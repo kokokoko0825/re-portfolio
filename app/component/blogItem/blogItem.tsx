@@ -6,10 +6,10 @@ import { Link } from "@remix-run/react";
 interface BlogItemProps {
     id: string;
     title: string;
-    updatedAt: Timestamp | null;
+    createdAt: Timestamp | null;
 }
 
-export function BlogItem({ id, title, updatedAt }: BlogItemProps): ReactNode {
+export function BlogItem({ id, title, createdAt }: BlogItemProps): ReactNode {
     // FirestoreのTimestampを日付文字列に変換
     const formatDate = (timestamp: Timestamp | null) => {
         if (!timestamp) return "";
@@ -26,7 +26,7 @@ export function BlogItem({ id, title, updatedAt }: BlogItemProps): ReactNode {
         <>
         <Link to={`/blog/${id}`}>
             <div className={styles.blogItem}>
-                <small>{formatDate(updatedAt)}</small>
+                <small>{formatDate(createdAt)}</small>
                 <h2>{title}</h2>
             </div>
         </Link>

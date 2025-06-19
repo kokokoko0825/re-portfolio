@@ -11,7 +11,7 @@ interface BlogData {
     number: number;
     title: string;
     thumbnail: string;
-    updatedAt: Timestamp;
+    createdAt: Timestamp;
 }
 
 export default function Blog() {
@@ -35,7 +35,7 @@ export default function Blog() {
                         number: data.number || 0,
                         title: data.title || "",
                         thumbnail: data.thumbnail || "",
-                        updatedAt: data.updatedAt || null
+                        createdAt: data.createdAt || null
                     });
                 });
                 
@@ -69,7 +69,7 @@ export default function Blog() {
                             key={blog.id}
                             id={blog.id}
                             title={blog.title}
-                            updatedAt={blog.updatedAt}
+                            createdAt={blog.createdAt}
                         />
                     ))
                 )}
