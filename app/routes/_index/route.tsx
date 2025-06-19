@@ -6,8 +6,8 @@ import * as styles from "./styles.css";
 
 export const meta: MetaFunction = () => {
     return [
-        { title: "KoshiのPortfolio" },
-        { name: "description", content: "エンジニアKoshiのポートフォリオサイトです。" },
+        { title: "kokokoko0825" },
+        { name: "description", content: "Koshi Tanakaのポートフォリオ" },
     ];
 };
 
