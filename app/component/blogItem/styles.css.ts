@@ -15,8 +15,11 @@ export const blogItem = style({
     "@media": {
         "(max-width: 768px)": {
             width: "100%",
+            maxWidth: "100%",
             boxSizing: "border-box",
             padding: "20px 30px",
+            alignSelf: "stretch",
+            borderRadius: "20px",
         }
     }
 })

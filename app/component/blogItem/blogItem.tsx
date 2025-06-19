@@ -23,13 +23,11 @@ export function BlogItem({ id, title, createdAt }: BlogItemProps): ReactNode {
     };
 
     return (
-        <>
-        <Link to={`/blog/${id}`} style={{width: "100%", alignSelf: "stretch"}}>
+        <Link to={`/blog/${id}`} style={{ width: "100%", textDecoration: "none", display: "block" }}>
             <div className={styles.blogItem}>
                 <small>{formatDate(createdAt)}</small>
-                <h2 style={{wordBreak: "break-word"}}>{title}</h2>
+                <h2>{title}</h2>
             </div>
         </Link>
-        </>
     );
 }
