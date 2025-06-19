@@ -6,6 +6,16 @@ export const adminBlogItem = style({
     padding: "10px 50px",
     alignItems: "center",
     gap: "50px",
+    "@media": {
+        "(max-width: 768px)": {
+            display: "flex",
+            padding: "10px 0px",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "flex-end",
+            gap: "10px",
+        }
+    }
 })
 
 export const adminItemIcon = style({
@@ -13,4 +23,11 @@ export const adminItemIcon = style({
     padding: "10px",
     alignItems: "flex-start",
     gap: "50px",
+    "@media": {
+        "(max-width: 768px)": {
+            padding: "0px",
+            justifyContent: "center",
+            alignItems: "center",
+        }
+    }
 })

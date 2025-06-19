@@ -125,7 +125,7 @@ export default function AdminBlogEdit() {
                         placeholder="thumbnail (絵文字)" 
                         value={formData.thumbnail}
                         onChange={(e) => handleInputChange("thumbnail", e.target.value)}
-                        style={{fontSize: "96px", width: "auto", height: "auto", textAlign: "center", border: "none", background: "none", color: "#DEDBFF"}} 
+                        className={styles.adminThumbnailInput}
                     />
                     <div className={styles.title}>
                         <input 
@@ -133,8 +133,8 @@ export default function AdminBlogEdit() {
                             placeholder="title"  
                             value={formData.title}
                             onChange={(e) => handleInputChange("title", e.target.value)}
-                            style={{fontSize: "36px", width: "100%", height: "auto", background: "none", border: "none", color: "#DEDBFF"}}
-                        />
+                            className={styles.adminTitleInput}
+                            />
                     </div>
                     <div className={styles.description}>
                         <input 
@@ -142,7 +142,7 @@ export default function AdminBlogEdit() {
                             placeholder="description" 
                             value={formData.description}
                             onChange={(e) => handleInputChange("description", e.target.value)}
-                            style={{fontSize: "24px", width: "100%", height: "auto", background: "none", border: "none", color: "#DEDBFF"}}
+                            className={styles.adminDescriptionInput}
                         />
                     </div>
                     <div className={styles.description}>
@@ -151,14 +151,14 @@ export default function AdminBlogEdit() {
                             placeholder="tag" 
                             value={formData.tag}
                             onChange={(e) => handleInputChange("tag", e.target.value)}
-                            style={{fontSize: "20px", width: "100%", height: "auto", background: "none", border: "none", color: "#DEDBFF"}}
+                            className={styles.adminDescriptionInput}
                         />
                     </div>
                     <textarea 
                         placeholder="content" 
                         value={formData.content}
                         onChange={(e) => handleInputChange("content", e.target.value)}
-                        style={{fontSize: "20px", width: "100%", height: "560px", background: "#DEDBFF", border: "none", color: "#2C2E47", borderRadius: "10px"}}
+                        className={styles.adminTextareaInput}
                     />
                 </div>
                 <button 

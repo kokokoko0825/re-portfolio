@@ -12,6 +12,8 @@ globalStyle("html, body", {
     // minWidth: "1440px",
 });
 
+
+// title
 globalStyle("h1", {
     fontFamily: "Inter",
     fontSize: "36px",
@@ -20,8 +22,17 @@ globalStyle("h1", {
     lineHeight: "normal",
     color: vars.color.text,
     margin: 0,
-})
+});
+globalStyle("h1", {
+    "@media": {
+        "(max-width: 768px)": {
+            fontSize: "24px",
+        }
+    }
+});
 
+
+// subtitle
 globalStyle("h2", {
     fontFamily: "Inter",
     fontSize: "24px",
@@ -31,7 +42,15 @@ globalStyle("h2", {
     color: vars.color.text,
     margin: 0,
 })
+globalStyle("h2", {
+    "@media": {
+        "(max-width: 768px)": {
+            fontSize: "20px",
+        }
+    }
+});
 
+// subtitle
 globalStyle("Link", {
     fontFamily: "Inter",
     fontSize: "24px",
@@ -43,7 +62,15 @@ globalStyle("Link", {
     textDecorationLine: "none",
     textDecorationColor: vars.color.text,
 })
+globalStyle("Link", {
+    "@media": {
+        "(max-width: 768px)": {
+            fontSize: "20px",
+        }
+    }
+});
 
+// わからない
 globalStyle("a", {
     fontFamily: "Inter",
     fontSize: "24px",
@@ -56,6 +83,7 @@ globalStyle("a", {
     textDecorationColor: vars.color.text,
 })
 
+// default
 globalStyle("p", {
     fontFamily: "Inter",
     fontSize: "20px",
@@ -64,7 +92,15 @@ globalStyle("p", {
     lineHeight: "normal",
     color: vars.color.text,
 })
+globalStyle("p", {
+    "@media": {
+        "(max-width: 768px)": {
+            fontSize: "12px",
+        }
+    }
+});
 
+// linksize
 globalStyle("small", {
     fontFamily: "Inter",
     fontSize: "16px",
@@ -73,14 +109,30 @@ globalStyle("small", {
     lineHeight: "normal",
     color: vars.color.text,
 })
+globalStyle("small", {
+    "@media": {
+        "(max-width: 768px)": {
+            fontSize: "10px",
+        }
+    }
+});
 
+// githubiconとか
 globalStyle("svg", {
     width: "25px",
     height: "25px",
     aspectRatio: "1/1",
     color: vars.color.text,
 })
+globalStyle("svg", {
+    "@media": {
+        "(max-width: 768px)": {
+            width: "15px",
+        }
+    }
+});
 
+// 多分defaultと一緒
 globalStyle("li", {
     fontFamily: "Inter",
     fontSize: "20px",
@@ -89,13 +141,31 @@ globalStyle("li", {
     lineHeight: "normal",
     color: vars.color.text,
 })
+globalStyle("li", {
+    "@media": {
+        "(max-width: 768px)": {
+            fontSize: "12px",
+        }
+    }
+});
 
+// worksの画像
 globalStyle("img", {
     width: "300px",
     height: "200px",
+    aspectRatio: "3/2",
     objectFit: "cover",
 })
+globalStyle("img", {
+    "@media": {
+        "(max-width: 768px)": {
+            width: "200px",
+            height: "133px",
+        }
+    }
+});
 
+// thumbnail
 globalStyle("span", {
     fontFamily: "Inter",
     fontSize: "96px",
@@ -104,7 +174,15 @@ globalStyle("span", {
     lineHeight: "normal",
     color: vars.color.text,
 })
+globalStyle("span", {
+    "@media": {
+        "(max-width: 768px)": {
+            fontSize: "48px",
+        }
+    }
+});
 
+// loginのinput
 globalStyle("input", {
     width: "330px",
     height: "30px",
@@ -116,6 +194,13 @@ globalStyle("input", {
     lineHeight: "normal",
     color: vars.color.background,
 })
+globalStyle("input", {
+    "@media": {
+        "(max-width: 768px)": {
+            width: "250px",
+        }
+    }
+});
 
 globalStyle("button", {
     display: "flex",
@@ -126,6 +211,7 @@ globalStyle("button", {
     background: vars.color.text,
 })
 
+// codefont
 globalStyle("code", {
     fontFamily: "Inter",
     fontSize: "18px",
@@ -134,3 +220,10 @@ globalStyle("code", {
     lineHeight: "normal",
     color: vars.color.text,
 })
+globalStyle("code", {
+    "@media": {
+        "(max-width: 768px)": {
+            fontSize: "11px",
+        }
+    }
+});

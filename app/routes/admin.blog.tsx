@@ -12,7 +12,7 @@ interface BlogData {
     id: string;
     number: number;
     title: string;
-    updatedAt: Timestamp;
+    createdAt: Timestamp;
 }
 
 export default function AdminBlog() {
@@ -34,7 +34,7 @@ export default function AdminBlog() {
                     id: doc.id,
                     number: data.number || 0,
                     title: data.title || "",
-                    updatedAt: data.updatedAt || null
+                    createdAt: data.createdAt || null
                 });
             });
             
@@ -79,7 +79,7 @@ export default function AdminBlog() {
                                 key={blog.id}
                                 id={blog.id}
                                 title={blog.title}
-                                updatedAt={blog.updatedAt}
+                                createdAt={blog.createdAt}
                                 onDelete={handleDelete}
                             />
                         ))

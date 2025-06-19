@@ -7,4 +7,9 @@ export const worksItem = style({
     flexDirection: "column",
     alignItems: "center",
     gap: "10px",
+    "@media": {
+        "(max-width: 768px)": {
+            display: "flex",
+        }
+    }
 })

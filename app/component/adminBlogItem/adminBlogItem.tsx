@@ -8,11 +8,11 @@ import { db } from "../../firebaseConfig";
 interface AdminBlogItemProps {
     id: string;
     title: string;
-    updatedAt: Timestamp | null;
+    createdAt: Timestamp | null;
     onDelete: (deletedId: string) => void;
 }
 
-export function AdminBlogItem({ id, title, updatedAt, onDelete }: AdminBlogItemProps): ReactNode {
+export function AdminBlogItem({ id, title, createdAt, onDelete }: AdminBlogItemProps): ReactNode {
     const handleDelete = async () => {
         const isConfirmed = window.confirm(`「${title}」を削除しますか？\nこの操作は取り消せません。`);
         
@@ -33,7 +33,7 @@ export function AdminBlogItem({ id, title, updatedAt, onDelete }: AdminBlogItemP
 
     return (
         <div className={styles.adminBlogItem}>
-            <BlogItem id={id} title={title} updatedAt={updatedAt} />
+            <BlogItem id={id} title={title} createdAt={createdAt} />
             <div className={styles.adminItemIcon}>
                 <Link to={`/blog/edit/${id}`}>
                     <h1>✏️</h1>

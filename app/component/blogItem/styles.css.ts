@@ -11,4 +11,10 @@ export const blogItem = style({
     borderRadius: "30px",
     borderBottom: `2px solid ${vars.color.borderColor}`,
     background: vars.color.background,
+    "@media": {
+        "(max-width: 768px)": {
+            width: "370px",
+            padding: "20px 30px",
+        }
+    }
 })
