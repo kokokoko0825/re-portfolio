@@ -10,6 +10,8 @@ export const Home = style({
     backgroundColor: vars.color.background,
 })
 
+export const mobileView = style({})
+
 export const item = style({
     display: "flex",
     // モバイルファーストのアプローチ - デフォルトでモバイルサイズに設定

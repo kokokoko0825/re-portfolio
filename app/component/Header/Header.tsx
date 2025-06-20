@@ -1,11 +1,32 @@
 import { ReactNode } from "react";
 import * as styles from "./styles.css";
-import { Link } from "@remix-run/react";
+import { Link, useLocation } from "@remix-run/react";
 import { useMenu } from "../../contexts/MenuContext";
 import { MobileMenu } from "../MobileMenu/MobileMenu";
+import { useEffect, useState } from "react";
 
 export function Header(): ReactNode {
     const { toggleMenu } = useMenu();
+    const location = useLocation();
+    const [isMobile, setIsMobile] = useState(false);
+    
+    // クライアントサイドでの画面サイズ検出
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+        
+        // 初期チェック
+        checkMobile();
+        
+        // リサイズイベントのリスナーを追加
+        window.addEventListener('resize', checkMobile);
+        
+        // クリーンアップ
+        return () => {
+            window.removeEventListener('resize', checkMobile);
+        };
+    }, []);
 
     return (
         <>
@@ -15,7 +36,10 @@ export function Header(): ReactNode {
                         <h1>🐶🐱</h1>
                     </Link>
                 </div>
-                <div className={styles.linkList} style={{textDecoration: "none"}}>
+                <div className={styles.linkList} style={{
+                    textDecoration: "none",
+                    display: isMobile ? 'none' : 'flex'
+                }}>
                     <Link to="/home">Home</Link>
                     <Link to="/about">About</Link>
                     <Link to="/blog">Blog</Link>
@@ -23,6 +47,7 @@ export function Header(): ReactNode {
                 </div>
                 <div 
                     className={styles.hamburgerIcon}
+                    style={{ display: isMobile ? 'flex' : 'none' }}
                     onClick={toggleMenu} 
                     role="button" 
                     tabIndex={0} 
