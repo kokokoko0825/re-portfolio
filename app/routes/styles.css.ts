@@ -64,13 +64,11 @@ export const works = style({
 
 export const blogId = style({
     display: "flex",
-    width: "100%",
-    maxWidth: "800px",
+    width: "800px",
     padding: "100px 10px 10px 10px",
     flexDirection: "column",
     alignItems: "center",
     gap: "30px",
-    boxSizing: "border-box",
     "@media": {
         "(max-width: 768px)": {
             width: "auto",
@@ -164,15 +162,13 @@ export const list = style({
 
 export const workList = style({
     display: "flex",
-    maxWidth: "750px",
+    width: "750px",
     alignItems: "flex-start",
     alignContent: "flex-start",
     gap: "40px",
     flexWrap: "wrap",
     "@media": {
         "(max-width: 768px)": {
-            width: "100%",
-            boxSizing: "border-box",
             padding: "10px",
             gap: "20px",
             flexDirection: "column",
@@ -202,53 +198,14 @@ export const thumbnail = style({
 
 export const textFrame = style({
     display: "flex",
-    width: "100%",
-    maxWidth: "600px",
+    width: "600px",
     alignItems: "flex-start",
     alignContent: "flex-start",
     gap: "10px",
     flexWrap: "wrap",
-    boxSizing: "border-box",
-    overflowWrap: "break-word",
-    wordBreak: "break-word",
-    selectors: {
-        "& .znc": {
-            width: "100%",
-            maxWidth: "100%",
-            boxSizing: "border-box",
-            overflowWrap: "break-word",
-            wordBreak: "break-word",
-        },
-        "& .znc *": {
-            maxWidth: "100%",
-            boxSizing: "border-box",
-        },
-        "& .znc img": {
-            width: "100%",
-            height: "auto",
-            maxWidth: "100%",
-            objectFit: "contain",
-        },
-        "& .znc pre": {
-            overflowX: "auto",
-            maxWidth: "100%",
-            boxSizing: "border-box",
-        },
-        "& .znc code": {
-            overflowWrap: "break-word",
-            wordBreak: "break-word",
-        },
-        "& .znc table": {
-            width: "100%",
-            maxWidth: "100%",
-            overflowX: "auto",
-            display: "block",
-        }
-    },
     "@media": {
         "(max-width: 768px)": {
-            width: "100%",
-            boxSizing: "border-box",
+            width: "390px",
             padding: "0px 30px",
         }
     }
