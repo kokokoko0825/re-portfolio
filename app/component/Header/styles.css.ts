@@ -10,6 +10,7 @@ export const header = style ({
     background: vars.color.background,
     boxSizing: "content-box",
     position: "fixed",
+    zIndex: 1001,
 })
 
 export const homeIcon = style({
@@ -56,7 +57,13 @@ export const mobileMenu = style({
     padding: "20px",
     transform: "translateX(100%)",
     transition: "transform 0.3s ease-in-out",
-    zIndex: 1000
+    zIndex: 1000,
+    // デスクトップでは完全に非表示にする
+    "@media": {
+        "screen and (min-width: 769px)": {
+            display: "none"
+        }
+    }
 })
 
 export const mobileMenuOpen = style({
@@ -101,9 +108,20 @@ export const mobileMenuOverlay = style({
     height: "100%",
     background: "rgba(0, 0, 0, 0.5)",
     zIndex: 999,
-    display: "none"
+    display: "none",
+    // デスクトップでは完全に非表示にする
+    "@media": {
+        "screen and (min-width: 769px)": {
+            display: "none !important"
+        }
+    }
 })
 
 export const mobileMenuOverlayOpen = style({
-    display: "block"
+    display: "block",
+    "@media": {
+        "screen and (min-width: 769px)": {
+            display: "none !important"
+        }
+    }
 })
