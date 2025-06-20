@@ -31,7 +31,7 @@ export const linkEmbedImage = style({
     height: "120px",
     overflow: "hidden",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             width: "80px",
             height: "80px",
         },

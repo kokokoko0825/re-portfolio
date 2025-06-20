@@ -8,7 +8,7 @@ export const worksItem = style({
     alignItems: "center",
     gap: "10px",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             display: "flex",
         }
     }

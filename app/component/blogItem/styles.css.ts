@@ -13,7 +13,7 @@ export const blogItem = style({
     borderBottom: `2px solid ${vars.color.borderColor}`,
     background: vars.color.background,
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             width: "100%",
             boxSizing: "border-box",
             padding: "20px 30px",
