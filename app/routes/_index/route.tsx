@@ -4,6 +4,7 @@ import { Header } from "~/component/Header/Header";
 import { Footer } from "~/component/Footer/Footer";
 import { useServerSafeDevice } from "~/contexts/DeviceContext";
 import { useIsClient } from "~/hooks/useMediaQuery";
+import { useEffect, useState } from "react";
 import * as styles from "./styles.css";
 
 export const meta: MetaFunction = () => {
@@ -16,38 +17,91 @@ export const meta: MetaFunction = () => {
 export default function Index() {
     const serverDevice = useServerSafeDevice();
     const isClient = useIsClient();
+    const [clientMobileCheck, setClientMobileCheck] = useState<boolean | null>(null);
     
-    // デバイス判定: サーバーサイドの情報を優先し、クライアントサイドではより詳細な判定
-    const isMobile = isClient ? 
-        (typeof window !== 'undefined' && window.innerWidth <= 768) || 
-        /iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent || '') :
-        serverDevice.isMobile;
-
-    // デバッグ情報
-    if (process.env.NODE_ENV === 'development') {
-        console.log('📱 Index page render:', {
-            isClient,
-            serverIsMobile: serverDevice.isMobile,
-            finalIsMobile: isMobile,
-            screenWidth: isClient ? window.innerWidth : 'N/A'
-        });
+    // クライアントサイドでのより詳細なモバイル判定
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const checkMobile = () => {
+                const userAgent = navigator.userAgent.toLowerCase();
+                const isMobileUA = /iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(userAgent);
+                const isSmallScreen = window.innerWidth <= 768;
+                const isTouchDevice = 'ontouchstart' in window;
+                
+                // より包括的な判定
+                const finalMobileCheck = isMobileUA || (isSmallScreen && isTouchDevice) || isSmallScreen;
+                
+                console.log('📱 Client mobile check:', {
+                    userAgent: userAgent.substring(0, 50),
+                    isMobileUA,
+                    isSmallScreen,
+                    screenWidth: window.innerWidth,
+                    isTouchDevice,
+                    finalMobileCheck
+                });
+                
+                setClientMobileCheck(finalMobileCheck);
+            };
+            
+            checkMobile();
+            
+            // リサイズ時にも再チェック
+            window.addEventListener('resize', checkMobile);
+            return () => window.removeEventListener('resize', checkMobile);
+        }
+    }, []);
+    
+    // 最終的なデバイス判定 - よりアグレッシブにモバイル判定
+    let finalIsMobile: boolean;
+    
+    if (isClient && clientMobileCheck !== null) {
+        // クライアントサイドではクライアント判定を優先
+        finalIsMobile = clientMobileCheck;
+    } else if (serverDevice.contextInitialized) {
+        // サーバーサイドの判定を使用
+        finalIsMobile = serverDevice.isMobile;
+    } else {
+        // フォールバック: 安全のためモバイルと判定
+        finalIsMobile = true;
     }
+    
+    // デバッグ情報を常に表示
+    console.log('📱 Index page final render:', {
+        isClient,
+        serverIsMobile: serverDevice.isMobile,
+        serverInitialized: serverDevice.contextInitialized,
+        clientMobileCheck,
+        finalIsMobile,
+        screenWidth: isClient ? window.innerWidth : 'N/A'
+    });
 
     return (
         <div className={styles.Home}>
             <Header />
             <div 
-                className={styles.item}
                 style={{
-                    paddingTop: isMobile ? "120px" : "124px",
-                    gap: isMobile ? "70px" : "50px"
+                    display: "flex",
+                    paddingTop: finalIsMobile ? "120px" : "124px",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: finalIsMobile ? "70px" : "50px"
                 }}
             >
                 <div 
-                    className={styles.icon}
                     style={{
-                        width: isMobile ? "100px" : "200px",
-                        height: isMobile ? "100px" : "200px"
+                        width: finalIsMobile ? "100px" : "200px",
+                        height: finalIsMobile ? "100px" : "200px",
+                        minWidth: finalIsMobile ? "100px" : "200px",
+                        minHeight: finalIsMobile ? "100px" : "200px",
+                        maxWidth: finalIsMobile ? "100px" : "200px",
+                        maxHeight: finalIsMobile ? "100px" : "200px",
+                        flexShrink: 0,
+                        aspectRatio: "1/1",
+                        borderRadius: "50%",
+                        background: "url(/public/images/icon.jpg) lightgray 50% / cover no-repeat",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat"
                     }}
                 ></div>
                 <div className={styles.myName}>
@@ -56,9 +110,11 @@ export default function Index() {
                     <h2>Software Engineer</h2>
                 </div>
                 <div 
-                    className={styles.accontFrame}
                     style={{
-                        gap: isMobile ? "10px" : "20px"
+                        display: "flex",
+                        padding: "10px",
+                        alignItems: "center",
+                        gap: finalIsMobile ? "10px" : "20px"
                     }}
                 >
                     <Link to="https://github.com/kokokoko0825">
@@ -74,29 +130,33 @@ export default function Index() {
                 </div>
             </div>
             
-            {/* デバッグ情報（開発時のみ） */}
-            {process.env.NODE_ENV === 'development' && (
-                <div style={{
-                    position: 'fixed',
-                    bottom: '10px',
-                    left: '10px',
-                    background: 'rgba(0,0,0,0.9)',
-                    color: 'white',
-                    padding: '10px',
-                    fontSize: '11px',
-                    borderRadius: '5px',
-                    zIndex: 9999,
-                    fontFamily: 'monospace'
-                }}>
-                    <div style={{fontWeight: 'bold', marginBottom: '5px'}}>📱 Page Debug</div>
-                    <div>• Server Mobile: {serverDevice.isMobile ? '✅' : '❌'}</div>
-                    <div>• Client: {isClient ? '✅' : '❌'}</div>
-                    <div>• Final Mobile: {isMobile ? '✅' : '❌'}</div>
-                    {isClient && (
+            {/* デバッグ情報を常に表示 */}
+            <div style={{
+                position: 'fixed',
+                bottom: '10px',
+                left: '10px',
+                background: 'rgba(0,0,0,0.9)',
+                color: 'white',
+                padding: '10px',
+                fontSize: '11px',
+                borderRadius: '5px',
+                zIndex: 9999,
+                fontFamily: 'monospace',
+                maxWidth: '300px'
+            }}>
+                <div style={{fontWeight: 'bold', marginBottom: '5px'}}>📱 Debug Info</div>
+                <div>• Server Mobile: {serverDevice.isMobile ? '✅' : '❌'}</div>
+                <div>• Server Init: {serverDevice.contextInitialized ? '✅' : '❌'}</div>
+                <div>• Client: {isClient ? '✅' : '❌'}</div>
+                <div>• Client Check: {clientMobileCheck === null ? '⏳' : (clientMobileCheck ? '✅' : '❌')}</div>
+                <div>• Final Mobile: {finalIsMobile ? '✅' : '❌'}</div>
+                {isClient && (
+                    <>
                         <div>• Screen: {window.innerWidth}px</div>
-                    )}
-                </div>
-            )}
+                        <div>• Touch: {'ontouchstart' in window ? '✅' : '❌'}</div>
+                    </>
+                )}
+            </div>
             
             <Footer />
         </div>
