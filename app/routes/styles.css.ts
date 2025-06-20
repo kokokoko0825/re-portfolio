@@ -64,11 +64,13 @@ export const works = style({
 
 export const blogId = style({
     display: "flex",
-    width: "800px",
+    width: "100%",
+    maxWidth: "800px",
     padding: "100px 10px 10px 10px",
     flexDirection: "column",
     alignItems: "center",
     gap: "30px",
+    boxSizing: "border-box",
     "@media": {
         "screen and (max-width: 768px)": {
             width: "auto",
@@ -199,7 +201,8 @@ export const thumbnail = style({
 
 export const textFrame = style({
     display: "flex",
-    width: "600px",
+    width: "100%",
+    maxWidth: "600px",
     alignItems: "flex-start",
     alignContent: "flex-start",
     gap: "10px",
