@@ -45,6 +45,8 @@ export function Header(): ReactNode {
                     <Link to="/blog">Blog</Link>
                     <Link to="/works">Works</Link>
                 </div>
+                
+                {/* モバイルハンバーガーボタン */}
                 <div 
                     className={styles.hamburgerIcon}
                     style={{ display: isMobile ? 'flex' : 'none' }}

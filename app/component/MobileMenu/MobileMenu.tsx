@@ -2,9 +2,17 @@ import { ReactNode } from "react";
 import * as styles from "../Header/styles.css";
 import { Link } from "@remix-run/react";
 import { useMenu } from "../../contexts/MenuContext";
+import { useIsMobile, useIsClient } from "../../hooks/useMediaQuery";
 
 export function MobileMenu(): ReactNode {
     const { isMenuOpen, closeMenu } = useMenu();
+    const isMobile = useIsMobile();
+    const isClient = useIsClient();
+
+    // ハイドレーション完了前、またはデスクトップの場合は何も表示しない
+    if (!isClient || !isMobile) {
+        return null;
+    }
 
     return (
         <>
