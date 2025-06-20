@@ -3,28 +3,26 @@ import * as styles from "./styles.css";
 import { Link } from "@remix-run/react";
 import { useMenu } from "../../contexts/MenuContext";
 import { MobileMenu } from "../MobileMenu/MobileMenu";
-import { cx } from "../../utils/vanillaExtractUtils";
 
 export function Header(): ReactNode {
     const { toggleMenu } = useMenu();
 
     return (
         <>
-            {/* cxユーティリティを使用してクラス名を結合 */}
-            <div className={cx(styles.header, 'header-container')}>
-                <div className={cx(styles.homeIcon, 'home-icon')}>
+            <div className={styles.header}>
+                <div className={styles.homeIcon}>
                     <Link to="/">
                         <h1>🐶🐱</h1>
                     </Link>
                 </div>
-                <div className={cx(styles.linkList, 'desktop-menu')} style={{textDecoration: "none"}}>
+                <div className={styles.linkList} style={{textDecoration: "none"}}>
                     <Link to="/">Home</Link>
                     <Link to="/about">About</Link>
                     <Link to="/blog">Blog</Link>
                     <Link to="/works">Works</Link>
                 </div>
                 <div 
-                    className={cx(styles.hamburgerIcon, 'hamburger-icon')}
+                    className={styles.hamburgerIcon}
                     onClick={toggleMenu} 
                     role="button" 
                     tabIndex={0} 

@@ -3,6 +3,7 @@ import { Link } from "@remix-run/react";
 import { Header } from "~/component/Header/Header";
 import { Footer } from "~/component/Footer/Footer";
 import * as styles from "./styles.css";
+import { cx } from "~/utils/vanillaExtractUtils";
 
 export const meta: MetaFunction = () => {
     return [

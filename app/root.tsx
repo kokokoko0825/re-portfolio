@@ -10,7 +10,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { MenuProvider } from "./contexts/MenuContext";
 
 // Vanilla Extract CSSのエントリーポイントをインポート
-import "app/styles/vanillaExtract.css";
+import "app/styles/globals.css";
 import { LinksFunction, MetaFunction } from "@remix-run/cloudflare";
 import { getCriticalCss } from "./utils/criticalCss";
 //import Page from "./routes/_index/route";
@@ -25,7 +25,7 @@ export function Layout({ children }: { children: React.ReactNode }): ReactNode {
       <head>
         <meta name="google-site-verification" content="brDkeRhoxktrjCiqqUefNlNyOKLGHk0Cik9q9MzLv2E" />
         <Meta />
-        {/* クリティカルCSSをインラインで埋め込む */}
+        {/* 最小限のクリティカルCSS */}
         <style dangerouslySetInnerHTML={{ __html: criticalCss }} />
         <Links />
         <title>kokokoko0825</title>
@@ -62,21 +62,6 @@ export const links: LinksFunction = () => {
     {
       href: "https://fonts.googleapis.com/css2?family=DotGothic16&family=Jersey+10&display=swap",
       rel: "stylesheet"
-    },
-    // クリティカルCSSのスタイルシートも含める（遅延読み込み）
-    {
-      rel: "stylesheet",
-      href: "/styles/critical.css",
-      // モバイルファーストのスタイルを適用するため、優先度を高く設定
-      precedence: "high"
-    },
-    // Vanilla Extract CSSで生成されたスタイルシートを読み込む
-    // Remixはビルド時に自動的にVanilla Extract CSSのスタイルシートを検出して読み込みます
-    // precedenceを設定することで、読み込み順序を制御できます
-    {
-      rel: "stylesheet",
-      href: "/styles/vanilla-extract.css",
-      precedence: "default" // クリティカルCSSより低い優先度
     }
   ];
 };

@@ -1,0 +1,37 @@
+/* 初期表示時のちらつきを防止するためのスタイル */
+
+/* デフォルトでモバイルビューを適用 */
+@media screen and (max-width: 768px) {
+  /* デスクトップメニューは非表示 */
+  .desktop-menu {
+    display: none !important;
+  }
+  
+  /* ハンバーガーメニューは表示 */
+  .hamburger-icon {
+    display: flex !important;
+  }
+  
+  /* ホームページのアイコンサイズ */
+  .home-icon {
+    width: 100px !important;
+    height: 100px !important;
+  }
+  
+  /* ホームページのアカウントフレーム */
+  .home-account-frame {
+    gap: 10px !important;
+  }
+}
+
+/* スタイル読み込み完了前の表示制御 - 一時的に無効化 */
+/*
+html:not(.styles-loaded) body {
+  opacity: 0;
+}
+
+html.styles-loaded body {
+  opacity: 1;
+  transition: opacity 0.1s ease-in;
+}
+*/
