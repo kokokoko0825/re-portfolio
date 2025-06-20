@@ -3,14 +3,19 @@ import * as styles from "../Header/styles.css";
 import { Link } from "@remix-run/react";
 import { useMenu } from "../../contexts/MenuContext";
 import { useIsMobile, useIsClient } from "../../hooks/useMediaQuery";
+import { useServerSafeDevice } from "../../contexts/DeviceContext";
 
 export function MobileMenu(): ReactNode {
     const { isMenuOpen, closeMenu } = useMenu();
-    const isMobile = useIsMobile();
+    const clientIsMobile = useIsMobile();
     const isClient = useIsClient();
+    const serverDevice = useServerSafeDevice();
 
-    // ハイドレーション完了前、またはデスクトップの場合は何も表示しない
-    if (!isClient || !isMobile) {
+    // サーバーサイドの情報を最初に使用し、ハイドレーション後はクライアントサイドの判定を使用
+    const isMobile = isClient ? clientIsMobile : serverDevice.isMobile;
+
+    // モバイルでない場合は何も表示しない
+    if (!isMobile) {
         return null;
     }
 

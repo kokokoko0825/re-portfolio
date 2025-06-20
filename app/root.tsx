@@ -4,10 +4,13 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
 import { ReactNode } from "react";
 import { AuthProvider } from "./contexts/AuthContext";
 import { MenuProvider } from "./contexts/MenuContext";
+import { DeviceProvider } from "./contexts/DeviceContext";
+import { getDeviceInfoFromRequest } from "./utils/deviceDetection";
 
 // Vanilla Extract CSSのエントリーポイントをインポート
 import "app/styles/globals.css";
@@ -15,6 +18,14 @@ import { LinksFunction, MetaFunction } from "@remix-run/cloudflare";
 import { getCriticalCss } from "./utils/criticalCss";
 //import Page from "./routes/_index/route";
 
+export async function loader({ request }: LoaderFunctionArgs) {
+  // サーバーサイドでデバイス情報を取得
+  const deviceInfo = getDeviceInfoFromRequest(request);
+  
+  return {
+    deviceInfo
+  };
+}
 
 export function Layout({ children }: { children: React.ReactNode }): ReactNode {
   // クリティカルCSSを取得
@@ -62,15 +73,18 @@ export function Layout({ children }: { children: React.ReactNode }): ReactNode {
 }
 
 export default function App(): ReactNode {
+  const { deviceInfo } = useLoaderData<typeof loader>();
+  
   return (
-    <AuthProvider>
-      <MenuProvider>
-        <Outlet />
-      </MenuProvider>
-    </AuthProvider>
+    <DeviceProvider serverDeviceInfo={deviceInfo}>
+      <AuthProvider>
+        <MenuProvider>
+          <Outlet />
+        </MenuProvider>
+      </AuthProvider>
+    </DeviceProvider>
   );
 }
-
 
 export const links: LinksFunction = () => {
   return [
