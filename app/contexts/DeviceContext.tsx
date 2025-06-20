@@ -50,11 +50,12 @@ export function DeviceProvider({ children, serverDeviceInfo }: DeviceProviderPro
             };
             
             // device-detection.jsからのカスタムイベントを受け取る
-            const handleDeviceDetection = (event: any) => {
-                if (event.detail) {
+            const handleDeviceDetection = (event: Event) => {
+                const customEvent = event as CustomEvent;
+                if (customEvent.detail) {
                     setDeviceInfo(prev => ({
                         ...prev,
-                        ...event.detail,
+                        ...customEvent.detail,
                         screenWidth: window.innerWidth,
                         screenHeight: window.innerHeight
                     }));
@@ -78,12 +79,9 @@ export function DeviceProvider({ children, serverDeviceInfo }: DeviceProviderPro
     );
 }
 
-<<<<<<< HEAD
-=======
 /**
  * デバイス情報を取得するフック
  */
->>>>>>> dev
 export function useDevice(): DeviceContextType {
     const context = useContext(DeviceContext);
     if (context === undefined) {
