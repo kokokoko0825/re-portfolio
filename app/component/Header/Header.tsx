@@ -11,12 +11,12 @@ export function Header(): ReactNode {
         <>
             <div className={styles.header}>
                 <div className={styles.homeIcon}>
-                    <Link to="/">
+                    <Link to="/home">
                         <h1>🐶🐱</h1>
                     </Link>
                 </div>
                 <div className={styles.linkList} style={{textDecoration: "none"}}>
-                    <Link to="/">Home</Link>
+                    <Link to="/home">Home</Link>
                     <Link to="/about">About</Link>
                     <Link to="/blog">Blog</Link>
                     <Link to="/works">Works</Link>
