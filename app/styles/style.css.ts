@@ -101,6 +101,7 @@ globalStyle("p", {
 })
 globalStyle("p", {
     "@media": {
+<<<<<<< HEAD
         "screen and (max-width: 768px)": {
             fontSize: "16px",
         }
@@ -118,6 +119,7 @@ globalStyle("small", {
 })
 globalStyle("small", {
     "@media": {
+<<<<<<< HEAD
         "screen and (max-width: 768px)": {
             fontSize: "12px",
         }
@@ -150,6 +152,7 @@ globalStyle("li", {
 })
 globalStyle("li", {
     "@media": {
+<<<<<<< HEAD
         "screen and (max-width: 768px)": {
             fontSize: "16px",
         }
@@ -229,6 +232,7 @@ globalStyle("code", {
 })
 globalStyle("code", {
     "@media": {
+<<<<<<< HEAD
         "screen and (max-width: 768px)": {
             fontSize: "15px",
         }
