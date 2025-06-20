@@ -16,6 +16,12 @@ export const item = style({
     flexDirection: "column",
     alignItems: "center",
     gap: "50px",
+    "@media": {
+        "screen and (max-width: 768px)": {
+            paddingTop: "120px",
+            gap: "70px",
+        }
+    }
 })
 
 export const icon = style({
@@ -25,6 +31,12 @@ export const icon = style({
     aspectRatio: "1/1",
     borderRadius: "50%",
     background: "url(/public/images/icon.jpg) lightgray 50% / cover no-repeat",
+    "@media": {
+        "screen and (max-width: 768px)": {
+            width: "100px",
+            height: "100px",
+        }
+    }
 })
 
 export const myName = style({
@@ -41,4 +53,9 @@ export const accontFrame = style({
     padding: "10px",
     alignItems: "center",
     gap: "20px",
+    "@media": {
+        "screen and (max-width: 768px)": {
+            gap: "10px",
+        }
+    }
 })
