@@ -44,7 +44,7 @@ globalStyle("h2", {
 })
 globalStyle("h2", {
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             fontSize: "20px",
         }
     }
@@ -64,7 +64,7 @@ globalStyle("Link", {
 })
 globalStyle("Link", {
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             fontSize: "20px",
         }
     }
@@ -84,7 +84,7 @@ globalStyle("a", {
 })
 globalStyle("a", {
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             fontSize: "20px",
         }
     }
@@ -101,7 +101,7 @@ globalStyle("p", {
 })
 globalStyle("p", {
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             fontSize: "18px", // 12px
         }
     }
@@ -118,7 +118,7 @@ globalStyle("small", {
 })
 globalStyle("small", {
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             fontSize: "12px", // 10px
         }
     }
@@ -133,7 +133,7 @@ globalStyle("svg", {
 })
 globalStyle("svg", {
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             width: "15px",
         }
     }
@@ -150,7 +150,7 @@ globalStyle("li", {
 })
 globalStyle("li", {
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             fontSize: "18px", // 12px
         }
     }
@@ -165,7 +165,7 @@ globalStyle("img", {
 })
 globalStyle("img", {
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             width: "200px",
             height: "133px",
         }
@@ -183,7 +183,7 @@ globalStyle("span", {
 })
 globalStyle("span", {
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             fontSize: "48px",
         }
     }
@@ -203,7 +203,7 @@ globalStyle("input", {
 })
 globalStyle("input", {
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             width: "250px",
         }
     }
@@ -229,7 +229,7 @@ globalStyle("code", {
 })
 globalStyle("code", {
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             fontSize: "15px", // 11px
         }
     }

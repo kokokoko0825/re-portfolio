@@ -9,7 +9,7 @@ export const frame = style({
     alignItems: "center",
     gap: "30px",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             gap: "10px",
         }
     }
@@ -22,7 +22,7 @@ export const about = style({
     alignItems: "flex-start",
     gap: "30px",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             paddingTop: "77px 10px 10px 10px",
             gap: "10px",
             alignSelf: "stretch",
@@ -37,7 +37,7 @@ export const blog = style({
     alignItems: "center",
     gap: "10px",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             paddingTop: "77px 10px 10px 10px",
             gap: "10px",
             alignItems: "center",
@@ -53,7 +53,7 @@ export const works = style({
     alignItems: "flex-start",
     gap: "10px",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             paddingTop: "77px 10px 10px 10px",
             gap: "20px",
             alignItems: "center",
@@ -72,7 +72,7 @@ export const blogId = style({
     gap: "30px",
     boxSizing: "border-box",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             width: "auto",
             padding: "75px 10px 0px 10px",
             gap: "20px",
@@ -88,7 +88,7 @@ export const login = style({
     alignItems: "center",
     gap: "50px",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             padding: "100px 10px",
         }
     }
@@ -109,7 +109,7 @@ export const adminManagement = style({
     alignItems: "flex-start",
     gap: "30px",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             alignItems: "center",
             gap: "20px",
             alignSelf: "stretch",
@@ -125,7 +125,7 @@ export const adminnewCreate = style({
     alignItems: "center",
     gap: "10px",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             width: "auto",
             padding: "100px 20px 0px 20px",
             alignSelf: "stretch",
@@ -140,7 +140,7 @@ export const section = style({
     alignItems: "flex-start",
     gap: "10px",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             padding: "10px 30px",
             gap: "20px",
             alignSelf: "stretch",
@@ -155,7 +155,7 @@ export const list = style({
     alignItems: "flex-start",
     gap: "10px",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             gap: "5px",
             alignSelf: "stretch",
         }
@@ -170,7 +170,7 @@ export const workList = style({
     gap: "40px",
     flexWrap: "wrap",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             width: "100%",
             boxSizing: "border-box",
             padding: "10px",
@@ -192,7 +192,7 @@ export const thumbnail = style({
     alignSelf: "stretch",
     borderBottom: `2px solid ${vars.color.borderColor}`,
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             padding: "20px 30px",
             gap: "20px",
             alignSelf: "stretch",
@@ -212,7 +212,7 @@ export const textFrame = style({
     overflowWrap: "break-word",
     wordBreak: "break-word",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             width: "100%",
             boxSizing: "border-box",
             padding: "0px 30px",
@@ -266,7 +266,7 @@ export const backFrame = style({
     gap: "10px",
     alignSelf: "stretch",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             padding: "30px 10px",
             alignItems: "center",
         }
@@ -282,7 +282,7 @@ export const loginCard = style({
     borderRadius: "10px",
     border: `2px solid ${vars.color.borderColor}`,
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             gap: "30px",
         }
     }
@@ -296,7 +296,7 @@ export const adminSelect = style({
     gap: "150px",
     alignSelf: "stretch",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             gap: "80px",
         }
     }
@@ -330,7 +330,7 @@ export const adminWorksList = style({
     flexWrap: "wrap",
     gap: "40px",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             width: "auto",
             flexDirection: "column",
             alignItems: "center",
@@ -368,7 +368,7 @@ export const adminThumbnailInput = style({
     background: "none", 
     color: "#DEDBFF",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             fontSize: "48px",
         }
     }
@@ -382,7 +382,7 @@ export const adminTitleInput = style({
     border: "none", 
     color: "#DEDBFF",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             fontSize: "24px",
         }
     }
@@ -396,7 +396,7 @@ export const adminDescriptionInput = style({
     border: "none", 
     color: "#DEDBFF",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             fontSize: "12px",
         }
     }
@@ -411,7 +411,7 @@ export const adminTextareaInput = style({
     color: "#2C2E47", 
     borderRadius: "10px",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             fontSize: "12px",
             height: "500px",
         }

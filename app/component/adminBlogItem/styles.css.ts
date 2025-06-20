@@ -7,7 +7,7 @@ export const adminBlogItem = style({
     alignItems: "center",
     gap: "50px",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             display: "flex",
             width: "100%",
             padding: "10px 0px",
@@ -26,7 +26,7 @@ export const adminItemIcon = style({
     alignItems: "flex-start",
     gap: "50px",
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             padding: "0px",
             justifyContent: "center",
             alignItems: "center",
