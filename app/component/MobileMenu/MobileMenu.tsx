@@ -1,22 +1,14 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
 import * as styles from "../Header/styles.css";
 import { Link } from "@remix-run/react";
 import { useMenu } from "../../contexts/MenuContext";
 
 export function MobileMenu(): ReactNode {
     const { isMenuOpen, closeMenu } = useMenu();
-    const [isClient, setIsClient] = useState(false);
-
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
-
-    // SSR時は常に閉じた状態でレンダリング
-    const actualMenuOpen = isClient ? isMenuOpen : false;
 
     return (
         <>
-            {actualMenuOpen && (
+            {isMenuOpen && (
                 <div 
                     className={styles.mobileMenuOverlay} 
                     onClick={closeMenu}
@@ -28,7 +20,7 @@ export function MobileMenu(): ReactNode {
                     aria-label="Close menu overlay"
                 />
             )}
-            <div className={`${styles.mobileMenu} ${actualMenuOpen ? styles.mobileMenuOpen : ""}`}>
+            <div className={`${styles.mobileMenu} ${isMenuOpen ? styles.mobileMenuOpen : ""}`}>
                 <button 
                     className={styles.closeButton} 
                     onClick={closeMenu}
