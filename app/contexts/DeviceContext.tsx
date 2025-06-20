@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactNode, useEffect } from "react";
+import { createContext, useContext, ReactNode, useState, useEffect } from "react";
 import { DeviceInfo } from "../utils/deviceDetection";
 
 interface DeviceContextType extends DeviceInfo {
@@ -17,28 +17,73 @@ interface DeviceProviderProps {
 }
 
 export function DeviceProvider({ children, serverDeviceInfo }: DeviceProviderProps) {
-    const contextValue: DeviceContextType = {
+    // サーバーサイドから取得したデバイス情報を初期値として使用
+    const [deviceInfo, setDeviceInfo] = useState<DeviceContextType>({
         ...serverDeviceInfo,
         contextInitialized: true
-    };
+    });
 
-    // デバッグ情報をログ出力
+    // クライアントサイドでのデバイス情報を更新
     useEffect(() => {
-        if (process.env.NODE_ENV === 'development') {
-            console.log('🔧 DeviceProvider initialized:', {
-                serverDeviceInfo,
-                contextValue
-            });
+        if (typeof window !== 'undefined') {
+            const isMobile = window.innerWidth <= 768 || 
+                /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            setDeviceInfo(prev => ({
+                ...prev,
+                isMobile,
+                deviceType: isMobile ? 'mobile' : 'desktop',
+                screenWidth: window.innerWidth,
+                screenHeight: window.innerHeight
+            }));
+
+            // リサイズイベントのリスナーを追加
+            const handleResize = () => {
+                const newIsMobile = window.innerWidth <= 768;
+                setDeviceInfo(prev => ({
+                    ...prev,
+                    isMobile: newIsMobile,
+                    deviceType: newIsMobile ? 'mobile' : 'desktop',
+                    screenWidth: window.innerWidth,
+                    screenHeight: window.innerHeight
+                }));
+            };
+            
+            // device-detection.jsからのカスタムイベントを受け取る
+            const handleDeviceDetection = (event: any) => {
+                if (event.detail) {
+                    setDeviceInfo(prev => ({
+                        ...prev,
+                        ...event.detail,
+                        screenWidth: window.innerWidth,
+                        screenHeight: window.innerHeight
+                    }));
+                }
+            };
+
+            window.addEventListener('resize', handleResize);
+            window.addEventListener('deviceDetection', handleDeviceDetection);
+            
+            return () => {
+                window.removeEventListener('resize', handleResize);
+                window.removeEventListener('deviceDetection', handleDeviceDetection);
+            };
         }
-    }, [serverDeviceInfo, contextValue]);
+    }, []);
 
     return (
-        <DeviceContext.Provider value={contextValue}>
+        <DeviceContext.Provider value={deviceInfo}>
             {children}
         </DeviceContext.Provider>
     );
 }
 
+<<<<<<< HEAD
+=======
+/**
+ * デバイス情報を取得するフック
+ */
+>>>>>>> dev
 export function useDevice(): DeviceContextType {
     const context = useContext(DeviceContext);
     if (context === undefined) {
@@ -58,22 +103,9 @@ export function useServerSafeDevice(): DeviceContextType {
     // フォールバック値（SSR時やコンテキストが無い場合）
     const fallback: DeviceContextType = {
         isMobile: false,
-        isTablet: false,
-        isDesktop: true,
         deviceType: 'desktop',
-        os: 'unknown',
-        contextInitialized: false,
-        detectionReason: 'Fallback - DeviceContext not available'
+        userAgent: null,
+        contextInitialized: false
     };
-    
-    // デバッグ情報
-    if (process.env.NODE_ENV === 'development') {
-        console.log('🔍 useServerSafeDevice called:', {
-            hasContext: !!context,
-            contextValue: context,
-            willUseFallback: !context
-        });
-    }
-    
     return context || fallback;
 } 

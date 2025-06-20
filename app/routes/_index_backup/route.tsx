@@ -6,6 +6,7 @@ import { useServerSafeDevice } from "~/contexts/DeviceContext";
 import { useIsClient } from "~/hooks/useMediaQuery";
 import { useEffect, useState } from "react";
 import * as styles from "./styles.css";
+import { cx } from "~/utils/vanillaExtractUtils";
 
 export const meta: MetaFunction = () => {
     return [

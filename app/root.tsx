@@ -12,38 +12,51 @@ import { MenuProvider } from "./contexts/MenuContext";
 import { DeviceProvider } from "./contexts/DeviceContext";
 import { getDeviceInfoFromRequest } from "./utils/deviceDetection";
 
+// Vanilla Extract CSSのエントリーポイントをインポート
 import "app/styles/globals.css";
 import { LinksFunction, MetaFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
+import { getCriticalCss } from "./utils/criticalCss";
 //import Page from "./routes/_index/route";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  // サーバーサイドでデバイス情報を取得
-  console.log('🚀 Root loader started for URL:', request.url);
-  
   const deviceInfo = getDeviceInfoFromRequest(request);
   
-  console.log('📋 Root loader device info:', {
-    isMobile: deviceInfo.isMobile,
-    deviceType: deviceInfo.deviceType,
-    userAgent: deviceInfo.userAgent?.substring(0, 50) + '...'
-  });
-  
   return {
-    deviceInfo,
-    // デバッグ用の追加情報
-    requestInfo: {
-      url: request.url,
-      timestamp: new Date().toISOString()
-    }
+    deviceInfo
   };
 }
 
 export function Layout({ children }: { children: React.ReactNode }): ReactNode {
+  // クリティカルCSSを取得
+  const criticalCss = getCriticalCss();
+  
+  // デバイス検出スクリプト（インライン版）
+  const deviceDetectionScript = `
+    // デバイス検出と即時スタイル適用のためのスクリプト
+    (function() {
+      function isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+              window.innerWidth <= 768;
+      }
+      
+      if (isMobileDevice()) {
+        document.documentElement.classList.add('mobile-device');
+        document.documentElement.classList.add('mobile-view');
+      } else {
+        document.documentElement.classList.add('desktop-device');
+      }
+    })();
+  `;
+  
   return (
     <html lang="ja">
       <head>
         <meta name="google-site-verification" content="brDkeRhoxktrjCiqqUefNlNyOKLGHk0Cik9q9MzLv2E" />
         <Meta />
+        {/* デバイス検出スクリプトを早期に実行 */}
+        <script dangerouslySetInnerHTML={{ __html: deviceDetectionScript }} />
+        {/* 最小限のクリティカルCSS */}
+        <style dangerouslySetInnerHTML={{ __html: criticalCss }} />
         <Links />
         <title>kokokoko0825</title>
       </head>
@@ -51,6 +64,8 @@ export function Layout({ children }: { children: React.ReactNode }): ReactNode {
         {children}
         <ScrollRestoration />
         <Scripts />
+        {/* 完全版のデバイス検出スクリプトを読み込み */}
+        <script src="/scripts/device-detection.js"></script>
       </body>
     </html>
   );
@@ -58,9 +73,6 @@ export function Layout({ children }: { children: React.ReactNode }): ReactNode {
 
 export default function App(): ReactNode {
   const data = useLoaderData<typeof loader>();
-  
-  // クライアントサイドでもデータを確認
-  console.log('📱 Client received device info:', data?.deviceInfo);
   
   return (
     <DeviceProvider serverDeviceInfo={data.deviceInfo}>
@@ -75,6 +87,12 @@ export default function App(): ReactNode {
 
 export const links: LinksFunction = () => {
   return [
+    // デバイス検出スクリプトを早期に読み込む
+    {
+      rel: "preload",
+      href: "/scripts/device-detection.js",
+      as: "script"
+    },
     { rel: "icon", href: "/images/account_icon_v2.jpg", type: "image/jpg" },
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
     {
@@ -85,14 +103,15 @@ export const links: LinksFunction = () => {
     {
       href: "https://fonts.googleapis.com/css2?family=DotGothic16&family=Jersey+10&display=swap",
       rel: "stylesheet"
-    },
+    }
   ];
 };
 
 export const meta: MetaFunction = () => {
   return [
     { charSet: "utf-8" },
-    { name: "viewport", content: "width=device-width, initial-scale=1" },
+    // ビューポートの設定を強化
+    { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" },
     { title: "kokokoko0825" },
     { rel: "icon", href: "/images/icon.jpg" },
     { name: "description", content: "Koshi Tanakaのポートフォリオ" },

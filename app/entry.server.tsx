@@ -8,6 +8,7 @@ import type { AppLoadContext, EntryContext } from "@remix-run/cloudflare";
 import { RemixServer } from "@remix-run/react";
 import { isbot } from "isbot";
 import { renderToReadableStream } from "react-dom/server";
+import { getCriticalCss } from "./utils/criticalCss";
 
 const ABORT_DELAY = 5000;
 
@@ -24,6 +25,8 @@ export default async function handleRequest(
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), ABORT_DELAY);
 
+  // サーバーサイドレンダリング時にVanilla Extract CSSのスタイルを確実に含める
+  // Remixはビルド時に自動的にVanilla Extract CSSのスタイルを処理します
   const body = await renderToReadableStream(
     <RemixServer
       context={remixContext}

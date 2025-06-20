@@ -25,7 +25,7 @@ globalStyle("h1", {
 });
 globalStyle("h1", {
     "@media": {
-        "(max-width: 768px)": {
+        "screen and (max-width: 768px)": {
             fontSize: "24px",
         }
     }
@@ -102,7 +102,11 @@ globalStyle("p", {
 globalStyle("p", {
     "@media": {
         "screen and (max-width: 768px)": {
+<<<<<<< HEAD
             fontSize: "18px", // 12px
+=======
+            fontSize: "16px",
+>>>>>>> dev
         }
     }
 });
@@ -119,7 +123,11 @@ globalStyle("small", {
 globalStyle("small", {
     "@media": {
         "screen and (max-width: 768px)": {
+<<<<<<< HEAD
             fontSize: "12px", // 10px
+=======
+            fontSize: "12px",
+>>>>>>> dev
         }
     }
 });
@@ -151,7 +159,11 @@ globalStyle("li", {
 globalStyle("li", {
     "@media": {
         "screen and (max-width: 768px)": {
+<<<<<<< HEAD
             fontSize: "18px", // 12px
+=======
+            fontSize: "16px",
+>>>>>>> dev
         }
     }
 });
@@ -191,8 +203,13 @@ globalStyle("span", {
 
 // loginのinput
 globalStyle("input", {
+<<<<<<< HEAD
     maxWidth: "330px",
     height: "30px",
+=======
+    width: "330px",
+    height: "auto",
+>>>>>>> dev
     borderRadius: "10px",
     fontFamily: "Inter",
     fontSize: "16px",
@@ -230,7 +247,11 @@ globalStyle("code", {
 globalStyle("code", {
     "@media": {
         "screen and (max-width: 768px)": {
+<<<<<<< HEAD
             fontSize: "15px", // 11px
+=======
+            fontSize: "15px",
+>>>>>>> dev
         }
     }
 });

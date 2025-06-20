@@ -171,8 +171,11 @@ export const workList = style({
     flexWrap: "wrap",
     "@media": {
         "screen and (max-width: 768px)": {
+<<<<<<< HEAD
             width: "100%",
             boxSizing: "border-box",
+=======
+>>>>>>> dev
             padding: "10px",
             gap: "20px",
             flexDirection: "column",
@@ -211,10 +214,17 @@ export const textFrame = style({
     boxSizing: "border-box",
     overflowWrap: "break-word",
     wordBreak: "break-word",
+<<<<<<< HEAD
     "@media": {
         "screen and (max-width: 768px)": {
             width: "100%",
             boxSizing: "border-box",
+=======
+    
+    "@media": {
+        "screen and (max-width: 768px)": {
+            width: "390px",
+>>>>>>> dev
             padding: "0px 30px",
         }
     }
