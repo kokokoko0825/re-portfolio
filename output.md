@@ -762,3 +762,194 @@ export const links: LinksFunction = () => {
    - `app/routes/admin._index.tsx`: 管理画面
 
 このディレクトリ構造は、Remix Runの規約に従いつつ、機能ごとにコードを整理し、再利用可能なコンポーネントを適切に分離しています。
+
+## スマートフォン表示問題の修正内容
+
+スマートフォンでポートフォリオを開いた際にモバイル用UIが正しく適用されない問題を解決するため、以下の修正を実施しました。
+
+### 1. DeviceContextの改善
+
+DeviceContextを改善して、サーバーサイドとクライアントサイドでのデバイス検出を統合しました。
+
+```tsx
+// app/contexts/DeviceContext.tsx
+export function DeviceProvider({ children, serverDeviceInfo }: DeviceProviderProps) {
+    // サーバーサイドから取得したデバイス情報を初期値として使用
+    const [deviceInfo, setDeviceInfo] = useState<DeviceContextType>({
+        ...serverDeviceInfo,
+        contextInitialized: true
+    });
+
+    // クライアントサイドでのデバイス情報を更新
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const isMobile = window.innerWidth <= 768 || 
+                /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            setDeviceInfo(prev => ({
+                ...prev,
+                isMobile,
+                deviceType: isMobile ? 'mobile' : 'desktop',
+                screenWidth: window.innerWidth,
+                screenHeight: window.innerHeight
+            }));
+
+            // device-detection.jsからのカスタムイベントを受け取る
+            const handleDeviceDetection = (event: any) => {
+                if (event.detail) {
+                    setDeviceInfo(prev => ({
+                        ...prev,
+                        ...event.detail,
+                        screenWidth: window.innerWidth,
+                        screenHeight: window.innerHeight
+                    }));
+                }
+            };
+
+            window.addEventListener('resize', handleResize);
+            window.addEventListener('deviceDetection', handleDeviceDetection);
+            
+            return () => {
+                window.removeEventListener('resize', handleResize);
+                window.removeEventListener('deviceDetection', handleDeviceDetection);
+            };
+        }
+    }, []);
+    
+    // ...
+}
+```
+
+### 2. インラインスタイルの削除
+
+インラインスタイルを削除し、CSSクラスとメディアクエリに一本化することで、スタイルの競合を解消しました。
+
+```tsx
+// app/component/Header/Header.tsx
+export function Header(): ReactNode {
+    const { toggleMenu } = useMenu();
+    const { isMobile } = useDevice();
+    
+    // モバイル用のクラス名
+    const mobileClass = isMobile ? styles.mobileView : '';
+    
+    return (
+        <>
+            <div className={`${styles.header} ${mobileClass}`}>
+                <div className={styles.homeIcon}>
+                    <Link to="/home">
+                        <h1>🐶🐱</h1>
+                    </Link>
+                </div>
+                <div className={styles.linkList}>
+                    <Link to="/home">Home</Link>
+                    <Link to="/about">About</Link>
+                    <Link to="/blog">Blog</Link>
+                    <Link to="/works">Works</Link>
+                </div>
+                
+                {/* モバイルハンバーガーボタン */}
+                <div 
+                    className={styles.hamburgerIcon}
+                    onClick={toggleMenu} 
+                    role="button" 
+                    tabIndex={0} 
+                    aria-label="Open menu" 
+                >
+                    <img src="/images/humberger.svg" alt="Menu" />
+                </div>
+            </div>
+            <MobileMenu />
+        </>
+    );
+}
+```
+
+### 3. デバイス検出の一元化
+
+複数の場所で行われていたデバイス検出をDeviceContextに一元化し、一貫したデバイス検出ロジックを実装しました。
+
+```tsx
+// app/routes/home.tsx
+export default function Home() {
+    // DeviceContextからモバイルかどうかの情報を取得
+    const { isMobile } = useDevice();
+    
+    // モバイル表示用のクラス名
+    const mobileClass = isMobile ? styles.mobileView : '';
+    
+    return (
+        <div className={`${styles.Home} ${mobileClass}`}>
+            <Header />
+            <div className={styles.item}>
+                <div className={styles.icon}></div>
+                <div className={styles.myName}>
+                    <h1>Koshi Tanaka</h1>
+                    <small>@kokokoko0825</small>
+                    <h2>Software Engineer</h2>
+                </div>
+                {/* ... */}
+            </div>
+            <Footer />
+        </div>
+    );
+}
+```
+
+### 4. 早期デバイス検出
+
+device-detection.jsを最適化し、早期にデバイス検出を実行するとともに、カスタムイベントを使用してReactコンポーネントと連携するようにしました。
+
+```javascript
+// public/scripts/device-detection.js
+(function() {
+  function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+           window.innerWidth <= 768;
+  }
+
+  function applyDeviceClass() {
+    if (isMobileDevice()) {
+      document.documentElement.classList.add('mobile-device');
+      document.documentElement.classList.add('mobile-view');
+      
+      // DeviceContextと同期するためのカスタムイベントを発行
+      if (typeof window.CustomEvent === 'function') {
+        const event = new CustomEvent('deviceDetection', { 
+          detail: { isMobile: true, deviceType: 'mobile' } 
+        });
+        window.dispatchEvent(event);
+      }
+    } else {
+      document.documentElement.classList.add('desktop-device');
+      // ...
+    }
+  }
+  
+  // 即時実行
+  applyDeviceClass();
+  
+  // リサイズイベントでも再適用
+  window.addEventListener('resize', function() {
+    // ...
+  });
+})();
+```
+
+### 5. ビューポート設定の最適化
+
+メタビューポート設定を最適化し、モバイルデバイスでの表示を改善しました。
+
+```tsx
+// app/root.tsx
+export const meta: MetaFunction = () => {
+  return [
+    // ...
+    // ビューポートの設定を強化
+    { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" },
+    // ...
+  ];
+};
+```
+
+これらの修正により、スマートフォンでポートフォリオを開いた際に、確実にモバイル用のUIが適用されるようになりました。また、コードの複雑さも大幅に軽減され、メンテナンス性が向上しています。

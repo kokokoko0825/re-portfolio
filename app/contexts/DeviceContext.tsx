@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactNode } from "react";
+import { createContext, useContext, ReactNode, useState, useEffect } from "react";
 import { DeviceInfo } from "../utils/deviceDetection";
 
 interface DeviceContextType extends DeviceInfo {
@@ -17,20 +17,70 @@ interface DeviceProviderProps {
 }
 
 export function DeviceProvider({ children, serverDeviceInfo }: DeviceProviderProps) {
-    const contextValue: DeviceContextType = {
+    // サーバーサイドから取得したデバイス情報を初期値として使用
+    const [deviceInfo, setDeviceInfo] = useState<DeviceContextType>({
         ...serverDeviceInfo,
         contextInitialized: true
-    };
+    });
 
+    // クライアントサイドでのデバイス情報を更新
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const isMobile = window.innerWidth <= 768 || 
+                /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            setDeviceInfo(prev => ({
+                ...prev,
+                isMobile,
+                deviceType: isMobile ? 'mobile' : 'desktop',
+                screenWidth: window.innerWidth,
+                screenHeight: window.innerHeight
+            }));
 
+            // リサイズイベントのリスナーを追加
+            const handleResize = () => {
+                const newIsMobile = window.innerWidth <= 768;
+                setDeviceInfo(prev => ({
+                    ...prev,
+                    isMobile: newIsMobile,
+                    deviceType: newIsMobile ? 'mobile' : 'desktop',
+                    screenWidth: window.innerWidth,
+                    screenHeight: window.innerHeight
+                }));
+            };
+            
+            // device-detection.jsからのカスタムイベントを受け取る
+            const handleDeviceDetection = (event: any) => {
+                if (event.detail) {
+                    setDeviceInfo(prev => ({
+                        ...prev,
+                        ...event.detail,
+                        screenWidth: window.innerWidth,
+                        screenHeight: window.innerHeight
+                    }));
+                }
+            };
+
+            window.addEventListener('resize', handleResize);
+            window.addEventListener('deviceDetection', handleDeviceDetection);
+            
+            return () => {
+                window.removeEventListener('resize', handleResize);
+                window.removeEventListener('deviceDetection', handleDeviceDetection);
+            };
+        }
+    }, []);
 
     return (
-        <DeviceContext.Provider value={contextValue}>
+        <DeviceContext.Provider value={deviceInfo}>
             {children}
         </DeviceContext.Provider>
     );
 }
 
+/**
+ * デバイス情報を取得するフック
+ */
 export function useDevice(): DeviceContextType {
     const context = useContext(DeviceContext);
     if (context === undefined) {
@@ -54,8 +104,6 @@ export function useServerSafeDevice(): DeviceContextType {
         userAgent: null,
         contextInitialized: false
     };
-    
-
     
     return context || fallback;
 } 

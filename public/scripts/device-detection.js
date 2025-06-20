@@ -13,8 +13,24 @@
       document.documentElement.classList.add('mobile-view');
       // モバイル用のメタビューポートを確実に設定
       ensureViewportMeta();
+      
+      // DeviceContextと同期するためのカスタムイベントを発行
+      if (typeof window.CustomEvent === 'function') {
+        const event = new CustomEvent('deviceDetection', { 
+          detail: { isMobile: true, deviceType: 'mobile' } 
+        });
+        window.dispatchEvent(event);
+      }
     } else {
       document.documentElement.classList.add('desktop-device');
+      
+      // DeviceContextと同期するためのカスタムイベントを発行
+      if (typeof window.CustomEvent === 'function') {
+        const event = new CustomEvent('deviceDetection', { 
+          detail: { isMobile: false, deviceType: 'desktop' } 
+        });
+        window.dispatchEvent(event);
+      }
     }
   }
 
@@ -42,10 +58,26 @@
       document.documentElement.classList.add('mobile-device');
       document.documentElement.classList.add('mobile-view');
       document.documentElement.classList.remove('desktop-device');
+      
+      // DeviceContextと同期するためのカスタムイベントを発行
+      if (typeof window.CustomEvent === 'function') {
+        const event = new CustomEvent('deviceDetection', { 
+          detail: { isMobile: true, deviceType: 'mobile' } 
+        });
+        window.dispatchEvent(event);
+      }
     } else if (!isMobile && wasMobile) {
       document.documentElement.classList.remove('mobile-device');
       document.documentElement.classList.remove('mobile-view');
       document.documentElement.classList.add('desktop-device');
+      
+      // DeviceContextと同期するためのカスタムイベントを発行
+      if (typeof window.CustomEvent === 'function') {
+        const event = new CustomEvent('deviceDetection', { 
+          detail: { isMobile: false, deviceType: 'desktop' } 
+        });
+        window.dispatchEvent(event);
+      }
     }
   });
 })();

@@ -13,6 +13,10 @@ export const header = style ({
     zIndex: 1001,
 })
 
+export const mobileView = style({
+    // モバイル表示時のスタイル
+})
+
 export const homeIcon = style({
     display: "flex",
     padding: "10px 0px 10px 30px",
