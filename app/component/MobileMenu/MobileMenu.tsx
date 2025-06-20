@@ -37,17 +37,7 @@ export function MobileMenu(): ReactNode {
         }
     }
 
-    // デバッグ情報
-    if (process.env.NODE_ENV === 'development') {
-        console.log('🍔 MobileMenu render:', {
-            isClient,
-            isMenuOpen,
-            finalIsMobile,
-            serverIsMobile: serverDevice.isMobile,
-            willShow: finalIsMobile,
-            contextInitialized: serverDevice.contextInitialized
-        });
-    }
+
 
     // モバイルでない場合は何も表示しない
     if (!finalIsMobile) {
@@ -112,11 +102,64 @@ export function MobileMenu(): ReactNode {
                 >
                     ✕
                 </button>
-                <div className={styles.mobileMenuLinks}>
-                    <Link to="/home" onClick={closeMenu}>Home</Link>
-                    <Link to="/about" onClick={closeMenu}>About</Link>
-                    <Link to="/blog" onClick={closeMenu}>Blog</Link>
-                    <Link to="/works" onClick={closeMenu}>Works</Link>
+                <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "20px",
+                    paddingTop: "20px"
+                }}>
+                    <Link 
+                        to="/home" 
+                        onClick={closeMenu}
+                        style={{
+                            color: "#DEDBFF",
+                            textDecoration: "none",
+                            fontSize: "18px",
+                            padding: "10px 0",
+                            borderBottom: "1px solid #2C2E47"
+                        }}
+                    >
+                        Home
+                    </Link>
+                    <Link 
+                        to="/about" 
+                        onClick={closeMenu}
+                        style={{
+                            color: "#DEDBFF",
+                            textDecoration: "none",
+                            fontSize: "18px",
+                            padding: "10px 0",
+                            borderBottom: "1px solid #2C2E47"
+                        }}
+                    >
+                        About
+                    </Link>
+                    <Link 
+                        to="/blog" 
+                        onClick={closeMenu}
+                        style={{
+                            color: "#DEDBFF",
+                            textDecoration: "none",
+                            fontSize: "18px",
+                            padding: "10px 0",
+                            borderBottom: "1px solid #2C2E47"
+                        }}
+                    >
+                        Blog
+                    </Link>
+                    <Link 
+                        to="/works" 
+                        onClick={closeMenu}
+                        style={{
+                            color: "#DEDBFF",
+                            textDecoration: "none",
+                            fontSize: "18px",
+                            padding: "10px 0",
+                            borderBottom: "1px solid #2C2E47"
+                        }}
+                    >
+                        Works
+                    </Link>
                 </div>
             </div>
         </>

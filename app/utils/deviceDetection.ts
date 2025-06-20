@@ -1,4 +1,14 @@
 /**
+ * デバイス情報の型定義
+ */
+export interface DeviceInfo {
+  isMobile: boolean;
+  deviceType: 'mobile' | 'tablet' | 'desktop';
+  userAgent: string | null;
+  viewportWidth?: number;
+}
+
+/**
  * ユーザーエージェント文字列からモバイルデバイスかどうかを判定する
  * @param userAgent ユーザーエージェント文字列
  * @returns モバイルデバイスの場合はtrue、それ以外はfalse
@@ -8,6 +18,36 @@ export function isMobileDevice(userAgent: string | null): boolean {
   
   // 一般的なモバイルデバイスのパターン
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+}
+
+/**
+ * リクエストからデバイス情報を取得する
+ * @param request Remix Request オブジェクト
+ * @returns デバイス情報
+ */
+export function getDeviceInfoFromRequest(request: Request): DeviceInfo {
+  const userAgent = request.headers.get('User-Agent');
+  const isMobile = isMobileDevice(userAgent);
+  
+  let deviceType: 'mobile' | 'tablet' | 'desktop';
+  
+  if (userAgent) {
+    if (/iPad/i.test(userAgent)) {
+      deviceType = 'tablet';
+    } else if (isMobile) {
+      deviceType = 'mobile';
+    } else {
+      deviceType = 'desktop';
+    }
+  } else {
+    deviceType = 'desktop';
+  }
+  
+  return {
+    isMobile,
+    deviceType,
+    userAgent
+  };
 }
 
 /**

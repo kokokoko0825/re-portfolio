@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactNode, useEffect } from "react";
+import { createContext, useContext, ReactNode } from "react";
 import { DeviceInfo } from "../utils/deviceDetection";
 
 interface DeviceContextType extends DeviceInfo {
@@ -22,15 +22,7 @@ export function DeviceProvider({ children, serverDeviceInfo }: DeviceProviderPro
         contextInitialized: true
     };
 
-    // デバッグ情報をログ出力
-    useEffect(() => {
-        if (process.env.NODE_ENV === 'development') {
-            console.log('🔧 DeviceProvider initialized:', {
-                serverDeviceInfo,
-                contextValue
-            });
-        }
-    }, [serverDeviceInfo, contextValue]);
+
 
     return (
         <DeviceContext.Provider value={contextValue}>
@@ -58,22 +50,12 @@ export function useServerSafeDevice(): DeviceContextType {
     // フォールバック値（SSR時やコンテキストが無い場合）
     const fallback: DeviceContextType = {
         isMobile: false,
-        isTablet: false,
-        isDesktop: true,
         deviceType: 'desktop',
-        os: 'unknown',
-        contextInitialized: false,
-        detectionReason: 'Fallback - DeviceContext not available'
+        userAgent: null,
+        contextInitialized: false
     };
     
-    // デバッグ情報
-    if (process.env.NODE_ENV === 'development') {
-        console.log('🔍 useServerSafeDevice called:', {
-            hasContext: !!context,
-            contextValue: context,
-            willUseFallback: !context
-        });
-    }
+
     
     return context || fallback;
 } 

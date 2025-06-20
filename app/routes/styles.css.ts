@@ -170,7 +170,6 @@ export const workList = style({
     gap: "40px",
     flexWrap: "wrap",
     "@media": {
-<<<<<<< HEAD
         "screen and (max-width: 768px)": {
             padding: "10px",
             gap: "20px",
@@ -207,7 +206,6 @@ export const textFrame = style({
     alignContent: "flex-start",
     gap: "10px",
     flexWrap: "wrap",
-<<<<<<< HEAD
     boxSizing: "border-box",
     overflowWrap: "break-word",
     wordBreak: "break-word",

@@ -673,3 +673,92 @@ export const links: LinksFunction = () => {
 4. **パフォーマンスの最適化**: 早期スクリプト実行によるフラッシュの防止
 
 これらの対策により、スマートフォンでのポートフォリオ表示問題は確実に解決されるはずです。
+
+## プロジェクトディレクトリ構造の概要
+
+このプロジェクトは、Remix RunとFirebaseを使用した個人ポートフォリオ兼ブログサイトで、以下のようなディレクトリ構造になっています：
+
+```
+/
+├── app/                      # メインアプリケーションコード
+│   ├── component/            # 再利用可能なUIコンポーネント
+│   │   ├── Header/           # ヘッダーコンポーネント
+│   │   ├── Footer/           # フッターコンポーネント
+│   │   ├── MobileMenu/       # モバイルメニューコンポーネント
+│   │   ├── blogItem/         # ブログ記事一覧アイテム
+│   │   ├── worksItem/        # 作品一覧アイテム
+│   │   ├── adminHeader/      # 管理画面ヘッダー
+│   │   ├── adminBlogItem/    # 管理画面ブログアイテム
+│   │   ├── adminWorkItem/    # 管理画面作品アイテム
+│   │   ├── ProtectedRoute/   # 認証保護されたルート
+│   │   ├── TwitterEmbed/     # Twitter埋め込みコンポーネント
+│   │   └── LinkEmbed/        # リンク埋め込みコンポーネント
+│   ├── components/           # UIコンポーネントライブラリ
+│   │   └── ui/               # 基本UIコンポーネント
+│   ├── contexts/             # React Context
+│   │   ├── AuthContext.tsx   # 認証コンテキスト
+│   │   ├── MenuContext.tsx   # メニュー状態コンテキスト
+│   │   └── AdminMenuContext.tsx # 管理画面メニューコンテキスト
+│   ├── routes/               # アプリケーションルート
+│   │   ├── _index.tsx        # ルートパス（/homeへリダイレクト）
+│   │   ├── home.tsx          # ホームページ
+│   │   ├── about.tsx         # アバウトページ
+│   │   ├── blog.tsx          # ブログレイアウト
+│   │   ├── blog._index.tsx   # ブログ一覧ページ
+│   │   ├── blog.$blogId.tsx  # ブログ記事詳細ページ
+│   │   ├── blog.new.tsx      # ブログ新規作成ページ
+│   │   ├── blog.edit.$blogId.tsx # ブログ編集ページ
+│   │   ├── works.tsx         # 作品レイアウト
+│   │   ├── works._index.tsx  # 作品一覧ページ
+│   │   ├── works.$workId.tsx # 作品詳細ページ
+│   │   ├── work.new.tsx      # 作品新規作成ページ
+│   │   ├── work.edit.$workId.tsx # 作品編集ページ
+│   │   ├── admin.tsx         # 管理画面レイアウト
+│   │   ├── admin._index.tsx  # 管理画面トップ
+│   │   ├── admin.blog.tsx    # ブログ管理ページ
+│   │   ├── admin.works.tsx   # 作品管理ページ
+│   │   ├── login.tsx         # ログインページ
+│   │   └── api.link-preview.tsx # リンクプレビューAPI
+│   ├── styles/               # グローバルスタイル
+│   │   ├── critical.css      # クリティカルCSS
+│   │   ├── globals.css.ts    # グローバルスタイル定義
+│   │   └── theme.css.ts      # テーマ変数定義
+│   └── utils/                # ユーティリティ関数
+│       ├── criticalCss.ts    # クリティカルCSS管理
+│       ├── deviceDetection.ts # デバイス検出
+│       └── markdownRenderer.tsx # マークダウンレンダリング
+├── functions/                # Cloudflare Functions
+├── public/                   # 静的ファイル
+│   ├── images/               # 画像ファイル
+│   ├── scripts/              # クライアントサイドスクリプト
+│   │   └── device-detection.js # デバイス検出スクリプト
+│   └── styles/               # コンパイル済みスタイル
+├── utils/                    # プロジェクト全体のユーティリティ
+├── components.json           # コンポーネント設定
+├── package.json              # プロジェクト依存関係
+├── tailwind.config.ts        # Tailwind CSS設定
+├── tsconfig.json             # TypeScript設定
+├── vite.config.ts            # Vite設定
+└── wrangler.toml             # Cloudflare Wrangler設定
+```
+
+### 主要ファイルの役割
+
+1. **エントリーポイント**:
+   - `app/root.tsx`: アプリケーションのルートレイアウト
+   - `app/entry.client.tsx`: クライアントサイドエントリーポイント
+   - `app/entry.server.tsx`: サーバーサイドレンダリングエントリーポイント
+
+2. **コアファイル**:
+   - `app/firebaseConfig.ts`: Firebase設定
+   - `app/contexts/AuthContext.tsx`: 認証管理
+   - `app/utils/markdownRenderer.tsx`: マークダウンレンダリング
+   - `app/utils/deviceDetection.ts`: デバイス検出
+
+3. **主要ルート**:
+   - `app/routes/home.tsx`: ホームページ
+   - `app/routes/blog._index.tsx`: ブログ一覧
+   - `app/routes/works._index.tsx`: 作品一覧
+   - `app/routes/admin._index.tsx`: 管理画面
+
+このディレクトリ構造は、Remix Runの規約に従いつつ、機能ごとにコードを整理し、再利用可能なコンポーネントを適切に分離しています。
