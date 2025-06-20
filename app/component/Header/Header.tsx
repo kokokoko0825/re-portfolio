@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import * as styles from "./styles.css";
 import { Link, useLocation } from "@remix-run/react";
 import { useMenu } from "../../contexts/MenuContext";
@@ -46,7 +46,7 @@ export function Header(): ReactNode {
                     <Link to="/works">Works</Link>
                 </div>
                 
-                {/* モバイルハンバーガーボタン - サーバーサイドでも正確に判定 */}
+                {/* モバイルハンバーガーボタン */}
                 <div 
                     className={styles.hamburgerIcon}
                     style={{ display: isMobile ? 'flex' : 'none' }}
@@ -75,20 +75,19 @@ export function Header(): ReactNode {
                         fontSize: '11px',
                         borderRadius: '5px',
                         zIndex: 9999,
-                        maxWidth: '300px',
+                        maxWidth: '350px',
                         fontFamily: 'monospace'
                     }}>
-                        <div style={{fontWeight: 'bold', marginBottom: '5px'}}>🔍 Device Detection Debug</div>
+                        <div style={{fontWeight: 'bold', marginBottom: '5px'}}>🔍 Header Debug Info</div>
                         
                         <div style={{marginBottom: '8px'}}>
                             <div style={{color: '#ffeb3b'}}>Server Detection:</div>
                             <div>• Type: {serverDevice.deviceType}</div>
                             <div>• Mobile: {serverDevice.isMobile ? '✅' : '❌'}</div>
-                            <div>• Tablet: {serverDevice.isTablet ? '✅' : '❌'}</div>
-                            <div>• OS: {serverDevice.os}</div>
+                            <div>• Context Init: {serverDevice.contextInitialized ? '✅' : '❌'}</div>
                             {serverDevice.detectionReason && (
                                 <div style={{fontSize: '10px', color: '#ccc'}}>
-                                    Reason: {serverDevice.detectionReason}
+                                    {serverDevice.detectionReason}
                                 </div>
                             )}
                         </div>
@@ -96,27 +95,28 @@ export function Header(): ReactNode {
                         <div style={{marginBottom: '8px'}}>
                             <div style={{color: '#4caf50'}}>Client Detection:</div>
                             <div>• Hydrated: {isClient ? '✅' : '❌'}</div>
-                            <div>• Mobile: {isClient ? (clientIsMobile ? '✅' : '❌') : '⏳'}</div>
+                            <div>• Media Query: {isClient ? (clientIsMobile ? '✅' : '❌') : '⏳'}</div>
+                            <div>• User-Agent: {directMobileCheck === null ? '⏳' : (directMobileCheck ? '✅' : '❌')}</div>
                             {isClient && typeof window !== 'undefined' && (
                                 <div>• Width: {window.innerWidth}px</div>
                             )}
                         </div>
                         
                         <div style={{marginBottom: '8px'}}>
-                            <div style={{color: '#ff9800'}}>Current State:</div>
-                            <div>• Active: {isMobile ? '📱 Mobile' : '🖥️ Desktop'}</div>
-                            <div>• Menu: {isMobile ? 'Hamburger' : 'Links'}</div>
+                            <div style={{color: '#ff9800'}}>Final Decision:</div>
+                            <div>• Source: {isClient ? 'Client' : 'Server'}</div>
+                            <div>• Result: {finalIsMobile ? '📱 Mobile' : '🖥️ Desktop'}</div>
+                            <div>• Logic: {isClient ? 
+                                `MediaQuery(${clientIsMobile}) OR UserAgent(${directMobileCheck})` : 
+                                `ServerContext(${serverDevice.isMobile})`}
+                            </div>
                         </div>
                         
-                        {serverDevice.userAgent && (
-                            <div style={{marginTop: '8px', fontSize: '9px', color: '#999'}}>
-                                <div>User-Agent:</div>
-                                <div style={{wordBreak: 'break-all', lineHeight: '1.2'}}>
-                                    {serverDevice.userAgent.substring(0, 120)}
-                                    {serverDevice.userAgent.length > 120 && '...'}
-                                </div>
-                            </div>
-                        )}
+                        <div style={{marginTop: '8px', fontSize: '10px', color: finalIsMobile ? '#4caf50' : '#f44336'}}>
+                            <div>Current Display:</div>
+                            <div>• Desktop Menu: {!finalIsMobile ? 'VISIBLE' : 'HIDDEN'}</div>
+                            <div>• Mobile Button: {finalIsMobile ? 'VISIBLE' : 'HIDDEN'}</div>
+                        </div>
                     </div>
                 )}
             </div>

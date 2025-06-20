@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import * as styles from "../Header/styles.css";
 import { Link } from "@remix-run/react";
 import { useMenu } from "../../contexts/MenuContext";
@@ -10,12 +10,33 @@ export function MobileMenu(): ReactNode {
     const clientIsMobile = useIsMobile();
     const isClient = useIsClient();
     const serverDevice = useServerSafeDevice();
+    
+    // Headerと同じ判定ロジック
+    const [directMobileCheck, setDirectMobileCheck] = useState<boolean | null>(null);
+    
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.navigator) {
+            const ua = window.navigator.userAgent.toLowerCase();
+            const isMobileUA = /iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(ua);
+            setDirectMobileCheck(isMobileUA);
+        }
+    }, []);
 
-    // サーバーサイドの情報を最初に使用し、ハイドレーション後はクライアントサイドの判定を使用
-    const isMobile = isClient ? clientIsMobile : serverDevice.isMobile;
+    // 複数の判定方法を組み合わせて最終判定
+    let finalIsMobile: boolean;
+    
+    if (isClient) {
+        finalIsMobile = clientIsMobile || (directMobileCheck === true);
+    } else {
+        if (serverDevice.contextInitialized) {
+            finalIsMobile = serverDevice.isMobile;
+        } else {
+            finalIsMobile = false;
+        }
+    }
 
     // モバイルでない場合は何も表示しない
-    if (!isMobile) {
+    if (!finalIsMobile) {
         return null;
     }
 
