@@ -11,15 +11,21 @@ import { MenuProvider } from "./contexts/MenuContext";
 
 import "app/styles/globals.css";
 import { LinksFunction, MetaFunction } from "@remix-run/cloudflare";
+import { getCriticalCss } from "./utils/criticalCss";
 //import Page from "./routes/_index/route";
 
 
 export function Layout({ children }: { children: React.ReactNode }): ReactNode {
+  // クリティカルCSSを取得
+  const criticalCss = getCriticalCss();
+  
   return (
     <html lang="ja">
       <head>
         <meta name="google-site-verification" content="brDkeRhoxktrjCiqqUefNlNyOKLGHk0Cik9q9MzLv2E" />
         <Meta />
+        {/* クリティカルCSSをインラインで埋め込む */}
+        <style dangerouslySetInnerHTML={{ __html: criticalCss }} />
         <Links />
         <title>kokokoko0825</title>
       </head>
@@ -56,6 +62,13 @@ export const links: LinksFunction = () => {
       href: "https://fonts.googleapis.com/css2?family=DotGothic16&family=Jersey+10&display=swap",
       rel: "stylesheet"
     },
+    // クリティカルCSSのスタイルシートも含める（遅延読み込み）
+    {
+      rel: "stylesheet",
+      href: "/styles/critical.css",
+      // モバイルファーストのスタイルを適用するため、優先度を高く設定
+      precedence: "high"
+    }
   ];
 };
 

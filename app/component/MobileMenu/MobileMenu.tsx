@@ -21,7 +21,7 @@ export function MobileMenu(): ReactNode {
                     style={{ display: isMenuOpen ? "block" : "none" }}
                 />
             )}
-            <div className={`${styles.mobileMenu} ${isMenuOpen ? styles.mobileMenuOpen : ""}`}>
+            <div className={`${styles.mobileMenu} mobile-menu ${isMenuOpen ? styles.mobileMenuOpen + " open" : ""}`}>
                 <button 
                     className={styles.closeButton} 
                     onClick={closeMenu}
