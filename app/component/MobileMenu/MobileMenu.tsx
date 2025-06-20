@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import * as styles from "../Header/styles.css";
 import { Link } from "@remix-run/react";
 import { useMenu } from "../../contexts/MenuContext";
+import { cx } from "../../utils/vanillaExtractUtils";
 
 export function MobileMenu(): ReactNode {
     const { isMenuOpen, closeMenu } = useMenu();
@@ -21,7 +22,12 @@ export function MobileMenu(): ReactNode {
                     style={{ display: isMenuOpen ? "block" : "none" }}
                 />
             )}
-            <div className={`${styles.mobileMenu} mobile-menu ${isMenuOpen ? styles.mobileMenuOpen + " open" : ""}`}>
+            <div className={cx(
+                styles.mobileMenu,
+                'mobile-menu',
+                isMenuOpen && styles.mobileMenuOpen,
+                isMenuOpen && 'open'
+            )}>
                 <button 
                     className={styles.closeButton} 
                     onClick={closeMenu}

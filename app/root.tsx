@@ -9,7 +9,8 @@ import { ReactNode } from "react";
 import { AuthProvider } from "./contexts/AuthContext";
 import { MenuProvider } from "./contexts/MenuContext";
 
-import "app/styles/globals.css";
+// Vanilla Extract CSSのエントリーポイントをインポート
+import "app/styles/vanillaExtract.css";
 import { LinksFunction, MetaFunction } from "@remix-run/cloudflare";
 import { getCriticalCss } from "./utils/criticalCss";
 //import Page from "./routes/_index/route";
@@ -68,6 +69,14 @@ export const links: LinksFunction = () => {
       href: "/styles/critical.css",
       // モバイルファーストのスタイルを適用するため、優先度を高く設定
       precedence: "high"
+    },
+    // Vanilla Extract CSSで生成されたスタイルシートを読み込む
+    // Remixはビルド時に自動的にVanilla Extract CSSのスタイルシートを検出して読み込みます
+    // precedenceを設定することで、読み込み順序を制御できます
+    {
+      rel: "stylesheet",
+      href: "/styles/vanilla-extract.css",
+      precedence: "default" // クリティカルCSSより低い優先度
     }
   ];
 };
