@@ -14,13 +14,21 @@ declare global {
     }
 }
 
+// リンクプレビューAPIレスポンスの型定義
+interface LinkPreviewData {
+    title: string;
+    description: string;
+    siteName: string;
+    error?: string;
+}
+
 const md = new MarkdownIt();
 
 // Twitter/X URLを検出する正規表現（x.comとtwitter.comの両方に対応）
 const TWITTER_URL_REGEX = /https?:\/\/(?:www\.)?(?:twitter\.com|x\.com)\/\w+\/status\/\d+/g;
 
 // 通常のURLを検出する正規表現（Twitter URLを除く）
-const GENERAL_URL_REGEX = /https?:\/\/(?!.*(?:twitter\.com|x\.com)\/\w+\/status\/)[^\s<>"{}|\\^`\[\]]+/g;
+const GENERAL_URL_REGEX = /https?:\/\/(?!.*(?:twitter\.com|x\.com)\/\w+\/status\/)[^\s<>"{}|\\^`[\]]+/g;
 
 // URLを正規化する関数（x.comをtwitter.comに変換）
 function normalizeTwitterUrl(url: string): string {
@@ -63,8 +71,10 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                         display: flex;
                         justify-content: center;
                         width: 100%;
+                        box-sizing: border-box;
                     ">
                         <div id="tweet-${tweetId}" style="
+                            max-width: 600px;
                             width: 100%;
                         "></div>
                     </div>
@@ -95,6 +105,7 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                     display: flex;
                     justify-content: center;
                     width: 100%;
+                    box-sizing: border-box;
                     margin: 2rem 0;
                 ">
                     <div class="link-embed" style="
@@ -111,6 +122,8 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                     " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
                         <div class="link-embed-content" style="
                             flex: 1;
+                            width: 100%;
+                            box-sizing: border-box;
                             padding: 1rem;
                             display: flex;
                             flex-direction: column;
@@ -210,9 +223,10 @@ export function initializeLinkEmbeds(): void {
                         // APIからメタデータを取得
                         fetch(`/api/link-preview?url=${encodeURIComponent(url)}`)
                             .then(response => response.json())
-                            .then(data => {
-                                if (data.error) {
-                                    throw new Error(data.error);
+                            .then((data: unknown) => {
+                                const linkData = data as LinkPreviewData;
+                                if (linkData.error) {
+                                    throw new Error(linkData.error);
                                 }
                                 
                                 const titleElement = embed.querySelector('.link-embed-title');
@@ -220,10 +234,10 @@ export function initializeLinkEmbeds(): void {
                                 const metaElement = embed.querySelector('.link-embed-meta');
                                 
                                 if (titleElement) {
-                                    titleElement.textContent = data.title;
+                                    titleElement.textContent = linkData.title;
                                 }
                                 if (descriptionElement) {
-                                    descriptionElement.textContent = data.description;
+                                    descriptionElement.textContent = linkData.description;
                                 }
                                 if (metaElement) {
                                     metaElement.innerHTML = `
@@ -233,7 +247,7 @@ export function initializeLinkEmbeds(): void {
                                             color: #007acc;
                                             text-transform: uppercase;
                                             letter-spacing: 0.5px;
-                                        ">${data.siteName}</span>
+                                        ">${linkData.siteName}</span>
                                         <span style="
                                             font-size: 0.75rem;
                                             color: #999;
@@ -246,7 +260,7 @@ export function initializeLinkEmbeds(): void {
                                 embed.addEventListener('click', () => {
                                     window.open(url, '_blank', 'noopener,noreferrer');
                                 });
-                                embed.style.cursor = 'pointer';
+                                (embed as HTMLElement).style.cursor = 'pointer';
                             })
                             .catch(error => {
                                 console.error('Link preview error:', error);
@@ -259,7 +273,7 @@ export function initializeLinkEmbeds(): void {
                                 embed.addEventListener('click', () => {
                                     window.open(url, '_blank', 'noopener,noreferrer');
                                 });
-                                embed.style.cursor = 'pointer';
+                                (embed as HTMLElement).style.cursor = 'pointer';
                             });
                     }
                 }
