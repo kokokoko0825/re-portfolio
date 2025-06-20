@@ -1,5 +1,4 @@
 import { ReactNode, useEffect, useState } from "react";
-import * as styles from "../Header/styles.css";
 import { Link } from "@remix-run/react";
 import { useMenu } from "../../contexts/MenuContext";
 import { useIsMobile, useIsClient } from "../../hooks/useMediaQuery";
@@ -11,14 +10,15 @@ export function MobileMenu(): ReactNode {
     const isClient = useIsClient();
     const serverDevice = useServerSafeDevice();
     
-    // Headerと同じ判定ロジック
+    // Headerと同じ判定ロジック - より詳細な判定
     const [directMobileCheck, setDirectMobileCheck] = useState<boolean | null>(null);
     
     useEffect(() => {
         if (typeof window !== 'undefined' && window.navigator) {
             const ua = window.navigator.userAgent.toLowerCase();
             const isMobileUA = /iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(ua);
-            setDirectMobileCheck(isMobileUA);
+            const isSmallScreen = window.innerWidth <= 768;
+            setDirectMobileCheck(isMobileUA || isSmallScreen);
         }
     }, []);
 
@@ -26,13 +26,27 @@ export function MobileMenu(): ReactNode {
     let finalIsMobile: boolean;
     
     if (isClient) {
+        // クライアントサイドでは複数の判定を組み合わせ
         finalIsMobile = clientIsMobile || (directMobileCheck === true);
     } else {
+        // サーバーサイドではDeviceContextの値を使用
         if (serverDevice.contextInitialized) {
             finalIsMobile = serverDevice.isMobile;
         } else {
             finalIsMobile = false;
         }
+    }
+
+    // デバッグ情報
+    if (process.env.NODE_ENV === 'development') {
+        console.log('🍔 MobileMenu render:', {
+            isClient,
+            isMenuOpen,
+            finalIsMobile,
+            serverIsMobile: serverDevice.isMobile,
+            willShow: finalIsMobile,
+            contextInitialized: serverDevice.contextInitialized
+        });
     }
 
     // モバイルでない場合は何も表示しない
@@ -42,9 +56,19 @@ export function MobileMenu(): ReactNode {
 
     return (
         <>
+            {/* オーバーレイ - モバイルかつメニューが開いている時のみ表示 */}
             {isMenuOpen && (
                 <div 
-                    className={styles.mobileMenuOverlay} 
+                    style={{
+                        display: "block",
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        background: "rgba(0, 0, 0, 0.5)",
+                        zIndex: 999
+                    }}
                     onClick={closeMenu}
                     onKeyDown={(e) => {
                         if (e.key === 'Escape') closeMenu();
@@ -54,19 +78,100 @@ export function MobileMenu(): ReactNode {
                     aria-label="Close menu overlay"
                 />
             )}
-            <div className={`${styles.mobileMenu} ${isMenuOpen ? styles.mobileMenuOpen : ""}`}>
+            
+            {/* メニュー本体 */}
+            <div 
+                style={{
+                    display: "flex",
+                    position: "fixed",
+                    top: 0,
+                    right: 0,
+                    width: "70%",
+                    height: "100vh",
+                    background: "#03031B", // テーマのbackground色
+                    borderLeft: "2px solid #2C2E47", // テーマのborderColor
+                    flexDirection: "column",
+                    padding: "20px",
+                    transform: isMenuOpen ? "translateX(0)" : "translateX(100%)",
+                    transition: "transform 0.3s ease-in-out",
+                    zIndex: 1000
+                }}
+            >
                 <button 
-                    className={styles.closeButton} 
                     onClick={closeMenu}
                     aria-label="Close menu"
+                    style={{
+                        alignSelf: "flex-end",
+                        background: "none",
+                        border: "none",
+                        color: "#DEDBFF", // テーマのtext色
+                        fontSize: "24px",
+                        cursor: "pointer",
+                        marginBottom: "20px"
+                    }}
                 >
                     ✕
                 </button>
-                <div className={styles.mobileMenuLinks}>
-                    <Link to="/" onClick={closeMenu}>Home</Link>
-                    <Link to="/about" onClick={closeMenu}>About</Link>
-                    <Link to="/blog" onClick={closeMenu}>Blog</Link>
-                    <Link to="/works" onClick={closeMenu}>Works</Link>
+                <div 
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "20px",
+                        padding: "20px"
+                    }}
+                >
+                    <Link 
+                        to="/" 
+                        onClick={closeMenu}
+                        style={{
+                            color: "#DEDBFF", // テーマのtext色
+                            textDecoration: "none",
+                            fontSize: "20px",
+                            fontWeight: "bold",
+                            transition: "opacity 0.2s ease"
+                        }}
+                    >
+                        Home
+                    </Link>
+                    <Link 
+                        to="/about" 
+                        onClick={closeMenu}
+                        style={{
+                            color: "#DEDBFF",
+                            textDecoration: "none",
+                            fontSize: "20px",
+                            fontWeight: "bold",
+                            transition: "opacity 0.2s ease"
+                        }}
+                    >
+                        About
+                    </Link>
+                    <Link 
+                        to="/blog" 
+                        onClick={closeMenu}
+                        style={{
+                            color: "#DEDBFF",
+                            textDecoration: "none",
+                            fontSize: "20px",
+                            fontWeight: "bold",
+                            transition: "opacity 0.2s ease"
+                        }}
+                    >
+                        Blog
+                    </Link>
+                    <Link 
+                        to="/works" 
+                        onClick={closeMenu}
+                        style={{
+                            color: "#DEDBFF",
+                            textDecoration: "none",
+                            fontSize: "20px",
+                            fontWeight: "bold",
+                            transition: "opacity 0.2s ease"
+                        }}
+                    >
+                        Works
+                    </Link>
                 </div>
             </div>
         </>
