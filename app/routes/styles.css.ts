@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { style, globalStyle } from "@vanilla-extract/css";
 import { vars } from "../styles/theme.css";
 import "zenn-content-css";
 
@@ -216,7 +216,46 @@ export const textFrame = style({
             padding: "0px 30px",
         }
     }
-})
+});
+
+// Zenn content CSS用のglobalStyleを追加
+globalStyle(`${textFrame} .znc`, {
+    width: "100%",
+    maxWidth: "100%",
+    boxSizing: "border-box",
+    overflowWrap: "break-word",
+    wordBreak: "break-word",
+});
+
+globalStyle(`${textFrame} .znc *`, {
+    maxWidth: "100%",
+    boxSizing: "border-box",
+});
+
+globalStyle(`${textFrame} .znc img`, {
+    width: "100%",
+    height: "auto",
+    maxWidth: "100%",
+    objectFit: "contain",
+});
+
+globalStyle(`${textFrame} .znc pre`, {
+    overflowX: "auto",
+    maxWidth: "100%",
+    boxSizing: "border-box",
+});
+
+globalStyle(`${textFrame} .znc code`, {
+    overflowWrap: "break-word",
+    wordBreak: "break-word",
+});
+
+globalStyle(`${textFrame} .znc table`, {
+    width: "100%",
+    maxWidth: "100%",
+    overflowX: "auto",
+    display: "block",
+});
 
 export const backFrame = style({
     display: "flex",
