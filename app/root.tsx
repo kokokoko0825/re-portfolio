@@ -18,10 +18,23 @@ import { LinksFunction, MetaFunction, LoaderFunctionArgs } from "@remix-run/clou
 
 export async function loader({ request }: LoaderFunctionArgs) {
   // サーバーサイドでデバイス情報を取得
+  console.log('🚀 Root loader started for URL:', request.url);
+  
   const deviceInfo = getDeviceInfoFromRequest(request);
   
+  console.log('📋 Root loader device info:', {
+    isMobile: deviceInfo.isMobile,
+    deviceType: deviceInfo.deviceType,
+    userAgent: deviceInfo.userAgent?.substring(0, 50) + '...'
+  });
+  
   return {
-    deviceInfo
+    deviceInfo,
+    // デバッグ用の追加情報
+    requestInfo: {
+      url: request.url,
+      timestamp: new Date().toISOString()
+    }
   };
 }
 
@@ -44,10 +57,13 @@ export function Layout({ children }: { children: React.ReactNode }): ReactNode {
 }
 
 export default function App(): ReactNode {
-  const { deviceInfo } = useLoaderData<typeof loader>();
+  const data = useLoaderData<typeof loader>();
+  
+  // クライアントサイドでもデータを確認
+  console.log('📱 Client received device info:', data?.deviceInfo);
   
   return (
-    <DeviceProvider serverDeviceInfo={deviceInfo}>
+    <DeviceProvider serverDeviceInfo={data.deviceInfo}>
       <AuthProvider>
         <MenuProvider>
           <Outlet />
