@@ -4,16 +4,16 @@ import { Link } from "@remix-run/react";
 import { useMenu } from "../../contexts/MenuContext";
 import { MobileMenu } from "../MobileMenu/MobileMenu";
 import { useIsMobile, useIsClient } from "../../hooks/useMediaQuery";
+import { useServerSafeDevice } from "../../contexts/DeviceContext";
 
 export function Header(): ReactNode {
     const { toggleMenu } = useMenu();
-    const isMobile = useIsMobile();
+    const clientIsMobile = useIsMobile();
     const isClient = useIsClient();
+    const serverDevice = useServerSafeDevice();
 
-    // ハイドレーション完了前は従来のCSSメディアクエリに依存
-    // ハイドレーション完了後はJavaScriptでの判定を使用
-    const showDesktopMenu = isClient ? !isMobile : true;
-    const showMobileButton = isClient ? isMobile : true;
+    // サーバーサイドの情報を最初に使用し、ハイドレーション後はクライアントサイドの判定を使用
+    const isMobile = isClient ? clientIsMobile : serverDevice.isMobile;
 
     return (
         <>
@@ -24,12 +24,12 @@ export function Header(): ReactNode {
                     </Link>
                 </div>
                 
-                {/* デスクトップメニュー */}
+                {/* デスクトップメニュー - サーバーサイドでも正確に判定 */}
                 <div 
                     className={styles.linkList} 
                     style={{
                         textDecoration: "none",
-                        display: showDesktopMenu ? "flex" : "none"
+                        display: !isMobile ? "flex" : "none"
                     }}
                 >
                     <Link to="/">Home</Link>
@@ -38,11 +38,11 @@ export function Header(): ReactNode {
                     <Link to="/works">Works</Link>
                 </div>
                 
-                {/* モバイルハンバーガーボタン */}
+                {/* モバイルハンバーガーボタン - サーバーサイドでも正確に判定 */}
                 <div 
                     className={styles.hamburgerIcon}
                     style={{
-                        display: showMobileButton ? "flex" : "none"
+                        display: isMobile ? "flex" : "none"
                     }}
                     onClick={toggleMenu} 
                     role="button" 
@@ -56,6 +56,25 @@ export function Header(): ReactNode {
                 >
                     <img src="/images/humberger.svg" alt="Menu" style={{width: "25.9px", height: "17px"}}/>
                 </div>
+                
+                {/* デバッグ情報（開発時のみ） */}
+                {process.env.NODE_ENV === 'development' && (
+                    <div style={{
+                        position: 'fixed',
+                        top: '60px',
+                        right: '10px',
+                        background: 'rgba(0,0,0,0.8)',
+                        color: 'white',
+                        padding: '5px',
+                        fontSize: '10px',
+                        borderRadius: '3px',
+                        zIndex: 9999
+                    }}>
+                        Server: {serverDevice.isMobile ? 'Mobile' : 'Desktop'}<br/>
+                        Client: {isClient ? (clientIsMobile ? 'Mobile' : 'Desktop') : 'Pending'}<br/>
+                        Active: {isMobile ? 'Mobile' : 'Desktop'}
+                    </div>
+                )}
             </div>
             <MobileMenu />
         </>
