@@ -10,11 +10,11 @@ export default function About() {
                 <div className={styles.section}>
                     <h1>About me</h1>
                     <div className={styles.list}>
-                        <p>高専4年目でプログラミングの楽しさに目覚めたWebエンジニアです。</p>
-                        <p>Web以外にはUI/UXなどのデザインやAI活用に興味を持っています。</p>
-                        <p>将来はフルスタックのエンジニアを目指しています。</p>
-                        <p>小さい頃から嵐、Hey!Say!JUMPなど男性アイドルを好んで聞いています。</p>
-                        <p>アイドル以外ではヤバイTシャツ屋さんをよく聞いています。</p>
+                        <p style={{ fontSize: "12px" }}>高専4年目でプログラミングの楽しさに目覚めたWebエンジニアです。</p>
+                        <p style={{ fontSize: "12px" }}>Web以外にはUI/UXなどのデザインやAI活用に興味を持っています。</p>
+                        <p style={{ fontSize: "12px" }}>将来はフルスタックのエンジニアを目指しています。</p>
+                        <p style={{ fontSize: "12px" }}>小さい頃から嵐、Hey!Say!JUMPなど男性アイドルを好んで聞いています。</p>
+                        <p style={{ fontSize: "12px" }}>アイドル以外ではヤバイTシャツ屋さんをよく聞いています。</p>
                     </div>
                 </div>
                 <div className={styles.section}>
@@ -23,7 +23,7 @@ export default function About() {
                         {/*
                         <p>2026 - 現在  株式会社セゾンテクノロジー</p>
                         */}
-                        <p>2021 - 2026  鈴鹿高専 電子情報工学科</p>
+                        <p style={{ fontSize: "12px" }}>2021 - 2026  鈴鹿高専 電子情報工学科</p>
                     </div>
                 </div>
                 <div className={styles.section}>
