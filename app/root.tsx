@@ -51,6 +51,7 @@ export function Layout({ children }: { children: React.ReactNode }): ReactNode {
   return (
     <html lang="ja">
       <head>
+        <meta charSet="utf-8" />
         <meta name="google-site-verification" content="brDkeRhoxktrjCiqqUefNlNyOKLGHk0Cik9q9MzLv2E" />
         <Meta />
         {/* デバイス検出スクリプトを早期に実行 */}
@@ -110,29 +111,29 @@ export const links: LinksFunction = () => {
 export const meta: MetaFunction = () => {
   return [
     { charSet: "utf-8" },
-    // ビューポートの設定を強化
     { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" },
     { title: "kokokoko0825" },
-    { rel: "icon", href: "/images/icon.jpg" },
     { name: "description", content: "Koshi Tanakaのポートフォリオ" },
     { name: "robots", content: "index, follow" },
-    { name: "og:title", content: "kokokoko0825" },
-    { name: "og:description", content: "Koshi Tanakaのポートフォリオ" },
-    { name: "og:url", content: "https://kokokoko0825.pages.dev" },
-    { name: "og:image", content: "https://kokokoko0825.pages.dev/ogp.png" },
-    {
-      property: "og:image:url",
-      content: "https://kokokoko0825.pages.dev/ogp.png",
-    },
+    
+    // Open Graph tags
+    { property: "og:title", content: "kokokoko0825" },
+    { property: "og:description", content: "Koshi Tanakaのポートフォリオ" },
+    { property: "og:url", content: "https://kokokoko0825.pages.dev" },
+    { property: "og:image", content: "/images/icon.jpg" },
+    { property: "og:image:url", content: "/images/icon.jpg" },
     { property: "og:image:alt", content: "kokokoko0825" },
-    { name: "og:type", content: "website" },
+    { property: "og:type", content: "website" },
+    { property: "og:site_name", content: "kokokoko0825" },
+    { property: "og:locale", content: "ja_JP" },
+    
+    // Twitter Card tags
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: "kokokoko0825" },
     { name: "twitter:description", content: "Koshi Tanakaのポートフォリオ" },
-    {
-      name: "twitter:image",
-      content: "https://kokokoko0825.pages.dev/ogp.png",
-    },
+    { name: "twitter:image", content: "/images/icon.jpg" },
     { name: "twitter:image:alt", content: "kokokoko0825" },
+    { name: "twitter:site", content: "@kokokoko0825" },
+    { name: "twitter:creator", content: "@kokokoko0825" },
   ];
 };
