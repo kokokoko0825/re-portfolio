@@ -37,6 +37,12 @@ function getContentType(pathname: string): string | null {
   }
 }
 
+// 静的アセットかどうかを判定する関数
+function isStaticAsset(pathname: string): boolean {
+  return pathname.startsWith('/assets/') || 
+         pathname.match(/\.(css|js|json|png|jpg|jpeg|gif|svg|woff|woff2|ico|txt|xml)$/) !== null;
+}
+
 const remixHandler = createPagesFunctionHandler({ build });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -44,31 +50,71 @@ export const onRequest = async (context: any) => {
   const { request } = context;
   const url = new URL(request.url);
   
-  // まずRemixハンドラーを呼び出し
-  const response = await remixHandler(context);
-  
-  // レスポンスのヘッダーを修正
-  const headers = new Headers(response.headers);
-  
-  // 静的アセットの場合はMIMEタイプを設定
-  if (url.pathname.startsWith('/assets/') || url.pathname.match(/\.(css|js|json|png|jpg|jpeg|gif|svg|woff|woff2|ico)$/)) {
-    const contentType = getContentType(url.pathname);
+  try {
+    // まずRemixハンドラーを呼び出し
+    const response = await remixHandler(context);
     
-    if (contentType) {
-      headers.set('Content-Type', contentType);
-      headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+    // 404でかつ静的アセットのリクエストの場合、適切な404を返す
+    if (response.status === 404 && isStaticAsset(url.pathname)) {
+      return new Response('Not Found', {
+        status: 404,
+        statusText: 'Not Found',
+        headers: {
+          'Content-Type': 'text/plain',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'X-Content-Type-Options': 'nosniff',
+        },
+      });
     }
+    
+    // レスポンスのヘッダーを修正
+    const headers = new Headers(response.headers);
+    
+    // 静的アセットの場合はMIMEタイプを設定
+    if (isStaticAsset(url.pathname) && response.status === 200) {
+      const contentType = getContentType(url.pathname);
+      
+      if (contentType) {
+        headers.set('Content-Type', contentType);
+        headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+      }
+    }
+    
+    // セキュリティヘッダーを追加
+    headers.set('X-Content-Type-Options', 'nosniff');
+    headers.set('X-Frame-Options', 'DENY');
+    headers.set('X-XSS-Protection', '1; mode=block');
+    headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+    
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: headers,
+    });
+  } catch (error) {
+    console.error('Pages Function error:', error);
+    
+    // エラーが発生した場合、静的アセットのリクエストなら404を返す
+    if (isStaticAsset(url.pathname)) {
+      return new Response('Not Found', {
+        status: 404,
+        statusText: 'Not Found',
+        headers: {
+          'Content-Type': 'text/plain',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'X-Content-Type-Options': 'nosniff',
+        },
+      });
+    }
+    
+    // その他のエラーの場合は500を返す
+    return new Response('Internal Server Error', {
+      status: 500,
+      statusText: 'Internal Server Error',
+      headers: {
+        'Content-Type': 'text/plain',
+        'X-Content-Type-Options': 'nosniff',
+      },
+    });
   }
-  
-  // セキュリティヘッダーを追加
-  headers.set('X-Content-Type-Options', 'nosniff');
-  headers.set('X-Frame-Options', 'DENY');
-  headers.set('X-XSS-Protection', '1; mode=block');
-  headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  
-  return new Response(response.body, {
-    status: response.status,
-    statusText: response.statusText,
-    headers: headers,
-  });
 };
