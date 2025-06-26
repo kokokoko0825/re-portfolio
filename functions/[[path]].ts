@@ -5,4 +5,70 @@ import { createPagesFunctionHandler } from "@remix-run/cloudflare-pages";
 // eslint-disable-next-line import/no-unresolved
 import * as build from "../build/server";
 
-export const onRequest = createPagesFunctionHandler({ build });
+// 静的アセットのMIMEタイプを設定する関数
+function getContentType(pathname: string): string | null {
+  const ext = pathname.split('.').pop()?.toLowerCase();
+  
+  switch (ext) {
+    case 'css':
+      return 'text/css';
+    case 'js':
+    case 'mjs':
+      return 'application/javascript';
+    case 'json':
+      return 'application/json';
+    case 'png':
+      return 'image/png';
+    case 'jpg':
+    case 'jpeg':
+      return 'image/jpeg';
+    case 'gif':
+      return 'image/gif';
+    case 'svg':
+      return 'image/svg+xml';
+    case 'woff':
+      return 'font/woff';
+    case 'woff2':
+      return 'font/woff2';
+    case 'ico':
+      return 'image/x-icon';
+    default:
+      return null;
+  }
+}
+
+const remixHandler = createPagesFunctionHandler({ build });
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const onRequest = async (context: any) => {
+  const { request } = context;
+  const url = new URL(request.url);
+  
+  // まずRemixハンドラーを呼び出し
+  const response = await remixHandler(context);
+  
+  // レスポンスのヘッダーを修正
+  const headers = new Headers(response.headers);
+  
+  // 静的アセットの場合はMIMEタイプを設定
+  if (url.pathname.startsWith('/assets/') || url.pathname.match(/\.(css|js|json|png|jpg|jpeg|gif|svg|woff|woff2|ico)$/)) {
+    const contentType = getContentType(url.pathname);
+    
+    if (contentType) {
+      headers.set('Content-Type', contentType);
+      headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+    }
+  }
+  
+  // セキュリティヘッダーを追加
+  headers.set('X-Content-Type-Options', 'nosniff');
+  headers.set('X-Frame-Options', 'DENY');
+  headers.set('X-XSS-Protection', '1; mode=block');
+  headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers: headers,
+  });
+};
