@@ -417,3 +417,48 @@ export const adminTextareaInput = style({
         }
     }
 })
+
+export const titleText = style({
+    fontSize: "36px",
+    "@media": {
+        "screen and (max-width: 768px)": {
+            fontSize: "24px",
+        }
+    }
+})
+
+export const subtitleText = style({
+    fontSize: "24px",
+    "@media": {
+        "screen and (max-width: 768px)": {
+            fontSize: "20px",
+        }
+    }
+})
+
+export const defaultText = style({
+    fontSize: "20px",
+    "@media": {
+        "screen and (max-width: 768px)": {
+            fontSize: "18px",
+        }
+    }
+})
+
+export const linkText = style({
+    fontSize: "16px",
+    "@media": {
+        "screen and (max-width: 768px)": {
+            fontSize: "12px",
+        }
+    }
+})
+
+export const careerText = style({
+    fontSize: "20px",
+    "@media": {
+        "screen and (max-width: 768px)": {
+            fontSize: "15px",
+        }
+    }
+})

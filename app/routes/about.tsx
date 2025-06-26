@@ -23,7 +23,7 @@ export default function About() {
                         {/*
                         <p>2026 - 現在  株式会社セゾンテクノロジー</p>
                         */}
-                        <small>2021 - 2026  鈴鹿高専 電子情報工学科</small>
+                        <p className={styles.careerText}>2021 - 2026  鈴鹿高専 電子情報工学科</p>
                     </div>
                 </div>
                 <div className={styles.section}>

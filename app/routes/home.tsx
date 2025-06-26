@@ -1,9 +1,9 @@
 import type { MetaFunction } from "@remix-run/cloudflare";
 import { Link } from "@remix-run/react";
-import { Header } from "~/component/Header/Header";
-import { Footer } from "~/component/Footer/Footer";
+import { Header } from "../component/Header/Header";
+import { Footer } from "../component/Footer/Footer";
 import * as styles from "./home.styles.css";
-import { useDevice } from "~/contexts/DeviceContext";
+import { useDevice } from "../contexts/DeviceContext";
 
 export const meta: MetaFunction = () => {
     return [

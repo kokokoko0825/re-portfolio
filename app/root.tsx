@@ -94,7 +94,7 @@ export const links: LinksFunction = () => {
       href: "/scripts/device-detection.js",
       as: "script"
     },
-    { rel: "icon", href: "/images/account_icon_v2.jpg", type: "image/jpg" },
+    { rel: "icon", href: "/images/icon.jpg", type: "image/jpg" },
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
     {
       rel: "preconnect",
