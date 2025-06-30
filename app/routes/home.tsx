@@ -1,3 +1,4 @@
+/*
 import type { MetaFunction } from "@remix-run/cloudflare";
 import { Link } from "@remix-run/react";
 import { Header } from "../component/Header/Header";
@@ -48,3 +49,4 @@ export default function Home() {
         </div>
     );
 }
+*/

@@ -15,12 +15,12 @@ export function Header(): ReactNode {
         <>
             <div className={`${styles.header} ${mobileClass}`}>
                 <div className={styles.homeIcon}>
-                    <Link to="/home">
+                    <Link to="/">
                         <h1>🐶🐱</h1>
                     </Link>
                 </div>
                 <div className={styles.linkList}>
-                    <Link to="/home">Home</Link>
+                    <Link to="/">Home</Link>
                     <Link to="/about">About</Link>
                     <Link to="/blog">Blog</Link>
                     <Link to="/works">Works</Link>

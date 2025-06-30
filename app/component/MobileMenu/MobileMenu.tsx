@@ -40,7 +40,7 @@ export function MobileMenu(): ReactNode {
                     ✕
                 </button>
                 <div className={styles.mobileMenuLinks}>
-                    <Link to="/home" onClick={closeMenu}>Home</Link>
+                    <Link to="/" onClick={closeMenu}>Home</Link>
                     <Link to="/about" onClick={closeMenu}>About</Link>
                     <Link to="/blog" onClick={closeMenu}>Blog</Link>
                     <Link to="/works" onClick={closeMenu}>Works</Link>
