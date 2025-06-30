@@ -53,6 +53,7 @@ export function Layout({ children }: { children: React.ReactNode }): ReactNode {
       <head>
         <meta charSet="utf-8" />
         <meta name="google-site-verification" content="brDkeRhoxktrjCiqqUefNlNyOKLGHk0Cik9q9MzLv2E" />
+        <meta name="google-site-verification" content="LQ31apSdI1TM-XP0eZ0Bdbv7eoBFrndb8pwSpCPhg2c" />
         <Meta />
         {/* デバイス検出スクリプトを早期に実行 */}
         <script dangerouslySetInnerHTML={{ __html: deviceDetectionScript }} />
@@ -94,7 +95,7 @@ export const links: LinksFunction = () => {
       href: "/scripts/device-detection.js",
       as: "script"
     },
-    { rel: "icon", href: "/images/icon.jpg", type: "image/jpg" },
+    { rel: "icon", href: "/images/icon.png", type: "image/png" },
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
     {
       rel: "preconnect",
@@ -119,9 +120,9 @@ export const meta: MetaFunction = () => {
     // Open Graph tags
     { property: "og:title", content: "kokokoko0825" },
     { property: "og:description", content: "Koshi Tanakaのポートフォリオ" },
-    { property: "og:url", content: "https://kokokoko0825.pages.dev" },
-    { property: "og:image", content: "/images/icon.jpg" },
-    { property: "og:image:url", content: "/images/icon.jpg" },
+    { property: "og:url", content: "https://kokokoko0825.dev" },
+    { property: "og:image", content: "/images/icon.png" },
+    { property: "og:image:url", content: "/images/icon.png" },
     { property: "og:image:alt", content: "kokokoko0825" },
     { property: "og:type", content: "website" },
     { property: "og:site_name", content: "kokokoko0825" },
@@ -131,7 +132,7 @@ export const meta: MetaFunction = () => {
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: "kokokoko0825" },
     { name: "twitter:description", content: "Koshi Tanakaのポートフォリオ" },
-    { name: "twitter:image", content: "/images/icon.jpg" },
+    { name: "twitter:image", content: "/images/icon.png" },
     { name: "twitter:image:alt", content: "kokokoko0825" },
     { name: "twitter:site", content: "@kokokoko0825" },
     { name: "twitter:creator", content: "@kokokoko0825" },
