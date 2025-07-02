@@ -10,11 +10,11 @@ export default function About() {
                 <div className={styles.section}>
                     <h1>About me</h1>
                     <div className={styles.list}>
-                        <p>高専4年目でプログラミングの楽しさに目覚めたWebエンジニアです。</p>
-                        <p>Web以外にはUI/UXなどのデザインやAI活用に興味を持っています。</p>
-                        <p>将来はフルスタックのエンジニアを目指しています。</p>
-                        <p>小さい頃から嵐、Hey!Say!JUMPなど男性アイドルを好んで聞いています。</p>
-                        <p>アイドル以外ではヤバイTシャツ屋さんをよく聞いています。</p>
+                        <p className={styles.careerText}>高専4年目でプログラミングの楽しさに目覚めたWebエンジニアです。</p>
+                        <p className={styles.careerText}>Web以外にはUI/UXなどのデザインやAI活用に興味を持っています。</p>
+                        <p className={styles.careerText}>将来はフルスタックのエンジニアを目指しています。</p>
+                        <p className={styles.careerText}>小さい頃から嵐、Hey!Say!JUMPなど男性アイドルを好んで聞いています。</p>
+                        <p className={styles.careerText}>アイドル以外ではヤバイTシャツ屋さんをよく聞いています。</p>
                     </div>
                 </div>
                 <div className={styles.section}>

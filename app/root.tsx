@@ -5,6 +5,8 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useRouteError,
+  isRouteErrorResponse,
 } from "@remix-run/react";
 import { ReactNode } from "react";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -16,6 +18,7 @@ import { getDeviceInfoFromRequest } from "./utils/deviceDetection";
 import "app/styles/globals.css";
 import { LinksFunction, MetaFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { getCriticalCss } from "./utils/criticalCss";
+import NotFound from "./routes/404";
 //import Page from "./routes/_index/route";
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -138,3 +141,49 @@ export const meta: MetaFunction = () => {
     { name: "twitter:creator", content: "@kokokoko0825" },
   ];
 };
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  // 404エラーの場合
+  if (isRouteErrorResponse(error) && error.status === 404) {
+    return (
+      <html lang="ja">
+        <head>
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <title>404 - ページが見つかりません | kokokoko0825</title>
+          <Meta />
+          <Links />
+        </head>
+        <body>
+          <NotFound />
+          <Scripts />
+        </body>
+      </html>
+    );
+  }
+
+  // その他のエラーの場合
+  return (
+    <html lang="ja">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>エラーが発生しました | kokokoko0825</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <div style={{ padding: "2rem", textAlign: "center" }}>
+          <h1>申し訳ございません</h1>
+          <p>予期しないエラーが発生しました。</p>
+          <a href="/" style={{ color: "blue", textDecoration: "underline" }}>
+            ホームへ戻る
+          </a>
+        </div>
+        <Scripts />
+      </body>
+    </html>
+  );
+}
