@@ -55,7 +55,6 @@ export function Layout({ children }: { children: React.ReactNode }): ReactNode {
     <html lang="ja">
       <head>
         <meta charSet="utf-8" />
-        <meta name="google-site-verification" content="brDkeRhoxktrjCiqqUefNlNyOKLGHk0Cik9q9MzLv2E" />
         <meta name="google-site-verification" content="LQ31apSdI1TM-XP0eZ0Bdbv7eoBFrndb8pwSpCPhg2c" />
         <Meta />
         {/* デバイス検出スクリプトを早期に実行 */}
