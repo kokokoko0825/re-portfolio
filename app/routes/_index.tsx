@@ -1,4 +1,4 @@
-import { LoaderFunction, redirect } from "@remix-run/cloudflare";
+// import { LoaderFunction, redirect } from "@remix-run/cloudflare";
 /*
 // ルートパス（/）にアクセスした場合、/homeにリダイレクト
 export const loader: LoaderFunction = () => {
@@ -22,6 +22,7 @@ export const meta: MetaFunction = () => {
     return [
         { title: "kokokoko0825" },
         { name: "description", content: "Koshi Tanakaのポートフォリオ" },
+        { name: "robots", content: "index, follow" },
         // ビューポートの設定を明示的に追加
         { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" },
     ];

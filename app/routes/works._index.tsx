@@ -5,6 +5,21 @@ import { WorksItem } from "../component/worksItem";
 import { useState, useEffect } from "react";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import { MetaFunction } from "@remix-run/cloudflare";
+
+export const meta: MetaFunction = () => {
+  return [
+    { name: "description", content: "Koshi Tanakaの作品" },
+    { name: "og:title", content: "Works | kokokoko0825"},
+    { name: "og:description", content: "Koshi Tanakaの作品"},
+    { name: "og:url", content: "https://kokokoko0825.dev/works"},
+    { name: "og:image", content: "/images/icon.png"},
+    { name: "og:image:url", content: "/images/icon.png"},
+    { name: "og:image:alt", content: "kokokoko0825"},
+    { name: "og:type", content: "website"},
+    { name: "robots", content: "noindex, nofollow" },
+  ];
+};
 
 interface WorkData {
     id: string;

@@ -6,6 +6,14 @@ import { useState, useEffect, useRef } from "react";
 import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { renderMarkdownWithEmbeds, initializeAllEmbeds } from "../utils/markdownRenderer";
+import { MetaFunction } from "@remix-run/cloudflare";
+
+export const meta: MetaFunction = () => {
+  return [
+    { name: "description", content: "Koshi Tanakaのブログ記事" },
+    { name: "robots", content: "noindex, nofollow" },
+  ];
+};
 
 interface BlogData {
     id: string;

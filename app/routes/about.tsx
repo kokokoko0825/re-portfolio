@@ -1,6 +1,22 @@
 import { Header } from "../component/Header/Header";
 import { Footer } from "../component/Footer/Footer";
 import * as styles from "./styles.css";
+import { MetaFunction } from "@remix-run/cloudflare";
+
+export const meta: MetaFunction = () => {
+  return [
+    { name: "description", content: "Koshi Tanakaについて" },
+    { name: "og:title", content: "About | kokokoko0825"},
+    { name: "og:description", content: "Koshi Tanakaについて"},
+    { name: "og:url", content: "https://kokokoko0825.dev/about"},
+    { name: "og:image", content: "/images/icon.png"},
+    { name: "og:image:url", content: "/images/icon.png"},
+    { name: "og:image:alt", content: "kokokoko0825"},
+    { name: "og:type", content: "website"},
+    { name: "og:site_name", content: "kokokoko0825"},
+    { name: "robots", content: "noindex, nofollow" },
+  ];
+};
 
 export default function About() {
     return (

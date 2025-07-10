@@ -6,6 +6,15 @@ import { useState, useEffect, useRef } from "react";
 import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { renderMarkdownWithEmbeds, initializeAllEmbeds } from "../utils/markdownRenderer";
+import { MetaFunction } from "@remix-run/cloudflare";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "作品詳細 | kokokoko0825" },
+    { name: "description", content: "Koshi Tanakaの作品詳細" },
+    { name: "robots", content: "noindex, nofollow" },
+  ];
+};
 
 interface WorkData {
     id: string;

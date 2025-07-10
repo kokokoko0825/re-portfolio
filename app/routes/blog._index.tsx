@@ -5,6 +5,21 @@ import { BlogItem } from "../component/blogItem";
 import { useState, useEffect } from "react";
 import { collection, getDocs, orderBy, query, Timestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import { MetaFunction } from "@remix-run/cloudflare";
+
+export const meta: MetaFunction = () => {
+  return [
+    { name: "description", content: "Koshi Tanakaのブログ" },
+    { name: "og:title", content: "Blog | kokokoko0825"},
+    { name: "og:description", content: "Koshi Tanakaのブログ"},
+    { name: "og:url", content: "https://kokokoko0825.dev/blog"},
+    { name: "og:image", content: "/images/icon.png"},
+    { name: "og:image:url", content: "/images/icon.png"},
+    { name: "og:image:alt", content: "kokokoko0825"},
+    { name: "og:type", content: "website"},
+    { name: "robots", content: "noindex, nofollow" },
+  ];
+};
 
 interface BlogData {
     id: string;

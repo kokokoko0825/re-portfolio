@@ -117,7 +117,7 @@ export const meta: MetaFunction = () => {
     { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" },
     { title: "kokokoko0825" },
     { name: "description", content: "Koshi Tanakaのポートフォリオ" },
-    { name: "robots", content: "index, nofollow" },
+    { name: "robots", content: "index, follow" },
     
     // Open Graph tags
     { property: "og:title", content: "kokokoko0825" },
