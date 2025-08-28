@@ -48,6 +48,9 @@ const GENERAL_URL_REGEX = /https?:\/\/(?!.*(?:twitter\.com|x\.com)\/\w+\/status\
 // YouTube URL を検出する正規表現（youtube.com / youtu.be / shorts に対応）
 const YOUTUBE_URL_REGEX = /https?:\/\/(?:www\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/g;
 
+// Google Slides URL を検出する正規表現
+const GOOGLE_SLIDES_URL_REGEX = /https?:\/\/docs\.google\.com\/presentation\/d\/([a-zA-Z0-9_-]+)/g;
+
 // <p>URL</p> または <p><a href="URL">URL</a></p> 双方にマッチする段落置換用の正規表現を生成
 // 汎用URL段落マッチ（現在未使用）
 
@@ -65,6 +68,20 @@ function buildYouTubeParagraphRegex(videoId: string): RegExp {
     const textUrl = `${baseUrlPattern}(?:[^<\\s]*)?`;
     const anchor = `<a[^>]*href=["']${baseUrlPattern}[^"']*["'][^>]*>[^<]*<\\/a>`;
     return new RegExp(`<p>(?:${textUrl}|${anchor})<\\/p>`, 'g');
+}
+
+// Google Slides 段落置換用: presentationId を含むURL（生テキスト or a要素）を段落単位で検出
+function buildGoogleSlidesParagraphRegex(presentationId: string): RegExp {
+    const id = presentationId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const baseUrlPattern = `https?:\\/\\/docs\\.google\\.com\\/presentation\\/d\\/${id}`;
+    const textUrl = `${baseUrlPattern}(?:[^<\\s]*)?`;
+    const anchor = `<a[^>]*href=["']${baseUrlPattern}[^"']*["'][^>]*>[^<]*<\\/a>`;
+    return new RegExp(`<p>(?:${textUrl}|${anchor})<\\/p>`, 'g');
+}
+
+function isGoogleSlidesUrl(url: string): boolean {
+    const re = /https?:\/\/docs\.google\.com\/presentation\/d\/[a-zA-Z0-9_-]+/;
+    return re.test(url);
 }
 
 // URLを正規化する関数（x.comをtwitter.comに変換）
@@ -199,6 +216,49 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
         });
     }
 
+    // Google Slides を検出して簡易埋め込みに変換
+    const slidesMatches = Array.from(content.matchAll(GOOGLE_SLIDES_URL_REGEX));
+    if (slidesMatches.length > 0) {
+        slidesMatches.forEach((match) => {
+            const presId = match[1];
+            if (!presId) return;
+
+            const regex = buildGoogleSlidesParagraphRegex(presId);
+            // Google Slides のプレゼンは preview 埋め込みにする（操作は最小限で簡易表示）
+            const embedSrc = `https://docs.google.com/presentation/d/${presId}/preview`;
+            const embedHtml = `
+                <div class="gslides-embed-wrapper" style="
+                    display: flex;
+                    justify-content: center;
+                    width: 100%;
+                    box-sizing: border-box;
+                    margin: 2rem 0;
+                ">
+                    <div style="
+                        position: relative;
+                        width: 100%;
+                        max-width: 800px;
+                        aspect-ratio: 16 / 9;
+                        border-radius: 12px;
+                        overflow: hidden;
+                        border: 1px solid #2C2E47;
+                        background-color: #000;
+                    ">
+                        <iframe src="${embedSrc}" allowfullscreen style="
+                            position: absolute;
+                            inset: 0;
+                            width: 100%;
+                            height: 100%;
+                            border: 0;
+                        "></iframe>
+                    </div>
+                </div>
+            `;
+
+            html = html.replace(regex, embedHtml);
+        });
+    }
+
     // 通常のURLを検出して埋め込みコンポーネントに変換
     const generalUrls = content.match(GENERAL_URL_REGEX);
     
@@ -210,6 +270,10 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
             }
             // YouTube URL は別途処理済みなのでスキップ（gフラグのない検査）
             if (isYouTubeUrl(url)) {
+                return;
+            }
+            // Google Slides は別途処理済みなのでスキップ
+            if (isGoogleSlidesUrl(url)) {
                 return;
             }
             
