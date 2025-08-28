@@ -1,7 +1,11 @@
 {
   "name": "kokokoko0825",
   "private": true,
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css",
+    "**/*.css.ts",
+    "app/styles/globals.css.ts"
+  ],
   "type": "module",
   "scripts": {
     "build": "remix vite:build",
