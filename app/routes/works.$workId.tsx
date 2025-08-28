@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { renderMarkdownWithEmbeds, initializeAllEmbeds } from "../utils/markdownRenderer";
+// Prism はクライアント側でのみ動的に読み込む
 import { MetaFunction } from "@remix-run/cloudflare";
 
 export const meta: MetaFunction = () => {
@@ -72,8 +73,28 @@ export default function BlogId() {
     useEffect(() => {
         if (workData && contentRef.current) {
             // 少し遅延を入れてDOMが更新されるのを待つ
-            setTimeout(() => {
+            setTimeout(async () => {
                 initializeAllEmbeds();
+                if (contentRef.current) {
+                    const Prism = (await import("prismjs")).default;
+                    await Promise.all([
+                        import("prismjs/plugins/line-numbers/prism-line-numbers"),
+                        import("prismjs/components/prism-markup"),
+                        import("prismjs/components/prism-css"),
+                        import("prismjs/components/prism-javascript"),
+                        import("prismjs/components/prism-jsx"),
+                        import("prismjs/components/prism-typescript"),
+                        import("prismjs/components/prism-tsx"),
+                        import("prismjs/components/prism-json"),
+                        import("prismjs/components/prism-bash"),
+                        import("prismjs/components/prism-python"),
+                        import("prismjs/components/prism-clike"),
+                        import("prismjs/components/prism-c"),
+                        import("prismjs/components/prism-cpp"),
+                        import("prismjs/components/prism-yaml"),
+                    ]);
+                    Prism.highlightAllUnder(contentRef.current as unknown as ParentNode);
+                }
             }, 100);
         }
     }, [workData]);
