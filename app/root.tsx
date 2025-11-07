@@ -12,6 +12,7 @@ import { ReactNode } from "react";
 import { AuthProvider } from "./contexts/AuthContext";
 import { MenuProvider } from "./contexts/MenuContext";
 import { DeviceProvider } from "./contexts/DeviceContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import { getDeviceInfoFromRequest } from "./utils/deviceDetection";
 
 // Vanilla Extract CSSのエントリーポイントをインポート
@@ -79,13 +80,15 @@ export default function App(): ReactNode {
   const data = useLoaderData<typeof loader>();
   
   return (
-    <DeviceProvider serverDeviceInfo={data.deviceInfo}>
-      <AuthProvider>
-        <MenuProvider>
-          <Outlet />
-        </MenuProvider>
-      </AuthProvider>
-    </DeviceProvider>
+    <ThemeProvider>
+      <DeviceProvider serverDeviceInfo={data.deviceInfo}>
+        <AuthProvider>
+          <MenuProvider>
+            <Outlet />
+          </MenuProvider>
+        </AuthProvider>
+      </DeviceProvider>
+    </ThemeProvider>
   );
 }
 

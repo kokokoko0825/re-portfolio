@@ -18,6 +18,7 @@ export const vars = createThemeContract({
     },
 });
 
+// デフォルト（ダークモード）
 createGlobalTheme(":root", vars, {
     color: {
         background: "#03031B",
@@ -36,13 +37,23 @@ createGlobalTheme(":root", vars, {
     },
 });
 
-// Lightモード（OS設定がライト）のときに色を上書き
-globalStyle(":root", {
+// Lightモード（data-theme="light"またはOS設定がライトでユーザー設定がない場合）
+globalStyle(":root[data-theme='light']", {
+    vars: {
+        [vars.color.text]: "#03031B",
+        [vars.color.background]: "#F2F1FF",
+        [vars.color.borderColor]: "#9496AD",
+    }
+});
+
+// OS設定がライトのときに色を上書き（ユーザーが手動で変更していない場合のみ）
+globalStyle(":root:not([data-theme])", {
     "@media": {
         "(prefers-color-scheme: light)": {
             vars: {
                 [vars.color.text]: "#03031B",
                 [vars.color.background]: "#F2F1FF",
+                [vars.color.borderColor]: "#9496AD",
             }
         }
     }

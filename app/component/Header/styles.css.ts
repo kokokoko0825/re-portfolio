@@ -34,6 +34,42 @@ export const linkList = style({
     }
 })
 
+export const themeToggle = style({
+    display: "flex",
+    padding: "10px 20px",
+    cursor: "pointer",
+    color: vars.color.text,
+    alignItems: "center",
+    justifyContent: "center",
+    transition: "opacity 0.2s ease",
+    "@media": {
+        "screen and (max-width: 768px)": {
+            padding: "10px 15px"
+        }
+    }
+})
+
+globalStyle(`${themeToggle}:hover`, {
+    opacity: 0.8
+})
+
+// ダークモードの時にテーマカラーボタンの色をtextcolorに設定
+globalStyle(`:root[data-theme='dark'] ${themeToggle}`, {
+    color: vars.color.text
+})
+
+// MUIアイコンの色を確実に適用（ダークモード）
+globalStyle(`:root[data-theme='dark'] ${themeToggle} svg`, {
+    color: vars.color.text,
+    fill: vars.color.text
+})
+
+// ライトモードの時も明示的に設定
+globalStyle(`:root[data-theme='light'] ${themeToggle} svg`, {
+    color: vars.color.text,
+    fill: vars.color.text
+})
+
 export const hamburgerIcon = style({
     display: "none",
     padding: "10px 30px",
