@@ -10,6 +10,11 @@ export const adminHeader = style ({
     background: vars.color.background,
     boxSizing: "content-box",
     position: "fixed",
+    zIndex: 1001,
+})
+
+export const mobileView = style({
+    // モバイル表示時のスタイル
 })
 
 export const adminHomeIcon = style({
@@ -20,13 +25,49 @@ export const adminHomeIcon = style({
 export const adminLinkList = style({
     display: "flex",
     padding: "10px 50px",
-    alignItems: "center",
+    alignItems: "flex-start",
     gap: "30px",
     "@media": {
         "screen and (max-width: 768px)": {
             display: "none"
         }
     }
+})
+
+export const themeToggle = style({
+    display: "flex",
+    padding: "10px 20px",
+    cursor: "pointer",
+    color: vars.color.text,
+    alignItems: "center",
+    justifyContent: "center",
+    transition: "opacity 0.2s ease",
+    "@media": {
+        "screen and (max-width: 768px)": {
+            padding: "10px 15px"
+        }
+    }
+})
+
+globalStyle(`${themeToggle}:hover`, {
+    opacity: 0.8
+})
+
+// ダークモードの時にテーマカラーボタンの色をtextcolorに設定
+globalStyle(`:root[data-theme='dark'] ${themeToggle}`, {
+    color: vars.color.text
+})
+
+// MUIアイコンの色を確実に適用（ダークモード）
+globalStyle(`:root[data-theme='dark'] ${themeToggle} svg`, {
+    color: vars.color.text,
+    fill: vars.color.text
+})
+
+// ライトモードの時も明示的に設定
+globalStyle(`:root[data-theme='light'] ${themeToggle} svg`, {
+    color: vars.color.text,
+    fill: vars.color.text
 })
 
 export const adminHamburgerIcon = style({
@@ -56,7 +97,13 @@ export const adminMobileMenu = style({
     padding: "20px",
     transform: "translateX(100%)",
     transition: "transform 0.3s ease-in-out",
-    zIndex: 1000
+    zIndex: 1000,
+    // デスクトップでは完全に非表示にする
+    "@media": {
+        "screen and (min-width: 769px)": {
+            display: "none"
+        }
+    }
 })
 
 export const adminMobileMenuOpen = style({
@@ -118,9 +165,20 @@ export const adminMobileMenuOverlay = style({
     height: "100%",
     background: "rgba(0, 0, 0, 0.5)",
     zIndex: 999,
-    display: "none"
+    display: "none",
+    // デスクトップでは完全に非表示にする
+    "@media": {
+        "screen and (min-width: 769px)": {
+            display: "none !important"
+        }
+    }
 })
 
 export const adminMobileMenuOverlayOpen = style({
-    display: "block"
+    display: "block",
+    "@media": {
+        "screen and (min-width: 769px)": {
+            display: "none !important"
+        }
+    }
 })

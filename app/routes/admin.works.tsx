@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { ProtectedRoute } from "../component/ProtectedRoute/ProtectedRoute";
+import { vars } from "../styles/theme.css";
 
 interface WorkData {
     id: string;
@@ -64,16 +65,16 @@ export default function AdminWorks() {
                     <h1>Worksの管理</h1>
                     <div className={styles.newCreate}>
                         <Link to="/work/new">
-                            <button>New Create</button>
+                            <button style={{color: "#03031B", background: "#F2F1FF", border: "2px solid #9496AD"}}>New Create</button>
                         </Link>
                     </div>
                     <div className={styles.adminWorksList}>
                         {isLoading ? (
-                            <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
+                            <div style={{color: vars.color.text, textAlign: "center", padding: "20px"}}>
                                 読み込み中...
                             </div>
                         ) : works.length === 0 ? (
-                            <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
+                            <div style={{color: vars.color.text, textAlign: "center", padding: "20px"}}>
                                 作品がありません
                             </div>
                         ) : (

@@ -64,6 +64,7 @@ export default function Works() {
                         value={formData.email}
                         onChange={(e) => handleInputChange("email", e.target.value)}
                         onKeyPress={handleKeyPress}
+                        style={{ color: "#03031B" }}
                     />
                     <small>Password</small>
                     <input 
@@ -72,6 +73,7 @@ export default function Works() {
                         value={formData.password}
                         onChange={(e) => handleInputChange("password", e.target.value)}
                         onKeyPress={handleKeyPress}
+                        style={{ color: "#03031B" }}
                     />
                     {error && (
                         <div style={{
@@ -84,7 +86,7 @@ export default function Works() {
                         </div>
                     )}
                 </div>
-                <button onClick={handleLogin}>ログイン</button>
+                <button onClick={handleLogin} style={{color: "#03031B", background: "#F2F1FF", border: "2px solid #9496AD"}}>ログイン</button>
             </div>
             <Footer />
         </div>

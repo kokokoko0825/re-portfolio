@@ -8,6 +8,7 @@ import { db } from "../firebaseConfig";
 import { renderMarkdownWithEmbeds, initializeAllEmbeds } from "../utils/markdownRenderer";
 // Prism はクライアント側でのみ動的に読み込む
 import { MetaFunction } from "@remix-run/cloudflare";
+import { vars } from "../styles/theme.css";
 
 export const meta: MetaFunction = () => {
   return [
@@ -116,7 +117,7 @@ export default function BlogId() {
             <div className={styles.frame}>
                 <Header />
                 <div className={styles.blogId}>
-                    <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
+                    <div style={{color: vars.color.text, textAlign: "center", padding: "20px"}}>
                         読み込み中...
                     </div>
                 </div>

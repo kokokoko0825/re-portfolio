@@ -3,11 +3,18 @@ import * as styles from "../adminHeader/styles.css";
 import { Link, useNavigate } from "@remix-run/react";
 import { useAdminMenu } from "../../contexts/AdminMenuContext";
 import { useAuth } from "../../contexts/AuthContext";
+import { useDevice } from "../../contexts/DeviceContext";
 
 export function AdminMobileMenu(): ReactNode {
     const { isMenuOpen, closeMenu } = useAdminMenu();
     const { logout } = useAuth();
     const navigate = useNavigate();
+    const { isMobile } = useDevice();
+    
+    // モバイルでない場合は何も表示しない
+    if (!isMobile) {
+        return null;
+    }
 
     const handleLogout = () => {
         logout();
@@ -17,6 +24,7 @@ export function AdminMobileMenu(): ReactNode {
 
     return (
         <>
+            {/* オーバーレイ - モバイルかつメニューが開いている時のみ表示 */}
             {isMenuOpen && (
                 <div 
                     className={styles.adminMobileMenuOverlay} 
@@ -30,6 +38,8 @@ export function AdminMobileMenu(): ReactNode {
                     style={{ display: isMenuOpen ? "block" : "none" }}
                 />
             )}
+            
+            {/* メニュー本体 */}
             <div className={`${styles.adminMobileMenu} ${isMenuOpen ? styles.adminMobileMenuOpen : ""}`}>
                 <button 
                     className={styles.adminCloseButton} 
