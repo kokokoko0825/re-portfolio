@@ -9,12 +9,20 @@ import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 
 export function Header(): ReactNode {
-    const { toggleMenu } = useMenu();
+    const { isMenuOpen, toggleMenu } = useMenu();
     const { isMobile } = useDevice();
     const { theme, toggleTheme } = useTheme();
     
     // モバイル用のクラス名
     const mobileClass = isMobile ? styles.mobileView : '';
+    const hamburgerIconSrc = isMenuOpen
+        ? theme === "light"
+            ? "/images/light_humberger-close.svg"
+            : "/images/humberger-close.svg"
+        : theme === "light"
+            ? "/images/light_humberger.svg"
+            : "/images/humberger.svg";
+    const hamburgerAriaLabel = isMenuOpen ? "Close menu" : "Open menu";
     return (
         <>
             <div className={`${styles.header} ${mobileClass}`}>
@@ -57,7 +65,7 @@ export function Header(): ReactNode {
                         onClick={toggleMenu} 
                         role="button" 
                         tabIndex={0} 
-                        aria-label="Open menu" 
+                        aria-label={hamburgerAriaLabel}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter' || e.key === ' ') {
                                 toggleMenu();
@@ -65,8 +73,8 @@ export function Header(): ReactNode {
                         }}
                     >
                         <img 
-                            src={theme === "light" ? "/images/light_humberger.svg" : "/images/humberger.svg"} 
-                            alt="Menu" 
+                            src={hamburgerIconSrc}
+                            alt={hamburgerAriaLabel} 
                             style={{width: "25.9px", height: "17px"}}
                         />
                     </div>

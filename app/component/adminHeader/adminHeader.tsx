@@ -13,7 +13,7 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 export function AdminHeader(): ReactNode {
     const { logout } = useAuth();
     const navigate = useNavigate();
-    const { toggleMenu } = useAdminMenu();
+    const { isMenuOpen, toggleMenu } = useAdminMenu();
     const { isMobile } = useDevice();
     const { theme, toggleTheme } = useTheme();
 
@@ -24,6 +24,14 @@ export function AdminHeader(): ReactNode {
 
     // モバイル用のクラス名
     const mobileClass = isMobile ? styles.mobileView : '';
+    const hamburgerIconSrc = isMenuOpen
+        ? theme === "light"
+            ? "/images/light_humberger-close.svg"
+            : "/images/humberger-close.svg"
+        : theme === "light"
+            ? "/images/light_humberger.svg"
+            : "/images/humberger.svg";
+    const hamburgerAriaLabel = isMenuOpen ? "Close menu" : "Open menu";
 
     return (
         <>
@@ -67,7 +75,10 @@ export function AdminHeader(): ReactNode {
                                 cursor: "pointer",
                                 fontSize: "16px",
                                 padding: "0",
-                                margin: "0"
+                                margin: "0",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                textAlign: "center",
                             }}
                         >
                             ログアウト
@@ -80,7 +91,7 @@ export function AdminHeader(): ReactNode {
                         onClick={toggleMenu} 
                         role="button" 
                         tabIndex={0} 
-                        aria-label="Open menu" 
+                        aria-label={hamburgerAriaLabel}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter' || e.key === ' ') {
                                 toggleMenu();
@@ -88,8 +99,8 @@ export function AdminHeader(): ReactNode {
                         }}
                     >
                         <img 
-                            src={theme === "light" ? "/images/light_humberger.svg" : "/images/humberger.svg"} 
-                            alt="Menu" 
+                            src={hamburgerIconSrc}
+                            alt={hamburgerAriaLabel} 
                             style={{width: "25.9px", height: "17px"}}
                         />
                     </div>
