@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { collection, getDocs, orderBy, query, Timestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { MetaFunction } from "@remix-run/cloudflare";
+import { vars } from "../styles/theme.css";
 
 export const meta: MetaFunction = () => {
   return [
@@ -71,11 +72,11 @@ export default function Blog() {
             <div className={styles.blog}>
                 <h1>Blog</h1>
                 {isLoading ? (
-                    <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
+                    <div style={{color: vars.color.text, textAlign: "center", padding: "20px"}}>
                         読み込み中...
                     </div>
                 ) : blogs.length === 0 ? (
-                    <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
+                    <div style={{color: vars.color.text, textAlign: "center", padding: "20px"}}>
                         ブログ記事がありません
                     </div>
                 ) : (

@@ -55,7 +55,10 @@ export function AdminHeader(): ReactNode {
                         }
                     }}
                 >
+                <picture>
+                    <source media="(prefers-color-scheme: light)" srcSet="/images/light_humberger.svg" />
                     <img src="/images/humberger.svg" alt="Menu" style={{width: "25.9px", height: "17px"}}/>
+                </picture>
                 </div>
             </div>
             <AdminMobileMenu />

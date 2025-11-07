@@ -1,4 +1,4 @@
-import { createGlobalTheme, createThemeContract } from "@vanilla-extract/css";
+import { createGlobalTheme, createThemeContract, globalStyle } from "@vanilla-extract/css";
 
 export const vars = createThemeContract({
     color: {
@@ -34,4 +34,16 @@ createGlobalTheme(":root", vars, {
         fontFamily: {
         },
     },
+});
+
+// Lightモード（OS設定がライト）のときに色を上書き
+globalStyle(":root", {
+    "@media": {
+        "(prefers-color-scheme: light)": {
+            vars: {
+                [vars.color.text]: "#03031B",
+                [vars.color.background]: "#F2F1FF",
+            }
+        }
+    }
 });

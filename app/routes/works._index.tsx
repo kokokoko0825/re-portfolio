@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { MetaFunction } from "@remix-run/cloudflare";
+import { vars } from "../styles/theme.css";
 
 export const meta: MetaFunction = () => {
   return [
@@ -72,11 +73,11 @@ export default function Works() {
                 <h1>Works</h1>
                 <div className={styles.workList}>
                     {isLoading ? (
-                        <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
+                        <div style={{color: vars.color.text, textAlign: "center", padding: "20px"}}>
                             読み込み中...
                         </div>
                     ) : works.length === 0 ? (
-                        <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
+                        <div style={{color: vars.color.text, textAlign: "center", padding: "20px"}}>
                             作品がありません
                         </div>
                     ) : (

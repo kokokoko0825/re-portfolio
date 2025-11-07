@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /blog/
+Disallow: /works/
+Disallow: /about
+Disallow: /login
