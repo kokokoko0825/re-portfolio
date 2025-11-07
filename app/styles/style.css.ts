@@ -237,8 +237,8 @@ globalStyle("code", {
 
 // PrismJS code block styles
 globalStyle('pre[class*="language-"]', {
-    background: "#0f111a",
-    border: "1px solid #2C2E47",
+    background: vars.color.codeBlock.background,
+    border: `1px solid ${vars.color.codeBlock.border}`,
     borderRadius: "10px",
     padding: "16px 0 16px 0",
     overflow: "auto",
@@ -254,7 +254,7 @@ globalStyle('code[class*="language-"]', {
         'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
     fontSize: "16px",
     lineHeight: "1.8",
-    color: "#DEDBFF",
+    color: vars.color.codeBlock.text,
 });
 
 // Prism が各トークンを span でラップするため、全体の span スタイルの影響を受けないようにする
@@ -264,7 +264,7 @@ globalStyle('code[class*="language-"] span', {
 });
 
 globalStyle(".line-numbers-rows > span:before", {
-    color: "#6b6f85",
+    color: vars.color.codeBlock.lineNumber,
 });
 
 // 行番号のガター幅・余白
@@ -280,29 +280,53 @@ globalStyle('pre.line-numbers .line-numbers-rows', {
 
 // Prism トークン色の微調整（画像の配色に寄せる）
 globalStyle('.token.comment, .token.prolog, .token.doctype, .token.cdata', {
-    color: "#6b6f85",
+    color: vars.color.codeBlock.tokens.comment,
 });
 globalStyle('.token.punctuation', {
-    color: "#b4b8d1",
+    color: vars.color.codeBlock.tokens.punctuation,
 });
 globalStyle('.token.property, .token.tag, .token.constant, .token.symbol, .token.deleted', {
-    color: "#f4bf75",
+    color: vars.color.codeBlock.tokens.property,
 });
 globalStyle('.token.boolean, .token.number', {
-    color: "#f4bf75",
+    color: vars.color.codeBlock.tokens.boolean,
 });
 globalStyle('.token.selector, .token.attr-name, .token.string, .token.char, .token.builtin, .token.inserted', {
-    color: "#c6ffdd",
+    color: vars.color.codeBlock.tokens.selector,
 });
 globalStyle('.token.operator, .token.entity, .token.url', {
-    color: "#b4b8d1",
+    color: vars.color.codeBlock.tokens.operator,
 });
 globalStyle('.token.atrule, .token.attr-value, .token.keyword', {
-    color: "#7fffd4",
+    color: vars.color.codeBlock.tokens.atrule,
 });
 globalStyle('.token.function, .token.class-name', {
-    color: "#a2e8ff",
+    color: vars.color.codeBlock.tokens.function,
 });
 globalStyle('.token.regex, .token.important, .token.variable', {
-    color: "#ff9ac1",
+    color: vars.color.codeBlock.tokens.regex,
+});
+
+// Twitter埋め込みのスタイル調整
+globalStyle('.twitter-embed-wrapper', {
+    margin: '2rem 0',
+});
+
+// Twitter APIが生成する要素のマージンをリセット
+globalStyle('.twitter-embed-wrapper blockquote.twitter-tweet', {
+    margin: '0 !important',
+    marginTop: '0 !important',
+    marginBottom: '0 !important',
+});
+
+// Twitter埋め込みコンテナ内の余分な空間を削除
+globalStyle('[id^="tweet-"]', {
+    margin: '0',
+    padding: '0',
+});
+
+globalStyle('[id^="tweet-"] > *', {
+    margin: '0 !important',
+    marginTop: '0 !important',
+    marginBottom: '0 !important',
 });

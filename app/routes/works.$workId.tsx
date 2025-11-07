@@ -5,7 +5,8 @@ import { Link, useParams } from "@remix-run/react";
 import { useState, useEffect, useRef } from "react";
 import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-import { renderMarkdownWithEmbeds, initializeAllEmbeds } from "../utils/markdownRenderer";
+import { renderMarkdownWithEmbeds, initializeAllEmbeds, initializeTwitterEmbeds } from "../utils/markdownRenderer";
+import { useTheme } from "../contexts/ThemeContext";
 // Prism はクライアント側でのみ動的に読み込む
 import { MetaFunction } from "@remix-run/cloudflare";
 import { vars } from "../styles/theme.css";
@@ -33,6 +34,7 @@ export default function BlogId() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const contentRef = useRef<HTMLDivElement>(null);
+    const { theme } = useTheme();
 
     useEffect(() => {
         const fetchWorkData = async () => {
@@ -75,6 +77,7 @@ export default function BlogId() {
         if (workData && contentRef.current) {
             // 少し遅延を入れてDOMが更新されるのを待つ
             setTimeout(async () => {
+                // コンテンツが変更された場合は強制再初期化
                 initializeAllEmbeds();
                 if (contentRef.current) {
                     const Prism = (await import("prismjs")).default;
@@ -99,6 +102,20 @@ export default function BlogId() {
             }, 100);
         }
     }, [workData]);
+
+    // テーマが変更されたときにTwitter埋め込みを再初期化（テーマ変更時のみ）
+    useEffect(() => {
+        if (workData && contentRef.current) {
+            const tweetContainers = contentRef.current.querySelectorAll('[id^="tweet-"]');
+            if (tweetContainers.length > 0) {
+                // テーマ変更時は強制再初期化
+                setTimeout(() => {
+                    initializeTwitterEmbeds(true);
+                }, 100);
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [theme]);
 
     // FirestoreのTimestampを日付文字列に変換
     const formatDate = (timestamp: Timestamp | null) => {

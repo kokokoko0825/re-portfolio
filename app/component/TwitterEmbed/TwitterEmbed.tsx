@@ -1,4 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
+import { useTheme } from "../../contexts/ThemeContext";
 import * as styles from "./styles.css";
 
 interface TwitterEmbedProps {
@@ -8,6 +9,7 @@ interface TwitterEmbedProps {
 export function TwitterEmbed({ url }: TwitterEmbedProps): ReactNode {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const { theme } = useTheme();
 
     // URLからツイートIDを抽出する関数
     const extractTweetId = (url: string): string | null => {
@@ -30,12 +32,12 @@ export function TwitterEmbed({ url }: TwitterEmbedProps): ReactNode {
         script.src = 'https://platform.twitter.com/widgets.js';
         script.async = true;
         script.onload = () => {
-            // @ts-expect-error - Twitter埋め込みAPIはグローバルに定義される
+            // [at]ts-expect-error - Twitter埋め込みAPIはグローバルに定義される
             if (window.twttr) {
                 // @ts-expect-error - Twitter埋め込みAPIの型定義
                 window.twttr.widgets.createTweet(tweetId, document.getElementById(`tweet-${tweetId}`), {
                     conversation: 'none',
-                    theme: 'dark'
+                    theme: theme
                 }).then((el: HTMLElement | null) => {
                     if (el) {
                         setIsLoading(false);
@@ -60,7 +62,7 @@ export function TwitterEmbed({ url }: TwitterEmbedProps): ReactNode {
                 document.head.removeChild(existingScript);
             }
         };
-    }, [tweetId]);
+    }, [tweetId, theme]);
 
     if (!tweetId) {
         return (

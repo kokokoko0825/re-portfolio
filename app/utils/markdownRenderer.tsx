@@ -1,4 +1,5 @@
 import MarkdownIt from "markdown-it";
+import { vars } from "../styles/theme.css";
 
 // Twitter埋め込みAPIの型定義
 declare global {
@@ -135,6 +136,8 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                         <div id="tweet-${tweetId}" style="
                             max-width: 600px;
                             width: 100%;
+                            margin: 0;
+                            padding: 0;
                         "></div>
                     </div>
                 `;
@@ -172,11 +175,11 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                         max-width: 800px;
                         border-radius: 12px;
                         overflow: hidden;
-                        border: 1px solid #2C2E47;
-                        background-color: #000;
+                        border: 1px solid ${vars.color.borderColor};
+                        background-color: ${vars.color.background};
                         aspect-ratio: 16 / 9;
                         text-decoration: none;
-                        color: inherit;
+                        color: ${vars.color.text};
                         transition: transform 0.2s ease, box-shadow 0.2s ease;
                     " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
                         <img src="${thumbnailUrl}" alt="YouTube thumbnail" style="
@@ -232,7 +235,6 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                     justify-content: center;
                     width: 100%;
                     box-sizing: border-box;
-                    margin: 2rem 0;
                 ">
                     <div style="
                         position: relative;
@@ -241,8 +243,8 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                         aspect-ratio: 16 / 9;
                         border-radius: 12px;
                         overflow: hidden;
-                        border: 1px solid #2C2E47;
-                        background-color: #000;
+                        border: 1px solid ${vars.color.borderColor};
+                        background-color: ${vars.color.background};
                     ">
                         <iframe src="${embedSrc}" allowfullscreen style="
                             position: absolute;
@@ -296,10 +298,10 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                         width: 100%;
                         border-radius: 12px;
                         overflow: hidden;
-                        border: 1px solid #2C2E47;
-                        background-color: #03031B;
+                        border: 1px solid ${vars.color.borderColor};
+                        background-color: ${vars.color.background};
                         text-decoration: none;
-                        color: inherit;
+                        color: ${vars.color.text};
                         transition: transform 0.2s ease, box-shadow 0.2s ease;
                     " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
                         <div class="link-embed-content" style="
@@ -316,12 +318,12 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                                     font-size: 1.1rem;
                                     font-weight: 600;
                                     margin: 0 0 0.5rem 0;
-                                    color: #DEDBFF;
+                                    color: ${vars.color.text};
                                     line-height: 1.4;
                                 ">リンクを読み込み中...</h3>
                                 <p class="link-embed-description" style="
                                     font-size: 0.9rem;
-                                    color: #999;
+                                    color: ${vars.color.muted.foreground};
                                     margin: 0 0 0.5rem 0;
                                     line-height: 1.4;
                                 ">メタデータを取得中...</p>
@@ -333,7 +335,7 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                             ">
                                 <span class="link-embed-url" style="
                                     font-size: 0.75rem;
-                                    color: #999;
+                                    color: ${vars.color.muted.foreground};
                                     word-break: break-all;
                                 ">${url}</span>
                             </div>
@@ -353,42 +355,85 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
 export const renderMarkdownWithTwitterEmbed = renderMarkdownWithEmbeds;
 
 // Twitter埋め込みウィジェットを初期化する関数
-export function initializeTwitterEmbeds(): void {
+export function initializeTwitterEmbeds(forceReinit = false): void {
+    // 現在のテーマを取得（data-theme属性から）
+    const getCurrentTheme = (): 'light' | 'dark' => {
+        if (typeof window === 'undefined') return 'dark';
+        const theme = document.documentElement.getAttribute('data-theme');
+        return (theme === 'light' || theme === 'dark') ? theme : 'dark';
+    };
+
+    const currentTheme = getCurrentTheme();
+
+    // Twitter埋め込みを初期化する内部関数
+    const initTweets = () => {
+        const tweetContainers = document.querySelectorAll('[id^="tweet-"]');
+        tweetContainers.forEach((container) => {
+            const tweetId = container.id.replace('tweet-', '');
+            const htmlElement = container as HTMLElement;
+            
+            // 既に初期化済みかどうかをチェック（data属性で管理）
+            const isInitialized = htmlElement.dataset.twitterInitialized === 'true';
+            const savedTheme = htmlElement.dataset.twitterTheme;
+            
+            // 強制再初期化の場合、または未初期化の場合、またはテーマが変更された場合のみ再初期化
+            const shouldReinit = forceReinit || !isInitialized || (savedTheme && savedTheme !== currentTheme);
+            
+            if (!shouldReinit && isInitialized && savedTheme === currentTheme) {
+                return; // 既に初期化済みでテーマも同じ場合はスキップ
+            }
+            
+            // 既存の埋め込みを削除（blockquote、iframe、またはtwitter-tweetクラスが存在する場合）
+            const hasExistingEmbed = container.querySelector('blockquote') || 
+                                    container.querySelector('iframe') || 
+                                    container.querySelector('.twitter-tweet') ||
+                                    container.children.length > 0;
+            if (hasExistingEmbed) {
+                container.innerHTML = '';
+                // data属性もクリア
+                delete htmlElement.dataset.twitterInitialized;
+                delete htmlElement.dataset.twitterTheme;
+            }
+            
+            // 新しい埋め込みを作成
+            if (window.twttr && window.twttr.widgets) {
+                window.twttr.widgets.createTweet(tweetId, htmlElement, {
+                    conversation: 'none',
+                    theme: currentTheme
+                }).then(() => {
+                    // 初期化済みマークを設定
+                    htmlElement.dataset.twitterInitialized = 'true';
+                    htmlElement.dataset.twitterTheme = currentTheme;
+                }).catch((error) => {
+                    console.error('Twitter埋め込みの作成に失敗しました:', error);
+                });
+            }
+        });
+    };
+
     // Twitter埋め込みスクリプトが既に読み込まれているかチェック
     if (typeof window !== 'undefined' && !window.twttr) {
+        // スクリプトが既に読み込み中かチェック
+        const existingScript = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
+        if (existingScript) {
+            // スクリプトが読み込み中の場合は、読み込み完了を待つ
+            existingScript.addEventListener('load', () => {
+                setTimeout(initTweets, 100);
+            });
+            return;
+        }
+        
         const script = document.createElement('script');
         script.src = 'https://platform.twitter.com/widgets.js';
         script.async = true;
         script.onload = () => {
             // スクリプト読み込み後に埋め込みを初期化
-            setTimeout(() => {
-                const tweetContainers = document.querySelectorAll('[id^="tweet-"]');
-                tweetContainers.forEach((container) => {
-                    const tweetId = container.id.replace('tweet-', '');
-                    if (window.twttr && window.twttr.widgets) {
-                        window.twttr.widgets.createTweet(tweetId, container as HTMLElement, {
-                            conversation: 'none',
-                            theme: 'dark'
-                        });
-                    }
-                });
-            }, 100);
+            setTimeout(initTweets, 100);
         };
         document.head.appendChild(script);
     } else if (typeof window !== 'undefined' && window.twttr) {
         // 既にスクリプトが読み込まれている場合は直接初期化
-        setTimeout(() => {
-            const tweetContainers = document.querySelectorAll('[id^="tweet-"]');
-            tweetContainers.forEach((container) => {
-                const tweetId = container.id.replace('tweet-', '');
-                if (window.twttr && window.twttr.widgets) {
-                    window.twttr.widgets.createTweet(tweetId, container as HTMLElement, {
-                        conversation: 'none',
-                        theme: 'dark'
-                    });
-                }
-            });
-        }, 100);
+        setTimeout(initTweets, 100);
     }
 }
 
@@ -426,13 +471,13 @@ export function initializeLinkEmbeds(): void {
                                         <span style="
                                             font-size: 0.8rem;
                                             font-weight: 500;
-                                            color: #007acc;
+                                            color: ${vars.color.primary.DEFAULT};
                                             text-transform: uppercase;
                                             letter-spacing: 0.5px;
                                         ">${linkData.siteName}</span>
                                         <span style="
                                             font-size: 0.75rem;
-                                            color: #999;
+                                            color: ${vars.color.muted.foreground};
                                             word-break: break-all;
                                         ">${url}</span>
                                     `;
