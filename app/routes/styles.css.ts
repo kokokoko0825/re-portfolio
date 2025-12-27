@@ -360,12 +360,12 @@ export const description = style({
 })
 
 export const adminThumbnailInput = style({
-    fontSize: "96px", 
-    width: "auto", 
-    height: "auto", 
-    textAlign: "center", 
-    border: "none", 
-    background: "none", 
+    fontSize: "96px",
+    width: "auto",
+    height: "auto",
+    textAlign: "center",
+    border: "none",
+    background: "none",
     color: "#DEDBFF",
     "@media": {
         "screen and (max-width: 768px)": {
@@ -375,11 +375,11 @@ export const adminThumbnailInput = style({
 })
 
 export const adminTitleInput = style({
-    fontSize: "36px", 
-    width: "100%", 
-    height: "auto", 
-    background: "none", 
-    border: "none", 
+    fontSize: "36px",
+    width: "100%",
+    height: "auto",
+    background: "none",
+    border: "none",
     color: "#DEDBFF",
     "@media": {
         "screen and (max-width: 768px)": {
@@ -389,11 +389,11 @@ export const adminTitleInput = style({
 })
 
 export const adminDescriptionInput = style({
-    fontSize: "20px", 
-    width: "100%", 
-    height: "auto", 
-    background: "none", 
-    border: "none", 
+    fontSize: "20px",
+    width: "100%",
+    height: "auto",
+    background: "none",
+    border: "none",
     color: "#DEDBFF",
     "@media": {
         "screen and (max-width: 768px)": {
@@ -403,12 +403,12 @@ export const adminDescriptionInput = style({
 })
 
 export const adminTextareaInput = style({
-    fontSize: "20px", 
-    width: "100%", 
-    height: "700px", 
-    background: "#DEDBFF", 
-    border: "none", 
-    color: "#2C2E47", 
+    fontSize: "20px",
+    width: "100%",
+    height: "700px",
+    background: "#DEDBFF",
+    border: "none",
+    color: "#2C2E47",
     borderRadius: "10px",
     "@media": {
         "screen and (max-width: 768px)": {
@@ -455,6 +455,17 @@ export const linkText = style({
 })
 
 export const careerText = style({
+    fontSize: "20px",
+    "@media": {
+        "screen and (max-width: 768px)": {
+            fontSize: "15px",
+        }
+    }
+})
+
+export const linkUnderline = style({
+    textDecoration: "underline",
+    color: vars.color.text,
     fontSize: "20px",
     "@media": {
         "screen and (max-width: 768px)": {

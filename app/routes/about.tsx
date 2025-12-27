@@ -2,20 +2,21 @@ import { Header } from "../component/Header/Header";
 import { Footer } from "../component/Footer/Footer";
 import * as styles from "./styles.css";
 import { MetaFunction } from "@remix-run/cloudflare";
+import { Link } from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
-  return [
-    { name: "description", content: "Koshi Tanakaについて" },
-    { name: "og:title", content: "About | kokokoko0825"},
-    { name: "og:description", content: "Koshi Tanakaについて"},
-    { name: "og:url", content: "https://kokokoko0825.dev/about"},
-    { name: "og:image", content: "/images/icon.png"},
-    { name: "og:image:url", content: "/images/icon.png"},
-    { name: "og:image:alt", content: "kokokoko0825"},
-    { name: "og:type", content: "website"},
-    { name: "og:site_name", content: "kokokoko0825"},
-    { name: "robots", content: "noindex, nofollow" },
-  ];
+    return [
+        { name: "description", content: "Koshi Tanakaについて" },
+        { name: "og:title", content: "About | kokokoko0825" },
+        { name: "og:description", content: "Koshi Tanakaについて" },
+        { name: "og:url", content: "https://kokokoko0825.dev/about" },
+        { name: "og:image", content: "/images/icon.png" },
+        { name: "og:image:url", content: "/images/icon.png" },
+        { name: "og:image:alt", content: "kokokoko0825" },
+        { name: "og:type", content: "website" },
+        { name: "og:site_name", content: "kokokoko0825" },
+        { name: "robots", content: "noindex, nofollow" },
+    ];
 };
 
 export default function About() {
@@ -27,11 +28,20 @@ export default function About() {
                     <h1>About me</h1>
                     <div className={styles.list}>
                         <p className={styles.careerText}>高専4年目でプログラミングの楽しさに目覚めたWebエンジニアです。</p>
-                        <p className={styles.careerText}>Web以外にはUI/UXなどのデザインやAI活用に興味を持っています。</p>
+                        <p className={styles.careerText}>Web以外にはUIデザインやAI活用に興味を持っています。</p>
                         <p className={styles.careerText}>将来はフルスタックのエンジニアを目指しています。</p>
-                        <p className={styles.careerText}>小さい頃から嵐、Hey!Say!JUMPなど男性アイドルを好んで聞いています。</p>
-                        <p className={styles.careerText}>アイドル以外ではヤバイTシャツ屋さんをよく聞いています。</p>
+                        <p className={styles.careerText}>お仕事の依頼は<Link to="https://forms.gle/HG3fUuXZmQYjxExR9" className={styles.linkUnderline}>こちら</Link>からお願いします。</p>
                     </div>
+                </div>
+                <div className={styles.section}>
+                    <h1>Skills</h1>
+                    <ul>
+                        <li className={styles.careerText}>TypeScript</li>
+                        <li className={styles.careerText}>C++</li>
+                        <li className={styles.careerText}>Python</li>
+                        <li className={styles.careerText}>Remix</li>
+                        <li className={styles.careerText}>Figma</li>
+                    </ul>
                 </div>
                 <div className={styles.section}>
                     <h1>Career</h1>
@@ -43,14 +53,26 @@ export default function About() {
                     </div>
                 </div>
                 <div className={styles.section}>
-                    <h1>Skills</h1>
-                    <ul>
-                        <li>TypeScript</li>
-                        <li>C++</li>
-                        <li>Python</li>
-                        <li>Remix</li>
-                        <li>Figma</li>
-                    </ul>
+                    <h1>Favorite</h1>
+                    <h2>Technology</h2>
+                    <div className={styles.list}>
+                        <ul>
+                            <li className={styles.careerText}>UI design</li>
+                            <li className={styles.careerText}>Vibe Cording</li>
+                            <li className={styles.careerText}>Web Application</li>
+                        </ul>
+                    </div>
+                    <h2>Person</h2>
+                    <div className={styles.list}>
+                        <ul>
+                            <li className={styles.careerText}>大野智 (嵐)</li>
+                            <li className={styles.careerText}>八乙女光 (Hay! Say! JUMP)</li>
+                            <li className={styles.careerText}>ヤバイTシャツ屋さん</li>
+                            <li className={styles.careerText}>遠藤さくら (乃木坂46)</li>
+                            <li className={styles.careerText}>谷口愛季 (櫻坂46)</li>
+                            <li className={styles.careerText}>環やね (きゅるりんってしてみて)</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <Footer />
