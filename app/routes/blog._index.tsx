@@ -28,6 +28,7 @@ interface BlogData {
     title: string;
     thumbnail: string;
     createdAt: Timestamp;
+    externalUrl: string;
 }
 
 export default function Blog() {
@@ -51,7 +52,8 @@ export default function Blog() {
                         number: data.number || 0,
                         title: data.title || "",
                         thumbnail: data.thumbnail || "",
-                        createdAt: data.createdAt || null
+                        createdAt: data.createdAt || null,
+                        externalUrl: data.externalUrl || ""
                     });
                 });
                 
@@ -81,11 +83,12 @@ export default function Blog() {
                     </div>
                 ) : (
                     blogs.map((blog) => (
-                        <BlogItem 
+                        <BlogItem
                             key={blog.id}
                             id={blog.id}
                             title={blog.title}
                             createdAt={blog.createdAt}
+                            externalUrl={blog.externalUrl}
                         />
                     ))
                 )}

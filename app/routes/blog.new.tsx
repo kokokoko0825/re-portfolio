@@ -12,6 +12,7 @@ export default function AdminBlogNew() {
         title: "",
         description: "",
         tag: "",
+        externalUrl: "",
         content: ""
     });
     const [isLoading, setIsLoading] = useState(false);
@@ -46,8 +47,8 @@ export default function AdminBlogNew() {
     };
 
     const handleSubmit = async () => {
-        if (!formData.title || !formData.content) {
-            alert("タイトルとコンテンツは必須です");
+        if (!formData.title || (!formData.content && !formData.externalUrl)) {
+            alert("タイトルは必須です。コンテンツまたは外部URLのいずれかを入力してください。");
             return;
         }
 
@@ -61,6 +62,7 @@ export default function AdminBlogNew() {
                 title: formData.title,
                 description: formData.description,
                 tag: formData.tag,
+                externalUrl: formData.externalUrl,
                 content: formData.content,
                 createdAt: serverTimestamp(),
                 updatedAt: serverTimestamp()
@@ -76,6 +78,7 @@ export default function AdminBlogNew() {
                 title: "",
                 description: "",
                 tag: "",
+                externalUrl: "",
                 content: ""
             });
         } catch (error) {
@@ -117,15 +120,24 @@ export default function AdminBlogNew() {
                         />
                     </div>
                     <div className={styles.description}>
-                        <input 
-                            type="text" 
-                            placeholder="tag" 
+                        <input
+                            type="text"
+                            placeholder="tag"
                             value={formData.tag}
                             onChange={(e) => handleInputChange("tag", e.target.value)}
                             className={styles.adminDescriptionInput}
                         />
                     </div>
-                    <textarea 
+                    <div className={styles.description}>
+                        <input
+                            type="text"
+                            placeholder="外部URL (Zenn, Qiitaなど)"
+                            value={formData.externalUrl}
+                            onChange={(e) => handleInputChange("externalUrl", e.target.value)}
+                            className={styles.adminDescriptionInput}
+                        />
+                    </div>
+                    <textarea
                         placeholder="content" 
                         value={formData.content}
                         onChange={(e) => handleInputChange("content", e.target.value)}
