@@ -1,9 +1,19 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import {
+    onAuthStateChanged,
+    signInWithPopup,
+    signOut,
+    GoogleAuthProvider,
+    User,
+} from "firebase/auth";
+import { auth } from "../firebaseConfig";
 
 interface AuthContextType {
     isLoggedIn: boolean;
-    login: () => void;
-    logout: () => void;
+    user: User | null;
+    loading: boolean;
+    login: () => Promise<void>;
+    logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -12,29 +22,46 @@ interface AuthProviderProps {
     children: ReactNode;
 }
 
-export function AuthProvider({ children }: AuthProviderProps) {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+const googleProvider = new GoogleAuthProvider();
+const ALLOWED_EMAIL = "koushi.tanaka54@gmail.com";
 
-    // ページ読み込み時にローカルストレージからログイン状態を復元
+export function AuthProvider({ children }: AuthProviderProps) {
+    const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        const loginStatus = localStorage.getItem('isLoggedIn');
-        if (loginStatus === 'true') {
-            setIsLoggedIn(true);
-        }
+        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+            if (firebaseUser && firebaseUser.email !== ALLOWED_EMAIL) {
+                signOut(auth);
+                return;
+            }
+            setUser(firebaseUser);
+            setLoading(false);
+        });
+
+        return () => unsubscribe();
     }, []);
 
-    const login = () => {
-        setIsLoggedIn(true);
-        localStorage.setItem('isLoggedIn', 'true');
+    const login = async () => {
+        const result = await signInWithPopup(auth, googleProvider);
+        if (result.user.email !== ALLOWED_EMAIL) {
+            await signOut(auth);
+            throw new Error("unauthorized");
+        }
     };
 
-    const logout = () => {
-        setIsLoggedIn(false);
-        localStorage.removeItem('isLoggedIn');
+    const logout = async () => {
+        await signOut(auth);
     };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+        <AuthContext.Provider value={{
+            isLoggedIn: !!user,
+            user,
+            loading,
+            login,
+            logout,
+        }}>
             {children}
         </AuthContext.Provider>
     );
@@ -46,4 +73,4 @@ export function useAuth() {
         throw new Error('useAuth must be used within an AuthProvider');
     }
     return context;
-} 
+}

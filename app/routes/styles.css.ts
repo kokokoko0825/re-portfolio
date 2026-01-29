@@ -366,7 +366,7 @@ export const adminThumbnailInput = style({
     textAlign: "center",
     border: "none",
     background: "none",
-    color: "#DEDBFF",
+    color: vars.color.text,
     "@media": {
         "screen and (max-width: 768px)": {
             fontSize: "48px",
@@ -380,7 +380,7 @@ export const adminTitleInput = style({
     height: "auto",
     background: "none",
     border: "none",
-    color: "#DEDBFF",
+    color: vars.color.text,
     "@media": {
         "screen and (max-width: 768px)": {
             fontSize: "24px",
@@ -394,7 +394,7 @@ export const adminDescriptionInput = style({
     height: "auto",
     background: "none",
     border: "none",
-    color: "#DEDBFF",
+    color: vars.color.text,
     "@media": {
         "screen and (max-width: 768px)": {
             fontSize: "12px",
@@ -406,9 +406,9 @@ export const adminTextareaInput = style({
     fontSize: "20px",
     width: "100%",
     height: "700px",
-    background: "#DEDBFF",
-    border: "none",
-    color: "#2C2E47",
+    background: vars.color.codeBlock.background,
+    border: `1px solid ${vars.color.borderColor}`,
+    color: vars.color.text,
     borderRadius: "10px",
     "@media": {
         "screen and (max-width: 768px)": {

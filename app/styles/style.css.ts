@@ -213,9 +213,12 @@ globalStyle("button", {
     display: "flex",
     padding: "10px 30px",
     alignItems: "flex-start",
-    gap :"10px",
+    gap: "10px",
     borderRadius: "10px",
     background: vars.color.text,
+    color: vars.color.background,
+    border: "none",
+    cursor: "pointer",
 })
 
 // codefont
