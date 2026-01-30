@@ -2,7 +2,6 @@ import { Header } from "../component/Header/Header";
 import { Footer } from "../component/Footer/Footer";
 import * as styles from "./styles.css";
 import { MetaFunction } from "@remix-run/cloudflare";
-import { Link } from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
     return [
@@ -30,7 +29,7 @@ export default function About() {
                         <p className={styles.careerText}>高専4年目でプログラミングの楽しさに目覚めたWebエンジニアです。</p>
                         <p className={styles.careerText}>Web以外にはUIデザインやAI活用に興味を持っています。</p>
                         <p className={styles.careerText}>将来はフルスタックのエンジニアを目指しています。</p>
-                        <p className={styles.careerText}>お仕事の依頼は<Link to="https://forms.gle/HG3fUuXZmQYjxExR9" className={styles.linkUnderline}>こちら</Link>からお願いします。</p>
+                        <p className={styles.careerText}>お仕事の依頼は<a href="mailto:me@kokokoko0825.dev" className={styles.linkUnderline}>こちら</a>からお願いします。</p>
                     </div>
                 </div>
                 <div className={styles.section}>
