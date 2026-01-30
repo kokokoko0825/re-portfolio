@@ -45,12 +45,22 @@ export default function About() {
                 </div>
                 <div className={styles.section}>
                     <h1>Career</h1>
-                    <div className={styles.list}>
+                    <ul className={styles.timeline}>
                         {/*
-                        <p>2026 - 現在  株式会社セゾンテクノロジー</p>
+                        <li className={styles.timelineItem}>
+                            <small className={styles.timelineYear}>2026 - 現在</small>
+                            <p className={styles.timelineTitle}>株式会社セゾンテクノロジー</p>
+                        </li>
                         */}
-                        <p className={styles.careerText}>2021 - 2026  鈴鹿高専 電子情報工学科</p>
-                    </div>
+                        <li className={styles.timelineItem}>
+                            <small className={styles.timelineYear}>2021 - 2026</small>
+                            <p className={styles.timelineTitle}>鈴鹿高専 電子情報工学科</p>
+                        </li>
+                        <li className={styles.timelineItem}>
+                            <small className={styles.timelineYear}>2005</small>
+                            <p className={styles.timelineTitle}>爆誕</p>
+                        </li>
+                    </ul>
                 </div>
                 <div className={styles.section}>
                     <h1>Favorite</h1>

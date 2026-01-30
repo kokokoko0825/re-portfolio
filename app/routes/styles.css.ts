@@ -473,3 +473,79 @@ export const linkUnderline = style({
         }
     }
 })
+
+// Timeline styles
+export const timeline = style({
+    listStyle: "none",
+    margin: 0,
+    padding: "0 0 0 24px",
+    position: "relative",
+    "::before": {
+        content: '""',
+        position: "absolute",
+        left: "5px",
+        top: "5px",
+        bottom: "5px",
+        width: "2px",
+        background: vars.color.borderColor,
+    },
+    "@media": {
+        "screen and (max-width: 768px)": {
+            paddingLeft: "20px",
+        }
+    }
+})
+
+export const timelineItem = style({
+    position: "relative",
+    paddingTop: "24px",
+    selectors: {
+        "&:first-child": {
+            paddingTop: 0,
+        },
+    },
+    "::before": {
+        content: '""',
+        position: "absolute",
+        left: "-24px",
+        bottom: "0px",
+        width: "12px",
+        height: "12px",
+        borderRadius: "50%",
+        background: vars.color.text,
+        border: `2px solid ${vars.color.background}`,
+        boxSizing: "border-box",
+    },
+    "@media": {
+        "screen and (max-width: 768px)": {
+            paddingTop: "20px",
+            "::before": {
+                left: "-20px",
+                width: "10px",
+                height: "10px",
+            },
+        }
+    }
+})
+
+export const timelineYear = style({
+    fontSize: "14px",
+    color: vars.color.muted.foreground,
+    marginBottom: "4px",
+    "@media": {
+        "screen and (max-width: 768px)": {
+            fontSize: "12px",
+        }
+    }
+})
+
+export const timelineTitle = style({
+    fontSize: "20px",
+    color: vars.color.text,
+    margin: 0,
+    "@media": {
+        "screen and (max-width: 768px)": {
+            fontSize: "15px",
+        }
+    }
+})
