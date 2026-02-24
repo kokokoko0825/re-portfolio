@@ -46,6 +46,51 @@ export const blog = style({
     }
 })
 
+export const tagFilters = style({
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "8px",
+    alignItems: "center",
+})
+
+export const tagFilter = style({
+    padding: "6px 12px",
+    fontSize: "14px",
+    border: `1px solid ${vars.color.borderColor}`,
+    borderRadius: "9999px",
+    background: vars.color.background,
+    color: vars.color.text,
+    cursor: "pointer",
+})
+
+export const tagFilterActive = style({
+    padding: "6px 12px",
+    fontSize: "14px",
+    border: `1px solid ${vars.color.borderColor}`,
+    borderRadius: "9999px",
+    background: vars.color.borderColor,
+    color: vars.color.text,
+    cursor: "pointer",
+})
+
+export const tagList = style({
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "6px",
+})
+
+export const tagChip = style({
+    fontSize: "12px",
+    padding: "2px 8px",
+    borderRadius: "9999px",
+    border: `1px solid ${vars.color.borderColor}`,
+    color: vars.color.text,
+    textDecoration: "none",
+    ":hover": {
+        background: vars.color.borderColor,
+    },
+})
+
 export const works = style({
     display: "flex",
     padding: "120px 10px 10px 10px",

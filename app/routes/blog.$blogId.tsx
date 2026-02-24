@@ -7,6 +7,7 @@ import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { renderMarkdownWithEmbeds, initializeAllEmbeds, initializeTwitterEmbeds } from "../utils/markdownRenderer";
 import { useTheme } from "../contexts/ThemeContext";
+import { normalizeBlogTags } from "../utils/blogTags";
 // Prism はクライアント側でのみ動的に読み込む
 import { MetaFunction } from "@remix-run/cloudflare";
 
@@ -24,6 +25,7 @@ interface BlogData {
     thumbnail: string;
     createdAt: Timestamp;
     updatedAt: Timestamp;
+    tags: string[];
 }
 
 export default function BlogId() {
@@ -54,7 +56,8 @@ export default function BlogId() {
                         content: data.content || "",
                         thumbnail: data.thumbnail || "",
                         createdAt: data.createdAt || null,
-                        updatedAt: data.updatedAt || null
+                        updatedAt: data.updatedAt || null,
+                        tags: normalizeBlogTags(data),
                     });
                 } else {
                     setError("ブログ記事が見つかりません");
@@ -168,6 +171,19 @@ export default function BlogId() {
                 <div className={styles.thumbnail}>
                     <span>{blogData.thumbnail}</span>
                     <h1>{blogData.title}</h1>
+                    {blogData.tags.length > 0 && (
+                        <div className={styles.tagList}>
+                            {blogData.tags.map((tag) => (
+                                <Link
+                                    key={tag}
+                                    to={`/blog?tag=${encodeURIComponent(tag)}`}
+                                    className={styles.tagChip}
+                                >
+                                    {tag}
+                                </Link>
+                            ))}
+                        </div>
+                    )}
                 </div>
                 <div className={styles.textFrame}>
                     <div 

@@ -8,9 +8,10 @@ interface BlogItemProps {
     title: string;
     createdAt: Timestamp | null;
     externalUrl?: string;
+    tags?: string[];
 }
 
-export function BlogItem({ id, title, createdAt, externalUrl }: BlogItemProps): ReactNode {
+export function BlogItem({ id, title, createdAt, externalUrl, tags = [] }: BlogItemProps): ReactNode {
     // FirestoreのTimestampを日付文字列に変換
     const formatDate = (timestamp: Timestamp | null) => {
         if (!timestamp) return "";
@@ -27,6 +28,20 @@ export function BlogItem({ id, title, createdAt, externalUrl }: BlogItemProps): 
         <div className={styles.blogItem}>
             <small>{formatDate(createdAt)}</small>
             <h2>{title}</h2>
+            {tags.length > 0 && (
+                <div className={styles.tagList}>
+                    {tags.map((tag) => (
+                        <Link
+                            key={tag}
+                            to={`/blog?tag=${encodeURIComponent(tag)}`}
+                            className={styles.tagChip}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {tag}
+                        </Link>
+                    ))}
+                </div>
+            )}
         </div>
     );
 

@@ -6,6 +6,7 @@ import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { useParams, useNavigate } from "@remix-run/react";
 import { ProtectedRoute } from "../component/ProtectedRoute/ProtectedRoute";
+import { normalizeBlogTags, formatTagsForInput, parseTagsInput } from "../utils/blogTags";
 
 export default function AdminBlogEdit() {
     const { blogId } = useParams();
@@ -14,7 +15,7 @@ export default function AdminBlogEdit() {
         thumbnail: "",
         title: "",
         description: "",
-        tag: "",
+        tagsInput: "",
         externalUrl: "",
         content: ""
     });
@@ -40,7 +41,7 @@ export default function AdminBlogEdit() {
                         thumbnail: data.thumbnail || "",
                         title: data.title || "",
                         description: data.description || "",
-                        tag: data.tag || "",
+                        tagsInput: formatTagsForInput(normalizeBlogTags(data)),
                         externalUrl: data.externalUrl || "",
                         content: data.content || ""
                     });
@@ -79,7 +80,7 @@ export default function AdminBlogEdit() {
                 thumbnail: formData.thumbnail,
                 title: formData.title,
                 description: formData.description,
-                tag: formData.tag,
+                tags: parseTagsInput(formData.tagsInput),
                 externalUrl: formData.externalUrl,
                 content: formData.content,
                 updatedAt: serverTimestamp()
@@ -151,9 +152,9 @@ export default function AdminBlogEdit() {
                     <div className={styles.description}>
                         <input
                             type="text"
-                            placeholder="tag"
-                            value={formData.tag}
-                            onChange={(e) => handleInputChange("tag", e.target.value)}
+                            placeholder="tags（カンマ区切り 例: React, TypeScript）"
+                            value={formData.tagsInput}
+                            onChange={(e) => handleInputChange("tagsInput", e.target.value)}
                             className={styles.adminDescriptionInput}
                         />
                     </div>

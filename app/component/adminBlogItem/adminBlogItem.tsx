@@ -9,10 +9,11 @@ interface AdminBlogItemProps {
     id: string;
     title: string;
     createdAt: Timestamp | null;
+    tags?: string[];
     onDelete: (deletedId: string) => void;
 }
 
-export function AdminBlogItem({ id, title, createdAt, onDelete }: AdminBlogItemProps): ReactNode {
+export function AdminBlogItem({ id, title, createdAt, tags = [], onDelete }: AdminBlogItemProps): ReactNode {
     const handleDelete = async () => {
         const isConfirmed = window.confirm(`「${title}」を削除しますか？\nこの操作は取り消せません。`);
         
@@ -33,7 +34,7 @@ export function AdminBlogItem({ id, title, createdAt, onDelete }: AdminBlogItemP
 
     return (
         <div className={styles.adminBlogItem}>
-            <BlogItem id={id} title={title} createdAt={createdAt} />
+            <BlogItem id={id} title={title} createdAt={createdAt} tags={tags} />
             <div className={styles.adminItemIcon}>
                 <Link to={`/blog/edit/${id}`}>
                     <h1>✏️</h1>

@@ -8,12 +8,14 @@ import { collection, getDocs, orderBy, query, Timestamp } from "firebase/firesto
 import { db } from "../firebaseConfig";
 import { ProtectedRoute } from "../component/ProtectedRoute/ProtectedRoute";
 import { vars } from "../styles/theme.css";
+import { normalizeBlogTags } from "../utils/blogTags";
 
 interface BlogData {
     id: string;
     number: number;
     title: string;
     createdAt: Timestamp;
+    tags: string[];
 }
 
 export default function AdminBlog() {
@@ -35,7 +37,8 @@ export default function AdminBlog() {
                     id: doc.id,
                     number: data.number || 0,
                     title: data.title || "",
-                    createdAt: data.createdAt || null
+                    createdAt: data.createdAt || null,
+                    tags: normalizeBlogTags(data),
                 });
             });
             
@@ -81,6 +84,7 @@ export default function AdminBlog() {
                                 id={blog.id}
                                 title={blog.title}
                                 createdAt={blog.createdAt}
+                                tags={blog.tags}
                                 onDelete={handleDelete}
                             />
                         ))

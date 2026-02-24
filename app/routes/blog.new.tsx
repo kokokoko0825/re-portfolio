@@ -5,13 +5,14 @@ import { useState } from "react";
 import { collection, addDoc, serverTimestamp, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { ProtectedRoute } from "../component/ProtectedRoute/ProtectedRoute";
+import { parseTagsInput } from "../utils/blogTags";
 
 export default function AdminBlogNew() {
     const [formData, setFormData] = useState({
         thumbnail: "",
         title: "",
         description: "",
-        tag: "",
+        tagsInput: "",
         externalUrl: "",
         content: ""
     });
@@ -61,7 +62,7 @@ export default function AdminBlogNew() {
                 thumbnail: formData.thumbnail, // 絵文字をそのまま保存
                 title: formData.title,
                 description: formData.description,
-                tag: formData.tag,
+                tags: parseTagsInput(formData.tagsInput),
                 externalUrl: formData.externalUrl,
                 content: formData.content,
                 createdAt: serverTimestamp(),
@@ -77,7 +78,7 @@ export default function AdminBlogNew() {
                 thumbnail: "",
                 title: "",
                 description: "",
-                tag: "",
+                tagsInput: "",
                 externalUrl: "",
                 content: ""
             });
@@ -122,9 +123,9 @@ export default function AdminBlogNew() {
                     <div className={styles.description}>
                         <input
                             type="text"
-                            placeholder="tag"
-                            value={formData.tag}
-                            onChange={(e) => handleInputChange("tag", e.target.value)}
+                            placeholder="tags（カンマ区切り 例: React, TypeScript）"
+                            value={formData.tagsInput}
+                            onChange={(e) => handleInputChange("tagsInput", e.target.value)}
                             className={styles.adminDescriptionInput}
                         />
                     </div>
