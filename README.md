@@ -1,47 +1,63 @@
-# Welcome to Remix + Cloudflare!
+# re-portfolio
 
-- 📖 [Remix docs](https://remix.run/docs)
-- 📖 [Remix Cloudflare docs](https://remix.run/guides/vite#cloudflare)
+田中洸志（Koshi Tanaka）のポートフォリオサイト。  
+[https://kokokoko0825.dev](https://kokokoko0825.dev)
 
-## Development
+## 技術スタック
 
-Run the dev server:
+- **フレームワーク**: [Remix](https://remix.run) + [Cloudflare Pages](https://pages.cloudflare.com)
+- **スタイル**: [Vanilla Extract](https://vanilla-extract.style)
+- **バックエンド**: [Firebase](https://firebase.google.com)（Firestore: ブログ・制作物の管理）
 
-```sh
-npm run dev
-```
+## 主な機能
 
-To run Wrangler:
+- トップ / About / ブログ（タグ付き・タグフィルタ） / 制作物（Works）
+- 管理画面: ブログ・制作物の作成・編集・削除（要ログイン）
 
-```sh
-npm run build
-npm run start
-```
-
-## Typegen
-
-Generate types for your Cloudflare bindings in `wrangler.toml`:
+## 開発
 
 ```sh
-npm run typegen
+pnpm install
+pnpm run dev
 ```
 
-You will need to rerun typegen whenever you make changes to `wrangler.toml`.
-
-## Deployment
-
-First, build your app for production:
+ビルド後のプレビュー（Wrangler）:
 
 ```sh
-npm run build
+pnpm run build
+pnpm run start
 ```
 
-Then, deploy your app to Cloudflare Pages:
+## 型生成（Cloudflare bindings）
+
+`wrangler.toml` を変更したあとは以下で型を再生成する:
 
 ```sh
-npm run deploy
+pnpm run typegen
 ```
 
-## Styling
+## デプロイ
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+```sh
+pnpm run build
+pnpm run deploy
+```
+
+Cloudflare Pages にデプロイされる。
+
+## スクリプト
+
+| コマンド      | 説明           |
+|---------------|----------------|
+| `pnpm run dev`   | 開発サーバー起動 |
+| `pnpm run build` | 本番ビルド     |
+| `pnpm run start` | ビルド済みのローカルプレビュー |
+| `pnpm run deploy` | Cloudflare Pages へデプロイ |
+| `pnpm run typegen` | Wrangler 型生成 |
+| `pnpm run lint`   | ESLint |
+| `pnpm run typecheck` | TypeScript 型チェック |
+
+## 参考
+
+- [Remix docs](https://remix.run/docs)
+- [Remix Cloudflare](https://remix.run/guides/vite#cloudflare)
