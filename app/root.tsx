@@ -51,6 +51,15 @@ export function Layout({ children }: { children: React.ReactNode }): ReactNode {
       }
     })();
   `;
+
+  // 初回描画前にdata-themeを設定（localStorage優先、なければデバイスのprefers-color-scheme）
+  const themeScript = `
+    (function() {
+      var saved = localStorage.getItem("theme");
+      var theme = (saved === "light" || saved === "dark") ? saved : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  `;
   
   return (
     <html lang="ja">
@@ -60,6 +69,8 @@ export function Layout({ children }: { children: React.ReactNode }): ReactNode {
         <Meta />
         {/* デバイス検出スクリプトを早期に実行 */}
         <script dangerouslySetInnerHTML={{ __html: deviceDetectionScript }} />
+        {/* 初回描画前にテーマを適用（デバイス設定 or localStorage） */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         {/* 最小限のクリティカルCSS */}
         <style dangerouslySetInnerHTML={{ __html: criticalCss }} />
         <Links />
