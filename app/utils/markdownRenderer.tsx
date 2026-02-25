@@ -134,7 +134,7 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                         box-sizing: border-box;
                     ">
                         <div id="tweet-${tweetId}" style="
-                            max-width: 600px;
+                            max-width: 520px;
                             width: 100%;
                             margin: 0;
                             padding: 0;
@@ -172,7 +172,7 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                         position: relative;
                         display: block;
                         width: 100%;
-                        max-width: 800px;
+                        max-width: 640px;
                         border-radius: 12px;
                         overflow: hidden;
                         border: 1px solid ${vars.color.borderColor};
@@ -239,7 +239,7 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                     <div style="
                         position: relative;
                         width: 100%;
-                        max-width: 800px;
+                        max-width: 640px;
                         aspect-ratio: 16 / 9;
                         border-radius: 12px;
                         overflow: hidden;
@@ -294,7 +294,7 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                 ">
                     <div class="link-embed" style="
                         display: flex;
-                        max-width: 600px;
+                        max-width: 540px;
                         width: 100%;
                         border-radius: 12px;
                         overflow: hidden;
@@ -303,7 +303,7 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                         text-decoration: none;
                         color: ${vars.color.text};
                         transition: transform 0.2s ease, box-shadow 0.2s ease;
-                    " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                    " onmouseover="this.style.transform='translateY(-2px)';this.styleBoxShadow='0 8px 25px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='';this.styleBoxShadow=''">
                         <div class="link-embed-content" style="
                             flex: 1;
                             width: 100%;
@@ -315,14 +315,14 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                         ">
                             <div>
                                 <h3 class="link-embed-title" style="
-                                    font-size: 1.1rem;
+                                    font-size: 1.1em;
                                     font-weight: 600;
                                     margin: 0 0 0.5rem 0;
                                     color: ${vars.color.text};
                                     line-height: 1.4;
                                 ">リンクを読み込み中...</h3>
                                 <p class="link-embed-description" style="
-                                    font-size: 0.9rem;
+                                    font-size: 0.9em;
                                     color: ${vars.color.muted.foreground};
                                     margin: 0 0 0.5rem 0;
                                     line-height: 1.4;
@@ -334,7 +334,7 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                                 gap: 0.25rem;
                             ">
                                 <span class="link-embed-url" style="
-                                    font-size: 0.75rem;
+                                    font-size: 0.75em;
                                     color: ${vars.color.muted.foreground};
                                     word-break: break-all;
                                 ">${url}</span>
@@ -469,14 +469,14 @@ export function initializeLinkEmbeds(): void {
                                 if (metaElement) {
                                     metaElement.innerHTML = `
                                         <span style="
-                                            font-size: 0.8rem;
+                                            font-size: 0.8em;
                                             font-weight: 500;
                                             color: ${vars.color.primary.DEFAULT};
                                             text-transform: uppercase;
                                             letter-spacing: 0.5px;
                                         ">${linkData.siteName}</span>
                                         <span style="
-                                            font-size: 0.75rem;
+                                            font-size: 0.75em;
                                             color: ${vars.color.muted.foreground};
                                             word-break: break-all;
                                         ">${url}</span>

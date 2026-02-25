@@ -187,7 +187,7 @@ export const section = style({
     "@media": {
         "screen and (max-width: 768px)": {
             padding: "10px 30px",
-            gap: "20px",
+            gap: "10px",
             alignSelf: "stretch",
         }
     }
@@ -195,7 +195,7 @@ export const section = style({
 
 export const list = style({
     display: "flex",
-    padding: "10px",
+    padding: "0px",
     flexDirection: "column",
     alignItems: "flex-start",
     gap: "10px",
@@ -501,6 +501,7 @@ export const linkText = style({
 
 export const careerText = style({
     fontSize: "20px",
+    margin: "0",
     "@media": {
         "screen and (max-width: 768px)": {
             fontSize: "15px",

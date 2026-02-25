@@ -119,9 +119,9 @@ export const links: LinksFunction = () => {
       crossOrigin: "anonymous" as const,
     },
     {
-      href: "https://fonts.googleapis.com/css2?family=DotGothic16&family=Jersey+10&display=swap",
-      rel: "stylesheet"
-    }
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap",
+    },
   ];
 };
 

@@ -4,7 +4,8 @@ import { vars } from "./theme.css";
 globalStyle("html, body", {
     color: vars.color.text,
     backgroundColor: vars.color.background,
-    //fontFamily: vars.typography.fontFamily.jap,
+    fontFamily:
+        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     margin: 0,
     padding: 0,
     // width: "1440px",
@@ -15,7 +16,8 @@ globalStyle("html, body", {
 
 // title
 globalStyle("h1", {
-    fontFamily: "Inter",
+    fontFamily:
+        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     fontSize: "36px",
     fontStyle: "normal",
     fontWeight: 400,
@@ -34,7 +36,8 @@ globalStyle("h1", {
 
 // subtitle
 globalStyle("h2", {
-    fontFamily: "Inter",
+    fontFamily:
+        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     fontSize: "24px",
     fontStyle: "normal",
     fontWeight: 400,
@@ -52,7 +55,8 @@ globalStyle("h2", {
 
 // subtitle
 globalStyle("Link", {
-    fontFamily: "Inter",
+    fontFamily:
+        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     fontSize: "24px",
     fontStyle: "normal",
     fontWeight: 400,
@@ -72,7 +76,8 @@ globalStyle("Link", {
 
 // 多分Headerのリンク
 globalStyle("a", {
-    fontFamily: "Inter",
+    fontFamily:
+        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     fontSize: "24px",
     fontStyle: "normal",
     fontWeight: 400,
@@ -92,7 +97,8 @@ globalStyle("a", {
 
 // default
 globalStyle("p", {
-    fontFamily: "Inter",
+    fontFamily:
+        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     fontSize: "20px",
     fontStyle: "normal",
     fontWeight: 400,
@@ -109,7 +115,8 @@ globalStyle("p", {
 
 // linksize
 globalStyle("small", {
-    fontFamily: "Inter",
+    fontFamily:
+        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     fontSize: "16px",
     fontStyle: "normal",
     fontWeight: 400,
@@ -141,7 +148,8 @@ globalStyle("svg", {
 
 // 多分defaultと一緒
 globalStyle("li", {
-    fontFamily: "Inter",
+    fontFamily:
+        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     fontSize: "20px",
     fontStyle: "normal",
     fontWeight: 400,
@@ -174,7 +182,8 @@ globalStyle("img", {
 
 // thumbnail
 globalStyle("span", {
-    fontFamily: "Inter",
+    fontFamily:
+        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     fontSize: "96px",
     fontStyle: "normal",
     fontWeight: 400,
@@ -194,7 +203,8 @@ globalStyle("input", {
     maxWidth: "330px",
     height: "30px",
     borderRadius: "10px",
-    fontFamily: "Inter",
+    fontFamily:
+        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     fontSize: "16px",
     fontStyle: "normal",
     fontWeight: 400,
@@ -223,7 +233,8 @@ globalStyle("button", {
 
 // codefont
 globalStyle("code", {
-    fontFamily: "Inter",
+    fontFamily:
+        'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
     fontSize: "16px",
     fontStyle: "normal",
     fontWeight: 400,
@@ -310,9 +321,16 @@ globalStyle('.token.regex, .token.important, .token.variable', {
     color: vars.color.codeBlock.tokens.regex,
 });
 
-// Twitter埋め込みのスタイル調整
+// Twitter埋め込みのスタイル調整（Zennライクなセンタリングと幅＋スケールダウン）
 globalStyle('.twitter-embed-wrapper', {
-    margin: '2rem 0',
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%',
+    boxSizing: 'border-box',
+    maxWidth: '640px',
+    margin: '1.75rem auto',
+    transform: 'scale(0.9)',
+    transformOrigin: 'top center',
 });
 
 // Twitter APIが生成する要素のマージンをリセット
@@ -334,6 +352,22 @@ globalStyle('[id^="tweet-"] > *', {
     marginBottom: '0 !important',
 });
 
+// その他の埋め込みカードも少し小さくスケール
+globalStyle('.youtube-embed-wrapper', {
+    transform: 'scale(0.9)',
+    transformOrigin: 'top center',
+});
+
+globalStyle('.gslides-embed-wrapper', {
+    transform: 'scale(0.9)',
+    transformOrigin: 'top center',
+});
+
+globalStyle('.link-embed-wrapper', {
+    transform: 'scale(0.9)',
+    transformOrigin: 'top center',
+});
+
 // 記事本文(.znc)内のコードブロック・引用などの余白調整
 globalStyle(".znc pre", {
     margin: "24px 0",
@@ -347,8 +381,9 @@ globalStyle(".znc blockquote", {
 });
 
 // 記事本文(.znc)内のタイポグラフィ調整（Zennライク）
+// PC: 16px / SP: 13px に分ける
 globalStyle(".znc", {
-    fontSize: "15px",
+    fontSize: "16px",
     lineHeight: "1.8",
 });
 
@@ -364,6 +399,24 @@ globalStyle(".znc", {
 globalStyle(".znc a", {
     fontSize: "inherit",
     lineHeight: "inherit",
+    textDecorationLine: "underline",
+    textDecorationColor: vars.color.text,
+});
+
+// 本文の段落・リスト
+globalStyle(".znc p, .znc li", {
+    fontSize: "16px",
+    lineHeight: "1.8",
+    margin: "0 0 1em 0",
+});
+
+globalStyle(".znc p, .znc li", {
+    "@media": {
+        "screen and (max-width: 768px)": {
+            fontSize: "13px",
+            lineHeight: "1.8",
+        },
+    },
 });
 
 // インラインコードは本文より一段階小さめ
@@ -375,6 +428,64 @@ globalStyle(".znc code", {
     "@media": {
         "screen and (max-width: 768px)": {
             fontSize: "0.9em",
+        },
+    },
+});
+
+// 記事本文内の見出しサイズ（.znc h1〜h4）
+globalStyle(".znc h1", {
+    fontSize: "26px",
+    lineHeight: "1.6",
+    margin: "2em 0 0.75em 0",
+});
+
+globalStyle(".znc h2", {
+    fontSize: "22px",
+    lineHeight: "1.6",
+    margin: "1.75em 0 0.5em 0",
+});
+
+globalStyle(".znc h3", {
+    fontSize: "18px",
+    lineHeight: "1.6",
+    margin: "1.5em 0 0.5em 0",
+});
+
+globalStyle(".znc h4", {
+    fontSize: "16px",
+    lineHeight: "1.6",
+    margin: "1.25em 0 0.5em 0",
+});
+
+// スマホ時の見出しサイズは少し小さめに
+globalStyle(".znc h1", {
+    "@media": {
+        "screen and (max-width: 768px)": {
+            fontSize: "20px",
+        },
+    },
+});
+
+globalStyle(".znc h2", {
+    "@media": {
+        "screen and (max-width: 768px)": {
+            fontSize: "18px",
+        },
+    },
+});
+
+globalStyle(".znc h3", {
+    "@media": {
+        "screen and (max-width: 768px)": {
+            fontSize: "15px",
+        },
+    },
+});
+
+globalStyle(".znc h4", {
+    "@media": {
+        "screen and (max-width: 768px)": {
+            fontSize: "13px",
         },
     },
 });
