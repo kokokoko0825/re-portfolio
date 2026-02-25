@@ -333,3 +333,48 @@ globalStyle('[id^="tweet-"] > *', {
     marginTop: '0 !important',
     marginBottom: '0 !important',
 });
+
+// 記事本文(.znc)内のコードブロック・引用などの余白調整
+globalStyle(".znc pre", {
+    margin: "24px 0",
+    padding: "12px 16px",
+});
+
+globalStyle(".znc blockquote", {
+    margin: "16px 0",
+    padding: "0.1em 1em",
+    borderLeft: `4px solid ${vars.color.borderColor}`,
+});
+
+// 記事本文(.znc)内のタイポグラフィ調整（Zennライク）
+globalStyle(".znc", {
+    fontSize: "15px",
+    lineHeight: "1.8",
+});
+
+globalStyle(".znc", {
+    "@media": {
+        "screen and (max-width: 768px)": {
+            fontSize: "13px",
+            lineHeight: "1.8",
+        },
+    },
+});
+
+globalStyle(".znc a", {
+    fontSize: "inherit",
+    lineHeight: "inherit",
+});
+
+// インラインコードは本文より一段階小さめ
+globalStyle(".znc code", {
+    fontSize: "0.9em",
+});
+
+globalStyle(".znc code", {
+    "@media": {
+        "screen and (max-width: 768px)": {
+            fontSize: "0.9em",
+        },
+    },
+});

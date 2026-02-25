@@ -110,17 +110,17 @@ export const works = style({
 export const blogId = style({
     display: "flex",
     width: "100%",
-    maxWidth: "800px",
-    padding: "100px 10px 10px 10px",
+    maxWidth: "840px",
+    padding: "96px 16px 48px 16px",
     flexDirection: "column",
     alignItems: "center",
-    gap: "30px",
+    gap: "32px",
     boxSizing: "border-box",
     "@media": {
         "screen and (max-width: 768px)": {
-            width: "auto",
-            padding: "75px 10px 0px 10px",
-            gap: "20px",
+            width: "100%",
+            padding: "80px 12px 40px 12px",
+            gap: "24px",
             alignSelf: "stretch",
         }
     }
@@ -229,7 +229,7 @@ export const workList = style({
 
 export const thumbnail = style({
     display: "flex",
-    padding: "20px, 10px",
+    padding: "24px 0 16px 0",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
@@ -238,7 +238,7 @@ export const thumbnail = style({
     borderBottom: `2px solid ${vars.color.borderColor}`,
     "@media": {
         "screen and (max-width: 768px)": {
-            padding: "20px 30px",
+            padding: "20px 0 12px 0",
             gap: "20px",
             alignSelf: "stretch",
         }
@@ -248,10 +248,10 @@ export const thumbnail = style({
 export const textFrame = style({
     display: "flex",
     width: "100%",
-    maxWidth: "600px",
+    maxWidth: "720px",
     alignItems: "flex-start",
     alignContent: "flex-start",
-    gap: "10px",
+    gap: "16px",
     flexWrap: "wrap",
     boxSizing: "border-box",
     overflowWrap: "break-word",
@@ -260,7 +260,7 @@ export const textFrame = style({
         "screen and (max-width: 768px)": {
             width: "100%",
             boxSizing: "border-box",
-            padding: "0px 30px",
+            padding: "0px",
         }
     }
 });
@@ -306,14 +306,14 @@ globalStyle(`${textFrame} .znc table`, {
 
 export const backFrame = style({
     display: "flex",
-    padding: "10px",
+    padding: "24px 0 0 0",
     alignItems: "flex-start",
     gap: "10px",
     alignSelf: "stretch",
     "@media": {
         "screen and (max-width: 768px)": {
-            padding: "30px 10px",
-            alignItems: "center",
+            padding: "32px 0 0 0",
+            alignItems: "flex-start",
         }
     }
 })
