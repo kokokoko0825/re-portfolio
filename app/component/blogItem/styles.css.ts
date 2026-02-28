@@ -38,6 +38,8 @@ export const tagChip = style({
     color: vars.color.text,
     textDecoration: "none",
     ":hover": {
-        background: vars.color.borderColor,
+        background: vars.color.tagActive.background,
+        color: vars.color.tagActive.text,
+        borderColor: vars.color.tagActive.background,
     },
 })

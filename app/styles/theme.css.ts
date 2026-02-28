@@ -11,6 +11,10 @@ export const vars = createThemeContract({
         primary: {
             DEFAULT: "",
         },
+        tagActive: {
+            background: "",
+            text: "",
+        },
         codeBlock: {
             background: "",
             text: "",
@@ -47,6 +51,10 @@ createGlobalTheme(":root", vars, {
         primary: {
             DEFAULT: "#007acc",
         },
+        tagActive: {
+            background: "#2C2E47",
+            text: "#DEDBFF",
+        },
         codeBlock: {
             background: "#0f111a",
             text: "#DEDBFF",
@@ -79,6 +87,8 @@ globalStyle(":root[data-theme='light']", {
         [vars.color.borderColor]: "#9496AD",
         [vars.color.muted.foreground]: "#5B5D72",
         [vars.color.primary.DEFAULT]: "#2D5BFF",
+        [vars.color.tagActive.background]: "#5B5D72",
+        [vars.color.tagActive.text]: "#F2F1FF",
         [vars.color.codeBlock.background]: "#F5F6FF",
         [vars.color.codeBlock.text]: "#1E1F3A",
         [vars.color.codeBlock.border]: "#C9CAE0",
@@ -105,6 +115,8 @@ globalStyle(":root:not([data-theme])", {
                 [vars.color.borderColor]: "#9496AD",
                 [vars.color.muted.foreground]: "#5B5D72",
                 [vars.color.primary.DEFAULT]: "#2D5BFF",
+                [vars.color.tagActive.background]: "#5B5D72",
+                [vars.color.tagActive.text]: "#F2F1FF",
                 [vars.color.codeBlock.background]: "#F5F6FF",
                 [vars.color.codeBlock.text]: "#1E1F3A",
                 [vars.color.codeBlock.border]: "#C9CAE0",

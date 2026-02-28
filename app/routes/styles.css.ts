@@ -66,10 +66,10 @@ export const tagFilter = style({
 export const tagFilterActive = style({
     padding: "6px 12px",
     fontSize: "14px",
-    border: `1px solid ${vars.color.borderColor}`,
+    border: `1px solid ${vars.color.tagActive.background}`,
     borderRadius: "9999px",
-    background: vars.color.borderColor,
-    color: vars.color.text,
+    background: vars.color.tagActive.background,
+    color: vars.color.tagActive.text,
     cursor: "pointer",
 })
 
@@ -87,7 +87,9 @@ export const tagChip = style({
     color: vars.color.text,
     textDecoration: "none",
     ":hover": {
-        background: vars.color.borderColor,
+        background: vars.color.tagActive.background,
+        color: vars.color.tagActive.text,
+        borderColor: vars.color.tagActive.background,
     },
 })
 
@@ -180,7 +182,7 @@ export const tocAccordion = style({
     padding: "12px 14px",
     borderRadius: "8px",
     border: `1px solid ${vars.color.borderColor}`,
-    backgroundColor: "#050524",
+    backgroundColor: vars.color.codeBlock.background,
     boxSizing: "border-box",
 });
 
