@@ -110,7 +110,7 @@ export const works = style({
 export const blogId = style({
     display: "flex",
     width: "100%",
-    maxWidth: "840px",
+    maxWidth: "1060px",
     padding: "96px 16px 48px 16px",
     flexDirection: "column",
     alignItems: "center",
@@ -124,7 +124,99 @@ export const blogId = style({
             alignSelf: "stretch",
         }
     }
-})
+});
+
+export const blogDetailWrapper = style({
+    display: "flex",
+    width: "100%",
+    maxWidth: "1060px",
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: "48px",
+    boxSizing: "border-box",
+    marginTop: "24px",
+    paddingTop: "24px",
+    borderTop: `2px solid ${vars.color.borderColor}`,
+    "@media": {
+        "screen and (max-width: 768px)": {
+            flexDirection: "column",
+            gap: "24px",
+            order: 0,
+        },
+    },
+});
+
+export const blogArticle = style({
+    flex: 1,
+    minWidth: 0,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "32px",
+    boxSizing: "border-box",
+    "@media": {
+        "screen and (max-width: 768px)": {
+            order: 1,
+        },
+    },
+});
+
+export const tocAside = style({
+    flexShrink: 0,
+    width: "220px",
+    position: "sticky",
+    top: "100px",
+    "@media": {
+        "screen and (max-width: 768px)": {
+            position: "static",
+            width: "100%",
+            order: -1,
+        },
+    },
+});
+
+export const tocAccordion = style({
+    width: "100%",
+    padding: "12px 14px",
+    borderRadius: "8px",
+    border: `1px solid ${vars.color.borderColor}`,
+    backgroundColor: "#050524",
+    boxSizing: "border-box",
+});
+
+export const tocSummary = style({
+    padding: "12px 0",
+    fontSize: "0.875rem",
+    fontWeight: 600,
+    color: vars.color.text,
+    cursor: "pointer",
+    listStyle: "none",
+    borderBottom: `1px solid ${vars.color.borderColor}`,
+});
+
+export const tocTitle = style({
+    fontSize: "0.875rem",
+    fontWeight: 600,
+    color: vars.color.text,
+    marginBottom: "8px",
+    "@media": {
+        "screen and (max-width: 768px)": {
+            display: "none",
+        },
+    },
+});
+
+globalStyle(`summary.${tocSummary}::-webkit-details-marker`, {
+    display: "none",
+});
+
+globalStyle(`${tocAside} details[open] summary.${tocSummary}`, {
+    "@media": {
+        "screen and (min-width: 769px)": {
+            display: "none",
+        },
+    },
+});
 
 export const login = style({
     display: "flex",
@@ -235,7 +327,6 @@ export const thumbnail = style({
     alignItems: "center",
     gap: "20px",
     alignSelf: "stretch",
-    borderBottom: `2px solid ${vars.color.borderColor}`,
     "@media": {
         "screen and (max-width: 768px)": {
             padding: "20px 0 12px 0",
@@ -303,6 +394,13 @@ globalStyle(`${textFrame} .znc table`, {
     overflowX: "auto",
     display: "block",
 });
+
+globalStyle(
+    `${textFrame} .znc h1[id], ${textFrame} .znc h2[id], ${textFrame} .znc h3[id], ${textFrame} .znc h4[id]`,
+    {
+        scrollMarginTop: "100px",
+    },
+);
 
 export const backFrame = style({
     display: "flex",

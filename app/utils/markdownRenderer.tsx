@@ -40,6 +40,40 @@ md.renderer.rules.fence = (tokens, idx, options, env, self) => {
     return rendered.replace('<pre', '<pre class="line-numbers"');
 };
 
+// 見出しにidを付与（目次用アンカー）
+function slugify(text: string): string {
+    const slug = text
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9\u3040-\u309f\u30a0-\u30ff\u4e00-\u9faf-]/g, "")
+        .replace(/-+/g, "-")
+        .replace(/^-|-$/g, "");
+    return slug || "section";
+}
+
+const originalHeadingOpen = md.renderer.rules.heading_open;
+md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
+    const token = tokens[idx];
+    const tag = token.tag;
+    // h1〜h4 に id を付与して目次対象にする
+    if (tag !== "h1" && tag !== "h2" && tag !== "h3" && tag !== "h4") {
+        return originalHeadingOpen
+            ? originalHeadingOpen(tokens, idx, options, env, self)
+            : self.renderToken(tokens, idx, options);
+    }
+    const nextToken = tokens[idx + 1];
+    const text =
+        nextToken?.type === "inline" ? nextToken.content : "";
+    const baseSlug = slugify(text);
+    const headingIds = (env as { headingIds?: Record<string, number> })
+        .headingIds ??= {};
+    const count = headingIds[baseSlug] ?? 0;
+    headingIds[baseSlug] = count + 1;
+    const id = count === 0 ? baseSlug : `${baseSlug}-${count}`;
+    return `<${tag} id="${id}">`;
+};
+
 // Twitter/X URLを検出する正規表現（x.comとtwitter.comの両方に対応）
 const TWITTER_URL_REGEX = /https?:\/\/(?:www\.)?(?:twitter\.com|x\.com)\/\w+\/status\/\d+/g;
 
@@ -103,8 +137,9 @@ function isTwitterUrl(url: string): boolean {
 
 // Markdownコンテンツをレンダリングし、URLを埋め込みコンポーネントに変換する関数
 export function renderMarkdownWithEmbeds(content: string): { __html: string } {
-    // まず通常のMarkdownをレンダリング
-    let html = md.render(content);
+    const env: { headingIds?: Record<string, number> } = {};
+    // まず通常のMarkdownをレンダリング（見出しid用にenvを渡す）
+    let html = md.render(content, env);
     // Prism line-numbers 用に <pre> にクラスを付与
     // class 未指定の <pre>
     html = html.replace(/<pre(?![^>]*class=)/g, '<pre class="line-numbers"');

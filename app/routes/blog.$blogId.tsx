@@ -1,5 +1,6 @@
 import { Header } from "../component/Header/Header";
 import { Footer } from "../component/Footer/Footer";
+import { TableOfContents } from "../component/TableOfContents";
 import * as styles from "./styles.css";
 import { Link, useParams } from "@remix-run/react";
 import { useState, useEffect, useRef } from "react";
@@ -185,17 +186,28 @@ export default function BlogId() {
                         </div>
                     )}
                 </div>
-                <div className={styles.textFrame}>
-                    <div 
-                        ref={contentRef}
-                        className="znc" 
-                        dangerouslySetInnerHTML={renderMarkdownWithEmbeds(blogData.content)} 
-                    />
-                </div>
-                <div className={styles.backFrame}>
-                    <Link to="/blog">
-                        <small>Back</small>
-                    </Link>
+                <div className={styles.blogDetailWrapper}>
+                    <article className={styles.blogArticle}>
+                        <div className={styles.textFrame}>
+                            <div
+                                ref={contentRef}
+                                className="znc"
+                                dangerouslySetInnerHTML={renderMarkdownWithEmbeds(blogData.content)}
+                            />
+                        </div>
+                        <div className={styles.backFrame}>
+                            <Link to="/blog">
+                                <small>Back</small>
+                            </Link>
+                        </div>
+                    </article>
+                    <aside className={styles.tocAside}>
+                        <details className={styles.tocAccordion} open>
+                            <summary className={styles.tocSummary}>目次</summary>
+                            <div className={styles.tocTitle}>目次</div>
+                            <TableOfContents contentRef={contentRef} contentKey={blogId} />
+                        </details>
+                    </aside>
                 </div>
             </div>
             <Footer />
