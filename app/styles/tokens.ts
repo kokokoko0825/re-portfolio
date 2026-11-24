@@ -17,21 +17,21 @@ export const layout = {
 } as const;
 
 export const type = {
-    heroName: { fontSize: "6rem", mobileSize: "3rem", fontWeight: 500, lineHeight: 1.15, letterSpacing: "-0.01em" },
-    largeTitle: { fontSize: "2.25rem", mobileSize: "2rem", fontWeight: 700, lineHeight: 1.4, letterSpacing: 0 },
-    title1: { fontSize: "1.75rem", mobileSize: "1.625rem", fontWeight: 700, lineHeight: 1.5, letterSpacing: 0 },
-    title2: { fontSize: "1.5rem", mobileSize: "1.375rem", fontWeight: 700, lineHeight: 1.5, letterSpacing: 0 },
-    title3: { fontSize: "1.25rem", mobileSize: "1.125rem", fontWeight: 700, lineHeight: 1.5, letterSpacing: 0 },
-    headline: { fontSize: "1.0625rem", mobileSize: "1rem", fontWeight: 700, lineHeight: 1.5, letterSpacing: 0 },
+    heroName: { fontSize: "3rem", mobileSize: "2.25rem", fontWeight: 500, lineHeight: 1.15, letterSpacing: "-0.01em" },
+    largeTitle: { fontSize: "2rem", mobileSize: "1.75rem", fontWeight: 500, lineHeight: 1.4, letterSpacing: 0 },
+    title1: { fontSize: "1.75rem", mobileSize: "1.625rem", fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 },
+    title2: { fontSize: "1.5rem", mobileSize: "1.25rem", fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 },
+    title3: { fontSize: "1.25rem", mobileSize: "1.125rem", fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 },
+    headline: { fontSize: "1.0625rem", mobileSize: "1rem", fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 },
     body: { fontSize: "1.0625rem", mobileSize: "1rem", fontWeight: 400, lineHeight: 1.75, letterSpacing: 0 },
     subheadline: { fontSize: "1rem", mobileSize: "1rem", fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 },
     uiBody: { fontSize: "1rem", mobileSize: "1rem", fontWeight: 400, lineHeight: 1.5, letterSpacing: 0 },
     footnote: { fontSize: "0.875rem", mobileSize: "0.875rem", fontWeight: 400, lineHeight: 1.6, letterSpacing: 0 },
     caption: { fontSize: "0.875rem", mobileSize: "0.875rem", fontWeight: 500, lineHeight: 1.6, letterSpacing: 0 },
     articleBody: { fontSize: "1.125rem", mobileSize: "1rem", fontWeight: 400, lineHeight: 1.9, letterSpacing: 0 },
-    articleH2: { fontSize: "1.75rem", mobileSize: "1.5rem", fontWeight: 700, lineHeight: 1.5, letterSpacing: 0 },
-    articleH3: { fontSize: "1.5rem", mobileSize: "1.25rem", fontWeight: 700, lineHeight: 1.5, letterSpacing: 0 },
-    articleH4: { fontSize: "1.25rem", mobileSize: "1.125rem", fontWeight: 700, lineHeight: 1.5, letterSpacing: 0 },
+    articleH2: { fontSize: "1.75rem", mobileSize: "1.5rem", fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 },
+    articleH3: { fontSize: "1.5rem", mobileSize: "1.25rem", fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 },
+    articleH4: { fontSize: "1.25rem", mobileSize: "1.125rem", fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 },
 } as const;
 
 export function typeStyle(token: keyof typeof type) {

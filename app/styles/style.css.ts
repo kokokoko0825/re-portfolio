@@ -338,6 +338,8 @@ globalStyle(".znc p, .znc li", {
     margin: 0,
 });
 
+globalStyle(".znc strong, .znc b", { fontWeight: 700 });
+
 globalStyle(".znc a, .znc span", {
     fontSize: "inherit", fontWeight: "inherit", lineHeight: "inherit", letterSpacing: "inherit",
 });

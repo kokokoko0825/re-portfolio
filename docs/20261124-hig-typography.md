@@ -6,11 +6,25 @@
 
 `app/styles/tokens.ts` に型・余白・レイアウト値を集約した。CSS出力のない通常のTypeScriptにしたため、管理画面の固定サイズのインラインスタイルでも同じ値を使える。`typeStyle("body")` の1行でサイズ・太さ・行高・字間とモバイル指定を適用する。既存で最も多い `screen and (max-width: 768px)` を再利用し、新しい境界は追加していない。
 
-ページ見出しはlargeTitle、カード名はtitle3、説明はbody、日付はfootnote、タグはcaption、ナビはsubheadline、フォームはuiBodyを使用する。トップの「Koshi Tanaka」は専用クラスでheroNameを適用し、一般のspanへ巨大な文字サイズを継承させない。一般リンクは親の文字階層を継承し、ナビには明示的にsubheadlineを適用する。
+ページ見出しはlargeTitle、カード名はtitle3、説明はbody、日付はfootnote、タグはcaption、デスクトップナビはsubheadline、フォームはuiBodyを使用する。トップの「Koshi Tanaka」は専用クラスでheroNameを適用し、一般のspanへ巨大な文字サイズを継承させない。一般リンクは親の文字階層を継承する。モバイルメニューはsubheadlineのウェイト500・行高1.5を使い、サイズは全幅で1.25rem（20px）、最小高さは3rem（48px）とし、デスクトップナビの指定とは分離する。
 
-記事本文はarticleBody、見出しはarticleH2/H3/H4を使い、幅40emの本文と外側のTOCを分離した。連続段落は1.5em、リスト上下24px・項目間8px・行高1.75、見出し直後の段落と先頭要素の上余白は0。TOCはリンク内の上下8px、最小高さ44px、下位レベルごとに16px字下げ。ナビリンクにも最小高さ44pxを適用した。
+記事本文はarticleBody、見出しはarticleH2/H3/H4を使い、幅40emの本文と外側のTOCを分離した。連続段落は1.5em、リスト上下24px・項目間8px・行高1.75、見出し直後の段落と先頭要素の上余白は0。TOCはリンク内の上下8px、最小高さ44px、下位レベルごとに16px字下げ。デスクトップナビリンクは最小高さ44px、モバイルメニューは48pxを適用した。
 
-Markdownが生成するリンクカードのHTML内にも文字サイズと600ウェイトがあったため、既存クラス名を用いた共通CSSへ移した。配色・テーマ・記事内容・マークアップ構造は変更していない。`_index_backup` は変更していない。コミットしていない。
+Markdownが生成するリンクカードのHTML内にも文字サイズと600ウェイトがあったため、既存クラス名を用いた共通CSSへ移した。配色・テーマ・記事内容・マークアップ構造は変更していない。`_index_backup` は変更していない。
+
+## 修正理由
+
+heroの元サイズは36pxで、96pxはBlog・Works詳細のサムネイル絵文字だった。役割の誤対応を直し、例えば「Koshi Tanaka」は96/48pxから48/36pxへ変更した。Noto Sans JPでは見出し700が重すぎるため、見出しのウェイトは500に統一した。700は記事本文の明示的な強調に限定し、`.znc strong, .znc b`へ指定した。モバイルメニューは元の20pxに戻し、リンク間のgapを維持したまま最小高さ48pxを確保した。
+
+今回の段階1の変更ファイルは`app/styles/tokens.ts`、`app/styles/style.css.ts`、`app/component/Header/styles.css.ts`、`plan/20261124-hig-typography.md`、本ファイルの5件。構造・マークアップの修正は段階2に残す。
+
+### 段階1の検証（2026-11-24）
+
+- 型検査前に`build`を削除し、`pnpm typecheck`は終了0。
+- `pnpm build`は終了0。Browserslistの古いデータ警告と空のapi.link-previewチャンク警告は既存のまま。
+- `npx eslint app/styles/tokens.ts app/styles/style.css.ts app/component/Header/styles.css.ts`は終了0。
+- 編集対象のスタイルに600・boldの直接指定はなく、700は`.znc strong, .znc b`のみ。編集範囲外の`app/routes/_index_backup/route.tsx:148`に既存のデバッグ用`fontWeight: 'bold'`があるが、変更していない。
+- 全体の`pnpm lint`は未実行。既存66件のエラーは今回の対象外。
 
 ## Typeトークン
 
@@ -18,21 +32,21 @@ Markdownが生成するリンクカードのHTML内にも文字サイズと600�
 
 | token | desktop rem (px) | mobile rem (px) | weight | line-height | letter-spacing |
 | --- | --- | --- | --- | --- | --- |
-| heroName | 6 (96) | 3 (48) | 500 | 1.15 | "-0.01em" |
-| largeTitle | 2.25 (36) | 2 (32) | 700 | 1.4 | 0 |
-| title1 | 1.75 (28) | 1.625 (26) | 700 | 1.5 | 0 |
-| title2 | 1.5 (24) | 1.375 (22) | 700 | 1.5 | 0 |
-| title3 | 1.25 (20) | 1.125 (18) | 700 | 1.5 | 0 |
-| headline | 1.0625 (17) | 1 (16) | 700 | 1.5 | 0 |
+| heroName | 3 (48) | 2.25 (36) | 500 | 1.15 | "-0.01em" |
+| largeTitle | 2 (32) | 1.75 (28) | 500 | 1.4 | 0 |
+| title1 | 1.75 (28) | 1.625 (26) | 500 | 1.5 | 0 |
+| title2 | 1.5 (24) | 1.25 (20) | 500 | 1.5 | 0 |
+| title3 | 1.25 (20) | 1.125 (18) | 500 | 1.5 | 0 |
+| headline | 1.0625 (17) | 1 (16) | 500 | 1.5 | 0 |
 | body | 1.0625 (17) | 1 (16) | 400 | 1.75 | 0 |
 | subheadline | 1 (16) | 1 (16) | 500 | 1.5 | 0 |
 | uiBody | 1 (16) | 1 (16) | 400 | 1.5 | 0 |
 | footnote | 0.875 (14) | 0.875 (14) | 400 | 1.6 | 0 |
 | caption | 0.875 (14) | 0.875 (14) | 500 | 1.6 | 0 |
 | articleBody | 1.125 (18) | 1 (16) | 400 | 1.9 | 0 |
-| articleH2 | 1.75 (28) | 1.5 (24) | 700 | 1.5 | 0 |
-| articleH3 | 1.5 (24) | 1.25 (20) | 700 | 1.5 | 0 |
-| articleH4 | 1.25 (20) | 1.125 (18) | 700 | 1.5 | 0 |
+| articleH2 | 1.75 (28) | 1.5 (24) | 500 | 1.5 | 0 |
+| articleH3 | 1.5 (24) | 1.25 (20) | 500 | 1.5 | 0 |
+| articleH4 | 1.25 (20) | 1.125 (18) | 500 | 1.5 | 0 |
 
 ## 余白・レイアウトトークン
 
@@ -67,7 +81,7 @@ Markdownが生成するリンクカードのHTML内にも文字サイズと600�
 ## 具体例（変更前 → 変更後）
 
 - ブログの日付（モバイル）: 12px / normal → footnoteの0.875rem (14px) / 1.6。
-- ブログカード名: 24/20px・400・normal → title3の20/18px・700・1.5。
+- ブログカード名: 24/20px・400・normal → title3の20/18px・500・1.5。
 - 記事本文: 16/13px・1.8 → articleBodyの18/16px・1.9。
 - 記事h2: 22/18px・1.6 → 28/24px・1.5、上下64/24px（モバイル48/16px）。
 - タグ: 12px → captionの14px・500・1.6。

@@ -135,6 +135,10 @@ globalStyle(`${mobileMenuLinks} a`, {
     color: vars.color.text,
     textDecoration: "none",
     ...typeStyle("subheadline"),
+    fontSize: "1.25rem",
+    display: "flex",
+    alignItems: "center",
+    minHeight: space[48],
     transition: "opacity 0.2s ease"
 })
 
@@ -167,6 +171,6 @@ export const mobileMenuOverlayOpen = style({
         }
     }
 })
-globalStyle(`${linkList} a, ${mobileMenuLinks} a`, {
+globalStyle(`${linkList} a`, {
     ...typeStyle("subheadline"), display: "flex", alignItems: "center", minHeight: "2.75rem",
 });
