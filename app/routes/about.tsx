@@ -5,6 +5,7 @@ import { MetaFunction } from "@remix-run/cloudflare";
 
 export const meta: MetaFunction = () => {
     return [
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
         { name: "description", content: "Koshi Tanakaについて" },
         { name: "og:title", content: "About | kokokoko0825" },
         { name: "og:description", content: "Koshi Tanakaについて" },
@@ -22,7 +23,7 @@ export default function About() {
     return (
         <div className={styles.frame}>
             <Header />
-            <div className={styles.about}>
+            <main className={styles.about}>
                 <div className={styles.section}>
                     <h1>About me</h1>
                     <div className={styles.list}>
@@ -33,7 +34,7 @@ export default function About() {
                     </div>
                 </div>
                 <div className={styles.section}>
-                    <h1>Skills</h1>
+                    <h2 className={styles.sectionTitle}>Skills</h2>
                     <ul>
                         <li className={styles.careerText}>TypeScript</li>
                         <li className={styles.careerText}>C++</li>
@@ -43,35 +44,35 @@ export default function About() {
                     </ul>
                 </div>
                 <div className={styles.section}>
-                    <h1>Career</h1>
+                    <h2 className={styles.sectionTitle}>Career</h2>
                     <ul className={styles.timeline}>
                         {/*
                         <li className={styles.timelineItem}>
                             <small className={styles.timelineYear}>2026 - 現在</small>
-                            <p className={styles.timelineTitle}>株式会社セゾンテクノロジー</p>
+                            <h3 className={styles.timelineTitle}>株式会社セゾンテクノロジー</h3>
                         </li>
                         */}
                         <li className={styles.timelineItem}>
                             <small className={styles.timelineYear}>2021 - 2026</small>
-                            <p className={styles.timelineTitle}>鈴鹿高専 電子情報工学科</p>
+                            <h3 className={styles.timelineTitle}>鈴鹿高専 電子情報工学科</h3>
                         </li>
                         <li className={styles.timelineItem}>
                             <small className={styles.timelineYear}>2005</small>
-                            <p className={styles.timelineTitle}>爆誕</p>
+                            <h3 className={styles.timelineTitle}>爆誕</h3>
                         </li>
                     </ul>
                 </div>
                 <div className={styles.section}>
-                    <h1>Favorite</h1>
-                    <h2>Technology</h2>
+                    <h2 className={styles.sectionTitle}>Favorite</h2>
+                    <h3 className={styles.subsectionTitle}>Technology</h3>
                     <div className={styles.list}>
                         <ul>
                             <li className={styles.careerText}>UI design</li>
-                            <li className={styles.careerText}>Vibe Cording</li>
+                            <li className={styles.careerText}>Vibe Coding</li>
                             <li className={styles.careerText}>Web Application</li>
                         </ul>
                     </div>
-                    <h2>Person</h2>
+                    <h3 className={styles.subsectionTitle}>Person</h3>
                     <div className={styles.list}>
                         <ul>
                             <li className={styles.careerText}>大野智 (嵐)</li>
@@ -83,7 +84,7 @@ export default function About() {
                         </ul>
                     </div>
                 </div>
-            </div>
+            </main>
             <Footer />
         </div>
     );

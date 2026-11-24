@@ -36,34 +36,26 @@ export function AdminHeader(): ReactNode {
 
     return (
         <>
-            <div className={`${styles.adminHeader} ${mobileClass}`}>
+            <header className={`${styles.adminHeader} ${mobileClass}`}>
                 <div className={styles.adminHomeIcon}>
-                    <Link to="/admin">
-                        <h1>🐶🐱.admin</h1>
+                    <Link to="/" aria-label="ホーム">
+                        <span className={styles.logo}>🐶🐱.admin</span>
                     </Link>
                 </div>
                 <div style={{display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "row"}}>
                     {/* テーマ切り替えボタン */}
-                    <div 
-                        className={styles.themeToggle}
+                    <button type="button" className={styles.themeToggle}
                         onClick={toggleTheme} 
-                        role="button" 
-                        tabIndex={0} 
                         aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"} 
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                                toggleTheme();
-                            }
-                        }}
                     >
                         {theme === "light" ? (
                             <DarkModeOutlinedIcon sx={{ color: "#03031B" }} />
                         ) : (
                             <LightModeOutlinedIcon sx={{ color: "#DEDBFF" }} />
                         )}
-                    </div>
+                    </button>
 
-                    <div className={styles.adminLinkList} style={{textDecoration: "none"}}>
+                    <nav aria-label="メイン" className={styles.adminLinkList} style={{textDecoration: "none"}}>
                         <Link to="/admin">Admin</Link>
                         <Link to="/admin/blog">Blog</Link>
                         <Link to="/admin/works">Works</Link>
@@ -84,29 +76,23 @@ export function AdminHeader(): ReactNode {
                         >
                             ログアウト
                         </button>
-                    </div>
+                    </nav>
 
                     {/* モバイルハンバーガーボタン */}
-                    <div 
-                        className={styles.adminHamburgerIcon} 
+                    <button type="button" className={styles.adminHamburgerIcon}
                         onClick={toggleMenu} 
-                        role="button" 
-                        tabIndex={0} 
                         aria-label={hamburgerAriaLabel}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                                toggleMenu();
-                            }
-                        }}
+                        aria-expanded={isMenuOpen}
+                        aria-controls="admin-mobile-menu"
                     >
                         <img 
                             src={hamburgerIconSrc}
-                            alt={hamburgerAriaLabel} 
+                            alt=""
                             style={{width: "25.9px", height: "17px"}}
                         />
-                    </div>
+                    </button>
                 </div>
-            </div>
+            </header>
             <AdminMobileMenu />
         </>
     );

@@ -1,7 +1,8 @@
 import { typeStyle, space, layout, mobile } from "~/styles/tokens";
-import { style, globalStyle } from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 import { vars } from "../../styles/theme.css";
 export const blogItem = style({
+    position: "relative",
     display: "flex",
     width: "600px",
     flexDirection: "column",
@@ -30,6 +31,8 @@ export const tagList = style({
     gap: space[4],
 });
 export const tagChip = style({
+    position: "relative",
+    zIndex: 1,
     ...typeStyle("caption"),
     padding: `${space[4]} ${space[8]}`,
     borderRadius: "9999px",
@@ -43,5 +46,10 @@ export const tagChip = style({
     },
 });
 // カード内の余白と文字階層。
-globalStyle(`${blogItem} h2`, typeStyle("title3"));
-globalStyle(`${blogItem} small`, typeStyle("footnote"));
+export const title = style({ ...typeStyle("title3"), margin: 0 });
+export const titleLink = style({
+    color: vars.color.text,
+    textDecoration: "none",
+    "::after": { content: '""', position: "absolute", inset: 0, borderRadius: "inherit" },
+    selectors: { "&:focus-visible::after": { outline: "2px solid currentColor", outlineOffset: "2px" } },
+});

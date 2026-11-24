@@ -117,7 +117,8 @@ export default function AdminWorkNew() {
         <ProtectedRoute>
             <div className={styles.frame}>
                 <AdminHeader />
-                <div className={styles.adminnewCreate}>
+                <main className={styles.adminnewCreate}>
+                    <h1>Worksを作成</h1>
                     <input 
                         type="file" 
                         placeholder="thumbnail" 
@@ -154,7 +155,7 @@ export default function AdminWorkNew() {
                         onChange={(e) => handleInputChange("content", e.target.value)}
                         className={styles.adminTextareaInput}
                     />
-                </div>
+                </main>
                 <button 
                     onClick={handleSubmit}
                     disabled={isLoading}

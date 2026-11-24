@@ -20,6 +20,8 @@ import "app/styles/globals.css";
 import { LinksFunction, MetaFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { getCriticalCss } from "./utils/criticalCss";
 import NotFound from "./routes/404";
+import { Header } from "./component/Header/Header";
+import { Footer } from "./component/Footer/Footer";
 //import Page from "./routes/_index/route";
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -125,10 +127,18 @@ export const links: LinksFunction = () => {
   ];
 };
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({ error }) => {
+  if (error) {
+    return [
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: isRouteErrorResponse(error) && error.status === 404
+        ? "404 - ページが見つかりません | kokokoko0825"
+        : "エラーが発生しました | kokokoko0825" },
+      { name: "robots", content: "noindex, nofollow" },
+    ];
+  }
   return [
-    { charSet: "utf-8" },
-    { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" },
+    { name: "viewport", content: "width=device-width, initial-scale=1" },
     { title: "kokokoko0825" },
     { name: "description", content: "Koshi Tanakaのポートフォリオ" },
     { name: "robots", content: "index, unfollow" },
@@ -157,46 +167,24 @@ export const meta: MetaFunction = () => {
 
 export function ErrorBoundary() {
   const error = useRouteError();
-
-  // 404エラーの場合
-  if (isRouteErrorResponse(error) && error.status === 404) {
-    return (
-      <html lang="ja">
-        <head>
-          <meta charSet="utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <title>404 - ページが見つかりません | kokokoko0825</title>
-          <Meta />
-          <Links />
-        </head>
-        <body>
-          <NotFound />
-          <Scripts />
-        </body>
-      </html>
-    );
-  }
-
-  // その他のエラーの場合
+  const notFound = isRouteErrorResponse(error) && error.status === 404;
   return (
-    <html lang="ja">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>エラーが発生しました | kokokoko0825</title>
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <div style={{ padding: "2rem", textAlign: "center" }}>
-          <h1>申し訳ございません</h1>
-          <p>予期しないエラーが発生しました。</p>
-          <a href="/" style={{ color: "blue", textDecoration: "underline" }}>
-            ホームへ戻る
-          </a>
-        </div>
-        <Scripts />
-      </body>
-    </html>
+    <ThemeProvider>
+      <DeviceProvider serverDeviceInfo={{ isMobile: false, deviceType: "desktop", userAgent: null }}>
+        <MenuProvider>
+          {notFound ? <NotFound /> : (
+            <>
+              <Header />
+              <main style={{ padding: "6rem 2rem", textAlign: "center" }}>
+                <h1>申し訳ございません</h1>
+                <p>予期しないエラーが発生しました。</p>
+                <a href="/">ホームへ戻る</a>
+              </main>
+              <Footer />
+            </>
+          )}
+        </MenuProvider>
+      </DeviceProvider>
+    </ThemeProvider>
   );
 }

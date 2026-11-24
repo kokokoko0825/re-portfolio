@@ -12,6 +12,7 @@ import { normalizeBlogTags } from "../utils/blogTags";
 
 export const meta: MetaFunction = () => {
   return [
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
     { name: "description", content: "Koshi Tanakaのブログ" },
     { name: "og:title", content: "Blog | kokokoko0825"},
     { name: "og:description", content: "Koshi Tanakaのブログ"},
@@ -89,7 +90,7 @@ export default function Blog() {
     return (
         <div className={styles.frame}>
             <Header />
-            <div className={styles.blog}>
+            <main className={styles.blog}>
                 <h1>Blog</h1>
                 {allTags.length > 0 && (
                     <div className={styles.tagFilters}>
@@ -132,7 +133,7 @@ export default function Blog() {
                         />
                     ))
                 )}
-            </div>
+            </main>
             <Footer />
         </div>
     );

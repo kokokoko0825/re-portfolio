@@ -24,7 +24,7 @@ export const meta: MetaFunction = () => {
         { name: "description", content: "Koshi Tanakaのポートフォリオ" },
         { name: "robots", content: "index, follow" },
         // ビューポートの設定を明示的に追加
-        { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
     ];
 };
 
@@ -38,12 +38,12 @@ export default function Home() {
     return (
         <div className={`${styles.Home} ${mobileClass}`}>
             <Header />
-            <div className={styles.item}>
+            <main className={styles.item}>
                 <div className={styles.icon}></div>
                 <div className={styles.myName}>
                     <h1 className={styles.heroName}>Koshi Tanaka</h1>
                     <small>@kokokoko0825</small>
-                    <h2>Software Engineer</h2>
+                    <p className={styles.subtitle}>Software Engineer</p>
                 </div>
                 <div className={styles.accontFrame}>
                     <Link to="https://github.com/kokokoko0825">
@@ -62,7 +62,7 @@ export default function Home() {
                         </svg>
                     </Link>
                 </div>
-            </div>
+            </main>
             <Footer />
         </div>
     );

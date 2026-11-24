@@ -125,11 +125,12 @@ export default function AdminWorkEdit() {
             <ProtectedRoute>
                 <div className={styles.frame}>
                     <AdminHeader />
-                    <div className={styles.adminnewCreate}>
+                    <main className={styles.adminnewCreate}>
+                    <h1>Worksを編集</h1>
                         <div style={{color: "#DEDBFF", textAlign: "center", padding: space[20]}}>
                             読み込み中...
                         </div>
-                    </div>
+                    </main>
                     <Footer />
                 </div>
             </ProtectedRoute>
@@ -140,7 +141,8 @@ export default function AdminWorkEdit() {
         <ProtectedRoute>
             <div className={styles.frame}>
                 <AdminHeader />
-                <div className={styles.adminnewCreate}>
+                <main className={styles.adminnewCreate}>
+                    <h1>Worksを編集</h1>
                     <input 
                         type="file" 
                         placeholder="thumbnail" 
@@ -182,7 +184,7 @@ export default function AdminWorkEdit() {
                         onChange={(e) => handleInputChange("content", e.target.value)}
                         className={styles.adminTextareaInput}
                     />
-                </div>
+                </main>
                 <button 
                     onClick={handleSubmit}
                     disabled={isLoading}

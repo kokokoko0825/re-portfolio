@@ -1,4 +1,4 @@
-import { space } from "~/styles/tokens";
+import { typeStyle, space } from "~/styles/tokens";
 import { style } from "@vanilla-extract/css";
 
 export const adminWorkItem = style({
@@ -15,3 +15,4 @@ export const adminItemIcon = style({
     alignItems: "center",
     gap: space[48],
 })
+export const editIcon = style(typeStyle("largeTitle"));

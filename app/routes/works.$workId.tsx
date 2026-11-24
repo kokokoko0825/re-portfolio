@@ -1,3 +1,5 @@
+import { DateText } from "../component/DateText";
+import { thumbnail as workThumbnail } from "../component/worksItem/styles.css";
 import { Header } from "../component/Header/Header";
 import { Footer } from "../component/Footer/Footer";
 import * as styles from "./styles.css";
@@ -13,6 +15,7 @@ import { vars } from "../styles/theme.css";
 
 export const meta: MetaFunction = () => {
   return [
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
     { title: "作品詳細 | kokokoko0825" },
     { name: "description", content: "Koshi Tanakaの作品詳細" },
     { name: "robots", content: "noindex, nofollow" },
@@ -117,27 +120,17 @@ export default function BlogId() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [theme]);
 
-    // FirestoreのTimestampを日付文字列に変換
-    const formatDate = (timestamp: Timestamp | null) => {
-        if (!timestamp) return "";
-        
-        const date = timestamp.toDate();
-        return date.toLocaleDateString('ja-JP', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit'
-        });
-    };
 
     if (isLoading) {
         return (
             <div className={styles.frame}>
                 <Header />
-                <div className={styles.blogId}>
+                <main className={styles.blogId}>
+                    <h1>Works</h1>
                     <div style={{color: vars.color.text, textAlign: "center", padding: "20px"}}>
                         読み込み中...
                     </div>
-                </div>
+                </main>
                 <Footer />
             </div>
         );
@@ -147,16 +140,15 @@ export default function BlogId() {
         return (
             <div className={styles.frame}>
                 <Header />
-                <div className={styles.blogId}>
+                <main className={styles.blogId}>
+                    <h1>Works</h1>
                     <div style={{color: "#ff6b6b", textAlign: "center", padding: "20px"}}>
                         {error || "エラーが発生しました"}
                     </div>
                     <div className={styles.backFrame}>
-                        <Link to="/works">
-                            <small>Back</small>
-                        </Link>
+                        <Link to="/works" className={styles.backLink}>Back</Link>
                     </div>
-                </div>
+                </main>
                 <Footer />
             </div>
         );
@@ -165,10 +157,10 @@ export default function BlogId() {
     return (
         <div className={styles.frame}>
             <Header />
-            <div className={styles.blogId}>
-                <small>投稿日: {formatDate(workData.createdAt)},  編集日: {formatDate(workData.updatedAt)}</small>
+            <main className={styles.blogId}>
+                <small>投稿日: <DateText value={workData.createdAt} />,  編集日: <DateText value={workData.updatedAt} /></small>
                 <div className={styles.thumbnail}>
-                    <img src={workData.thumbnail || "/public/images/icon.jpg"} alt="thumbnail" />
+                    <img src={workData.thumbnail || "/images/icon.jpg"} alt="" className={workThumbnail} />
                     <h1>{workData.title}</h1>
                 </div>
                 <div className={styles.textFrame}>
@@ -179,11 +171,9 @@ export default function BlogId() {
                     />
                 </div>
                 <div className={styles.backFrame}>
-                    <Link to="/works">
-                        <small>Back</small>
-                    </Link>
+                    <Link to="/works" className={styles.backLink}>Back</Link>
                 </div>
-            </div>
+            </main>
             <Footer />
         </div>
     );

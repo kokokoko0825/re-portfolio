@@ -1,4 +1,4 @@
-import { space, mobile } from "~/styles/tokens";
+import { typeStyle, space, mobile } from "~/styles/tokens";
 import { style } from "@vanilla-extract/css";
 
 export const adminBlogItem = style({
@@ -33,3 +33,4 @@ export const adminItemIcon = style({
         }
     }
 })
+export const editIcon = style(typeStyle("largeTitle"));

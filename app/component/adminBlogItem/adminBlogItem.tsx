@@ -37,8 +37,8 @@ export function AdminBlogItem({ id, title, createdAt, tags = [], onDelete }: Adm
         <div className={styles.adminBlogItem}>
             <BlogItem id={id} title={title} createdAt={createdAt} tags={tags} />
             <div className={styles.adminItemIcon}>
-                <Link to={`/blog/edit/${id}`}>
-                    <h1>✏️</h1>
+                <Link to={`/blog/edit/${id}`} aria-label="編集">
+                    <span aria-hidden="true" className={styles.editIcon}>✏️</span>
                 </Link>
                 <button 
                     onClick={handleDelete} 

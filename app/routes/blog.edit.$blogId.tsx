@@ -108,11 +108,12 @@ export default function AdminBlogEdit() {
             <ProtectedRoute>
                 <div className={styles.frame}>
                     <AdminHeader />
-                    <div className={styles.adminnewCreate}>
+                    <main className={styles.adminnewCreate}>
+                    <h1>Blogを編集</h1>
                         <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
                             読み込み中...
                         </div>
-                    </div>
+                    </main>
                     <Footer />
                 </div>
             </ProtectedRoute>
@@ -123,7 +124,8 @@ export default function AdminBlogEdit() {
         <ProtectedRoute>
             <div className={styles.frame}>
                 <AdminHeader />
-                <div className={styles.adminnewCreate}>
+                <main className={styles.adminnewCreate}>
+                    <h1>Blogを編集</h1>
                     <input 
                         type="text" 
                         placeholder="thumbnail (絵文字)" 
@@ -173,7 +175,7 @@ export default function AdminBlogEdit() {
                         onChange={(e) => handleInputChange("content", e.target.value)}
                         className={styles.adminTextareaInput}
                     />
-                </div>
+                </main>
                 <button 
                     onClick={handleSubmit}
                     disabled={isLoading}
@@ -184,4 +186,4 @@ export default function AdminBlogEdit() {
             </div>
         </ProtectedRoute>
     );
-} 
+}

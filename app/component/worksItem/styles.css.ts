@@ -1,5 +1,5 @@
 import { typeStyle, layout, mobile } from "~/styles/tokens";
-import { style, globalStyle } from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 export const worksItem = style({
     display: "inline-flex",
     flexDirection: "column",
@@ -14,6 +14,10 @@ export const worksItem = style({
     gap: layout.cardContentGap,
     boxSizing: "border-box"
 });
-// カード内の余白と文字階層。
-globalStyle(`${worksItem} h2`, typeStyle("title3"));
-globalStyle(`${worksItem} small`, typeStyle("body"));
+export const cardLink = style({ color: "inherit", textDecoration: "none" });
+export const title = style({ ...typeStyle("title3"), margin: 0, wordBreak: "break-word" });
+export const description = style({ ...typeStyle("body"), margin: 0, wordBreak: "break-word" });
+export const thumbnail = style({
+    width: "300px", height: "200px", objectFit: "cover",
+    "@media": { [mobile]: { width: "200px", height: "133px" } },
+});

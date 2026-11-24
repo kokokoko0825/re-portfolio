@@ -37,6 +37,7 @@ export const adminLinkList = style({
 })
 
 export const themeToggle = style({
+    background: "none", border: "none", borderRadius: 0, gap: 0,
     display: "flex",
     padding: `${space[8]} ${space[20]}`,
     cursor: "pointer",
@@ -73,6 +74,7 @@ globalStyle(`:root[data-theme='light'] ${themeToggle} svg`, {
 })
 
 export const adminHamburgerIcon = style({
+    background: "none", border: "none", borderRadius: 0, gap: 0,
     display: "none",
     padding: `${space[8]} ${space[32]}`,
     cursor: "pointer",
@@ -186,3 +188,7 @@ export const adminMobileMenuOverlayOpen = style({
 globalStyle(`${adminLinkList} a, ${adminMobileMenuLinks} a`, {
     ...typeStyle("subheadline"), display: "flex", alignItems: "center", minHeight: "2.75rem",
 });
+
+export const logo = style(typeStyle("largeTitle"));
+globalStyle(`${adminHomeIcon} a, ${adminLinkList} a`, { color: vars.color.text, textDecoration: "none" });
+globalStyle(`${themeToggle} svg`, { width: "25px", height: "25px", "@media": { [mobile]: { width: "15px" } } });

@@ -42,7 +42,7 @@
       viewportMeta.name = 'viewport';
       document.head.appendChild(viewportMeta);
     }
-    viewportMeta.content = 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no';
+    viewportMeta.content = 'width=device-width, initial-scale=1';
   }
 
   // 即時実行

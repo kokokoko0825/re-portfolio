@@ -367,7 +367,7 @@ globalStyle(`${textFrame} .znc table`, {
     overflowX: "auto",
     display: "block",
 });
-globalStyle(`${textFrame} .znc h1[id], ${textFrame} .znc h2[id], ${textFrame} .znc h3[id], ${textFrame} .znc h4[id]`, {
+globalStyle(`${textFrame} .znc h2[id], ${textFrame} .znc h3[id], ${textFrame} .znc h4[id], ${textFrame} .znc h5[id]`, {
     scrollMarginTop: "100px",
 });
 export const backFrame = style({
@@ -507,7 +507,9 @@ export const defaultText = style({
     ...typeStyle("body")
 });
 export const linkText = style({
-    ...typeStyle("footnote")
+    ...typeStyle("footnote"),
+    color: vars.color.text,
+    textDecoration: "none",
 });
 export const careerText = style({
     ...typeStyle("body"),
@@ -582,3 +584,8 @@ export const timelineTitle = style({
 });
 globalStyle(`${thumbnail} > span`, typeStyle("heroName"));
 globalStyle(`${adminnewCreate} p, ${adminnewCreate} label, ${adminManagement} button, ${loginCard} p`, typeStyle("uiBody"));
+
+export const sectionTitle = style({ ...typeStyle("largeTitle"), margin: 0 });
+export const subsectionTitle = style({ ...typeStyle("title2"), margin: 0 });
+export const backLink = style({ ...typeStyle("footnote"), color: vars.color.text, textDecoration: "none" });
+globalStyle(`${adminSelect} a, ${newCreate} a`, { color: vars.color.text, textDecoration: "none" });

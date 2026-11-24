@@ -5,8 +5,7 @@ import { vars } from "./theme.css";
 globalStyle("html, body", {
     color: vars.color.text,
     backgroundColor: vars.color.background,
-    fontFamily:
-        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+    fontFamily: '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     margin: 0,
     padding: 0,
     // width: "1440px",
@@ -23,8 +22,6 @@ globalStyle("h1, h2, h3, h4, h5, h6", { textWrap: "pretty" });
 // title
 globalStyle("h1", {
     ...typeStyle("largeTitle"),
-    fontFamily:
-        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
 
     fontStyle: "normal",
 
@@ -35,48 +32,16 @@ globalStyle("h1", {
 // subtitle
 globalStyle("h2", {
     ...typeStyle("title2"),
-    fontFamily:
-        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
 
     fontStyle: "normal",
 
     color: vars.color.text,
     margin: 0,
-})
-
-// subtitle
-globalStyle("Link", {
-    ...typeStyle("subheadline"),
-    fontFamily:
-        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-
-    fontStyle: "normal",
-
-    color: vars.color.text,
-    margin: 0,
-    textDecorationLine: "none",
-    textDecorationColor: vars.color.text,
-})
-
-// 多分Headerのリンク
-globalStyle("a", {
-    fontSize: "inherit", fontWeight: "inherit", lineHeight: "inherit", letterSpacing: "inherit",
-    fontFamily:
-        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-
-    fontStyle: "normal",
-
-    color: vars.color.text,
-    margin: 0,
-    textDecorationLine: "none",
-    textDecorationColor: vars.color.text,
 })
 
 // default
 globalStyle("p", {
     ...typeStyle("body"),
-    fontFamily:
-        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
 
     fontStyle: "normal",
 
@@ -86,61 +51,15 @@ globalStyle("p", {
 // linksize
 globalStyle("small", {
     ...typeStyle("footnote"),
-    fontFamily:
-        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
 
     fontStyle: "normal",
 
     color: vars.color.text,
 })
-
-// githubiconとか
-globalStyle("svg", {
-    width: "25px",
-    height: "25px",
-    aspectRatio: "1/1",
-    color: vars.color.text,
-})
-globalStyle("svg", {
-    "@media": {
-        [mobile]: {
-            width: "15px",
-        }
-    }
-});
 
 // 多分defaultと一緒
 globalStyle("li", {
     ...typeStyle("body"),
-    fontFamily:
-        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-
-    fontStyle: "normal",
-
-    color: vars.color.text,
-})
-
-// worksの画像
-globalStyle("img", {
-    width: "300px",
-    height: "200px",
-    aspectRatio: "3/2",
-    objectFit: "cover",
-})
-globalStyle("img", {
-    "@media": {
-        [mobile]: {
-            width: "200px",
-            height: "133px",
-        }
-    }
-});
-
-// thumbnail
-globalStyle("span", {
-    fontSize: "inherit", fontWeight: "inherit", lineHeight: "inherit", letterSpacing: "inherit",
-    fontFamily:
-        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
 
     fontStyle: "normal",
 
@@ -153,8 +72,6 @@ globalStyle("input", {
     maxWidth: "330px",
     height: "30px",
     borderRadius: "10px",
-    fontFamily:
-        '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
 
     fontStyle: "normal",
 
@@ -171,7 +88,6 @@ globalStyle("input", {
 
 globalStyle("button", {
     ...typeStyle("uiBody"),
-    fontFamily: "inherit",
     display: "flex",
     padding: `${space[12]} ${space[32]}`,
     alignItems: "flex-start",
@@ -343,11 +259,10 @@ globalStyle(".znc strong, .znc b", { fontWeight: 700 });
 globalStyle(".znc a, .znc span", {
     fontSize: "inherit", fontWeight: "inherit", lineHeight: "inherit", letterSpacing: "inherit",
 });
-globalStyle(".znc a", { textDecorationLine: "underline", textDecorationColor: vars.color.text });
+globalStyle(".znc a", { color: vars.color.primary.DEFAULT, textDecorationLine: "underline", textDecorationColor: "currentColor" });
 globalStyle(".znc code", { ...typeStyle("uiBody"), fontSize: "0.9em" });
 globalStyle(".znc pre code", { fontSize: "0.875em" });
 
-globalStyle(".znc h1", { ...typeStyle("title1"), margin: `${space[64]} 0 ${space[24]}` });
 globalStyle(".znc h2", {
     ...typeStyle("articleH2"), margin: `${space[64]} 0 ${space[24]}`,
     "@media": { [mobile]: { fontSize: type.articleH2.mobileSize, margin: `${space[48]} 0 ${space[16]}` } },
@@ -362,7 +277,7 @@ globalStyle(".znc ul, .znc ol, .znc ul ul, .znc ul ol, .znc ol ul, .znc ol ol", 
 globalStyle(".znc ul, .znc ol, .znc li", { lineHeight: 1.75 });
 globalStyle(".znc ul > li, .znc ol > li", { margin: 0 });
 globalStyle(".znc li + li", { marginTop: space[8] });
-globalStyle(".znc h1 + p, .znc h2 + p, .znc h3 + p, .znc h4 + p", { marginTop: 0 });
+globalStyle(".znc h2 + p, .znc h3 + p, .znc h4 + p", { marginTop: 0 });
 globalStyle(".znc > :first-child", { marginTop: 0 });
 
 
@@ -377,3 +292,5 @@ globalStyle(".znc .link-embed-content", {
     "@media": { [mobile]: { padding: layout.mobile.cardPadding } },
 });
 globalStyle(".znc .link-embed-meta", { gap: space[4] });
+
+globalStyle("button, input, textarea, select", { fontFamily: "inherit" });

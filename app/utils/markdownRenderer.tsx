@@ -52,15 +52,12 @@ function slugify(text: string): string {
     return slug || "section";
 }
 
-const originalHeadingOpen = md.renderer.rules.heading_open;
-md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
+md.renderer.rules.heading_open = (tokens, idx, _options, env) => {
     const token = tokens[idx];
-    const tag = token.tag;
-    // h1〜h4 に id を付与して目次対象にする
-    if (tag !== "h1" && tag !== "h2" && tag !== "h3" && tag !== "h4") {
-        return originalHeadingOpen
-            ? originalHeadingOpen(tokens, idx, options, env, self)
-            : self.renderToken(tokens, idx, options);
+    const tag = `h${Math.min(Number(token.tag.slice(1)) + 1, 6)}`;
+    // 元の #〜#### を h2〜h5 にして目次対象にする
+    if (tag === "h6") {
+        return "<h6>";
     }
     const nextToken = tokens[idx + 1];
     const text =
@@ -73,6 +70,9 @@ md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
     const id = count === 0 ? baseSlug : `${baseSlug}-${count}`;
     return `<${tag} id="${id}">`;
 };
+
+md.renderer.rules.heading_close = (tokens, idx) =>
+    `</h${Math.min(Number(tokens[idx].tag.slice(1)) + 1, 6)}>\n`;
 
 // Twitter/X URLを検出する正規表現（x.comとtwitter.comの両方に対応）
 const TWITTER_URL_REGEX = /https?:\/\/(?:www\.)?(?:twitter\.com|x\.com)\/\w+\/status\/\d+/g;
@@ -535,4 +535,4 @@ export function initializeLinkEmbeds(): void {
 export function initializeAllEmbeds(): void {
     initializeTwitterEmbeds();
     initializeLinkEmbeds();
-} 
+}

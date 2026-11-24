@@ -40,11 +40,12 @@ export default function Login() {
         return (
             <div className={styles.frame}>
                 <Header />
-                <div className={styles.login}>
+                <main className={styles.login}>
+                    <h1>Login</h1>
                     <div style={{ color: vars.color.text, textAlign: "center", padding: space[20] }}>
                         読み込み中...
                     </div>
-                </div>
+                </main>
                 <Footer />
             </div>
         );
@@ -53,7 +54,7 @@ export default function Login() {
     return (
         <div className={styles.frame}>
             <Header />
-            <div className={styles.login}>
+            <main className={styles.login}>
                 <h1>Login</h1>
                 <div className={styles.loginCard}>
                     <p style={{ textAlign: "center", ...typeStyle("uiBody"), }}>
@@ -97,7 +98,7 @@ export default function Login() {
                         </div>
                     )}
                 </div>
-            </div>
+            </main>
             <Footer />
         </div>
     );

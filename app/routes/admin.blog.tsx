@@ -62,7 +62,7 @@ export default function AdminBlog() {
         <ProtectedRoute>
             <div className={styles.frame}>
                 <AdminHeader />
-                <div className={styles.adminManagement}>
+                <main className={styles.adminManagement}>
                     <h1>Blogの管理</h1>
                     <div className={styles.newCreate}>
                         <Link to="/blog/new">
@@ -89,7 +89,7 @@ export default function AdminBlog() {
                             />
                         ))
                     )}
-                </div>
+                </main>
                 <Footer />
             </div>
         </ProtectedRoute>

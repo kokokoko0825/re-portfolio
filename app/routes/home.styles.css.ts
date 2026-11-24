@@ -1,5 +1,5 @@
 import { typeStyle, space, layout } from "~/styles/tokens";
-import { style } from "@vanilla-extract/css";
+import { style, globalStyle } from "@vanilla-extract/css";
 import { vars } from "../styles/theme.css";
 
 export const Home = style({
@@ -70,3 +70,6 @@ export const accontFrame = style({
     }
 })
 export const heroName = style(typeStyle("heroName"));
+
+export const subtitle = style({ ...typeStyle("title2"), margin: 0 });
+globalStyle(`${accontFrame} svg`, { width: "25px", height: "25px", color: vars.color.text, "@media": { "screen and (max-width: 768px)": { width: "15px" } } });

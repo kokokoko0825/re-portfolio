@@ -37,8 +37,8 @@ export function AdminWorkItem({ id, thumbnail, title, description, onDelete }: A
         <div className={styles.adminWorkItem}>
             <WorksItem id={id} thumbnail={thumbnail} title={title} description={description} />
             <div className={styles.adminItemIcon}>
-                <Link to={`/work/edit/${id}`}>
-                    <h1>✏️</h1>
+                <Link to={`/work/edit/${id}`} aria-label="編集">
+                    <span aria-hidden="true" className={styles.editIcon}>✏️</span>
                 </Link>
                 <button 
                     onClick={handleDelete} 

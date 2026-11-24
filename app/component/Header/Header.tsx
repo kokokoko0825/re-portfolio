@@ -25,61 +25,47 @@ export function Header(): ReactNode {
     const hamburgerAriaLabel = isMenuOpen ? "Close menu" : "Open menu";
     return (
         <>
-            <div className={`${styles.header} ${mobileClass}`}>
+            <header className={`${styles.header} ${mobileClass}`}>
                 <div className={styles.homeIcon}>
-                    <Link to="/">
-                        <h1>🐶🐱</h1>
+                    <Link to="/" aria-label="ホーム">
+                        <span className={styles.logo}>🐶🐱</span>
                     </Link>
                 </div>
                 <div style={{display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "row"}}>
                     {/* テーマ切り替えボタン */}
-                    <div 
-                        className={styles.themeToggle}
+                    <button type="button" className={styles.themeToggle}
                         onClick={toggleTheme} 
-                        role="button" 
-                        tabIndex={0} 
                         aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"} 
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                                toggleTheme();
-                            }
-                        }}
                     >
                         {theme === "light" ? (
                             <DarkModeOutlinedIcon sx={{ color: "#03031B" }} />
                         ) : (
                             <LightModeOutlinedIcon sx={{ color: "#DEDBFF" }} />
                         )}
-                    </div>
+                    </button>
 
-                    <div className={styles.linkList}>
+                    <nav aria-label="メイン" className={styles.linkList}>
                     <Link to="/">Home</Link>
                     <Link to="/about">About</Link>
                     <Link to="/blog">Blog</Link>
                     <Link to="/works">Works</Link>
-                    </div>
+                    </nav>
                     
                     {/* モバイルハンバーガーボタン */}
-                    <div 
-                        className={styles.hamburgerIcon}
+                    <button type="button" className={styles.hamburgerIcon}
                         onClick={toggleMenu} 
-                        role="button" 
-                        tabIndex={0} 
                         aria-label={hamburgerAriaLabel}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                                toggleMenu();
-                            }
-                        }}
+                        aria-expanded={isMenuOpen}
+                        aria-controls="mobile-menu"
                     >
                         <img 
                             src={hamburgerIconSrc}
-                            alt={hamburgerAriaLabel} 
+                            alt=""
                             style={{width: "25.9px", height: "17px"}}
                         />
-                    </div>
+                    </button>
                 </div>
-            </div>
+            </header>
             <MobileMenu />
         </>
     );

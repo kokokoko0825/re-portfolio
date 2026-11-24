@@ -10,6 +10,7 @@ import { vars } from "../styles/theme.css";
 
 export const meta: MetaFunction = () => {
   return [
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
     { name: "description", content: "Koshi Tanakaの作品" },
     { name: "og:title", content: "Works | kokokoko0825"},
     { name: "og:description", content: "Koshi Tanakaの作品"},
@@ -69,7 +70,7 @@ export default function Works() {
     return (
         <div className={styles.frame}>
             <Header />
-            <div className={styles.works}>
+            <main className={styles.works}>
                 <h1>Works</h1>
                 <div className={styles.workList}>
                     {isLoading ? (
@@ -92,7 +93,7 @@ export default function Works() {
                         ))
                     )}
                 </div>
-            </div>
+            </main>
             <Footer />
         </div>
     );
