@@ -343,33 +343,24 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                             flex: 1;
                             width: 100%;
                             box-sizing: border-box;
-                            padding: 1rem;
                             display: flex;
                             flex-direction: column;
                             justify-content: space-between;
                         ">
                             <div>
                                 <h3 class="link-embed-title" style="
-                                    font-size: 1.1em;
-                                    font-weight: 600;
-                                    margin: 0 0 0.5rem 0;
+
                                     color: ${vars.color.text};
-                                    line-height: 1.4;
                                 ">リンクを読み込み中...</h3>
                                 <p class="link-embed-description" style="
-                                    font-size: 0.9em;
                                     color: ${vars.color.muted.foreground};
-                                    margin: 0 0 0.5rem 0;
-                                    line-height: 1.4;
                                 ">メタデータを取得中...</p>
                             </div>
                             <div class="link-embed-meta" style="
                                 display: flex;
                                 flex-direction: column;
-                                gap: 0.25rem;
                             ">
                                 <span class="link-embed-url" style="
-                                    font-size: 0.75em;
                                     color: ${vars.color.muted.foreground};
                                     word-break: break-all;
                                 ">${url}</span>
@@ -503,15 +494,11 @@ export function initializeLinkEmbeds(): void {
                                 }
                                 if (metaElement) {
                                     metaElement.innerHTML = `
-                                        <span style="
-                                            font-size: 0.8em;
-                                            font-weight: 500;
+                                        <span class="link-embed-site" style="
                                             color: ${vars.color.primary.DEFAULT};
                                             text-transform: uppercase;
-                                            letter-spacing: 0.5px;
                                         ">${linkData.siteName}</span>
-                                        <span style="
-                                            font-size: 0.75em;
+                                        <span class="link-embed-url" style="
                                             color: ${vars.color.muted.foreground};
                                             word-break: break-all;
                                         ">${url}</span>

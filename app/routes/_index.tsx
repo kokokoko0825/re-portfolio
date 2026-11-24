@@ -41,7 +41,7 @@ export default function Home() {
             <div className={styles.item}>
                 <div className={styles.icon}></div>
                 <div className={styles.myName}>
-                    <h1>Koshi Tanaka</h1>
+                    <h1 className={styles.heroName}>Koshi Tanaka</h1>
                     <small>@kokokoko0825</small>
                     <h2>Software Engineer</h2>
                 </div>

@@ -1,3 +1,4 @@
+import { typeStyle, space, layout } from "~/styles/tokens";
 import { style } from "@vanilla-extract/css";
 import { vars } from "../styles/theme.css";
 
@@ -6,7 +7,8 @@ export const Home = style({
     width: "auto",
     flexDirection: "column",
     alignItems: "center",
-    gap: "50px",
+    gap: layout.sectionGap,
+    "@media": { "screen and (max-width: 768px)": { gap: layout.mobile.sectionGap } },
     backgroundColor: vars.color.background,
 })
 
@@ -15,15 +17,15 @@ export const mobileView = style({})
 export const item = style({
     display: "flex",
     // モバイルファーストのアプローチ - デフォルトでモバイルサイズに設定
-    paddingTop: "120px",
+    paddingTop: `calc(${space[96]} + ${space[24]})`,
     flexDirection: "column",
     alignItems: "center",
-    gap: "70px",
+    gap: layout.mobile.sectionGap,
     "@media": {
         // デスクトップサイズはメディアクエリで上書き
         "screen and (min-width: 769px)": {
-            paddingTop: "124px",
-            gap: "50px",
+            paddingTop: `calc(${space[96]} + ${space[24]} + ${space[4]})`,
+            gap: layout.sectionGap,
         }
     }
 })
@@ -47,23 +49,24 @@ export const icon = style({
 
 export const myName = style({
     display: "flex",
-    padding: "10px",
+    padding: space[12],
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    gap: "10px",
+    gap: layout.cardContentGap,
 })
 
 export const accontFrame = style({
     display: "flex",
-    padding: "10px",
+    padding: space[12],
     alignItems: "center",
     // モバイルファーストのアプローチ - デフォルトでモバイルサイズに設定
-    gap: "10px",
+    gap: layout.cardContentGap,
     "@media": {
         // デスクトップサイズはメディアクエリで上書き
         "screen and (min-width: 769px)": {
-            gap: "20px",
+            gap: space[20],
         }
     }
 })
+export const heroName = style(typeStyle("heroName"));

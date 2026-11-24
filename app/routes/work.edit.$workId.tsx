@@ -1,3 +1,4 @@
+import { typeStyle, space } from "~/styles/tokens";
 import { AdminHeader } from "../component/adminHeader/adminHeader";
 import { Footer } from "../component/Footer/Footer";
 import * as styles from "./styles.css";
@@ -75,10 +76,10 @@ export default function AdminWorkEdit() {
         const timestamp = Date.now();
         const fileName = `${timestamp}_${file.name}`;
         const storageRef = ref(storage, `thumbnails/${fileName}`);
-        
+
         const snapshot = await uploadBytes(storageRef, file);
         const downloadURL = await getDownloadURL(snapshot.ref);
-        
+
         return downloadURL;
     };
 
@@ -91,7 +92,7 @@ export default function AdminWorkEdit() {
         setIsLoading(true);
         try {
             let thumbnailURL = formData.thumbnail;
-            
+
             if (selectedFile) {
                 thumbnailURL = await uploadFileToStorage(selectedFile);
             }
@@ -106,10 +107,10 @@ export default function AdminWorkEdit() {
 
             const workDoc = doc(db, "works", workId!);
             await updateDoc(workDoc, workData);
-            
+
             console.log("作品が正常に更新されました。ID: ", workId);
             alert("作品が正常に更新されました！");
-            
+
             navigate("/admin");
         } catch (error) {
             console.error("エラーが発生しました: ", error);
@@ -125,7 +126,7 @@ export default function AdminWorkEdit() {
                 <div className={styles.frame}>
                     <AdminHeader />
                     <div className={styles.adminnewCreate}>
-                        <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
+                        <div style={{color: "#DEDBFF", textAlign: "center", padding: space[20]}}>
                             読み込み中...
                         </div>
                     </div>
@@ -148,12 +149,12 @@ export default function AdminWorkEdit() {
                         style={{width: "auto", height: "auto", textAlign: "center", border: "none", background: "none", color: "#DEDBFF"}} 
                     />
                     {selectedFile && (
-                        <div style={{color: "#DEDBFF", fontSize: "14px", margin: "10px 0"}}>
+                        <div style={{color: "#DEDBFF", ...typeStyle("uiBody"), margin: `${space[12]} 0`}}>
                             選択されたファイル: {selectedFile.name}
                         </div>
                     )}
                     {formData.thumbnail && !selectedFile && (
-                        <div style={{color: "#DEDBFF", fontSize: "14px", margin: "10px 0"}}>
+                        <div style={{color: "#DEDBFF", ...typeStyle("uiBody"), margin: `${space[12]} 0`}}>
                             現在のサムネイル: {formData.thumbnail}
                         </div>
                     )}

@@ -1,3 +1,4 @@
+import { typeStyle } from "~/styles/tokens";
 import { ReactNode } from "react";
 import * as styles from "./styles.css";
 import { Link } from "@remix-run/react";
@@ -16,13 +17,13 @@ interface AdminBlogItemProps {
 export function AdminBlogItem({ id, title, createdAt, tags = [], onDelete }: AdminBlogItemProps): ReactNode {
     const handleDelete = async () => {
         const isConfirmed = window.confirm(`「${title}」を削除しますか？\nこの操作は取り消せません。`);
-        
+
         if (isConfirmed) {
             try {
                 await deleteDoc(doc(db, "blogs", id));
                 console.log("ブログ記事が正常に削除されました。ID: ", id);
                 alert("ブログ記事が正常に削除されました！");
-                
+
                 // 親コンポーネントに削除完了を通知
                 onDelete(id);
             } catch (error) {
@@ -45,7 +46,7 @@ export function AdminBlogItem({ id, title, createdAt, tags = [], onDelete }: Adm
                         cursor: "pointer", 
                         background: "none", 
                         border: "none", 
-                        fontSize: "36px",
+                        ...typeStyle("uiBody"),
                         padding: "0",
                         margin: "0"
                     }}

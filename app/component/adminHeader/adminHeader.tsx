@@ -1,3 +1,4 @@
+import { typeStyle } from "~/styles/tokens";
 import { ReactNode } from "react";
 import * as styles from "./styles.css";
 import { Link, useNavigate } from "@remix-run/react";
@@ -73,7 +74,7 @@ export function AdminHeader(): ReactNode {
                                 border: "none",
                                 color: vars.color.text,
                                 cursor: "pointer",
-                                fontSize: "16px",
+                                ...typeStyle("uiBody"),
                                 padding: "0",
                                 margin: "0",
                                 justifyContent: "center",
@@ -84,7 +85,7 @@ export function AdminHeader(): ReactNode {
                             ログアウト
                         </button>
                     </div>
-                    
+
                     {/* モバイルハンバーガーボタン */}
                     <div 
                         className={styles.adminHamburgerIcon} 

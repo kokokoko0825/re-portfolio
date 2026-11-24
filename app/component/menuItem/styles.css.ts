@@ -1,11 +1,11 @@
+import { space } from "~/styles/tokens";
 import { style } from "@vanilla-extract/css";
-import { vars } from "../../styles/theme.css";
 
 export const menuItem = style({
     display: "inline-flex",
-    padding: "30px 50px",
+    padding: `${space[32]} ${space[48]}`,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    gap: "20px",
+    gap: space[20],
 })

@@ -1,3 +1,4 @@
+import { typeStyle, type, space, layout, mobile } from "./tokens";
 import { globalStyle } from "@vanilla-extract/css";
 import { vars } from "./theme.css";
 
@@ -13,123 +14,85 @@ globalStyle("html, body", {
     // minWidth: "1440px",
 });
 
+// rem の基準となる html の文字サイズはブラウザ設定に委ねる。
+globalStyle("body", typeStyle("body"));
+
+// 見出しの最終行に1〜2文字だけ残る折り返し（例:「…作っ／た」）を防ぐ
+globalStyle("h1, h2, h3, h4, h5, h6", { textWrap: "pretty" });
 
 // title
 globalStyle("h1", {
+    ...typeStyle("largeTitle"),
     fontFamily:
         '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    fontSize: "36px",
+
     fontStyle: "normal",
-    fontWeight: 400,
-    lineHeight: "normal",
+
     color: vars.color.text,
     margin: 0,
 });
-globalStyle("h1", {
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "24px",
-        }
-    }
-});
-
 
 // subtitle
 globalStyle("h2", {
+    ...typeStyle("title2"),
     fontFamily:
         '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    fontSize: "24px",
+
     fontStyle: "normal",
-    fontWeight: 400,
-    lineHeight: "normal",
+
     color: vars.color.text,
     margin: 0,
 })
-globalStyle("h2", {
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "20px",
-        }
-    }
-});
 
 // subtitle
 globalStyle("Link", {
+    ...typeStyle("subheadline"),
     fontFamily:
         '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    fontSize: "24px",
+
     fontStyle: "normal",
-    fontWeight: 400,
-    lineHeight: "normal",
+
     color: vars.color.text,
     margin: 0,
     textDecorationLine: "none",
     textDecorationColor: vars.color.text,
 })
-globalStyle("Link", {
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "20px",
-        }
-    }
-});
 
 // 多分Headerのリンク
 globalStyle("a", {
+    fontSize: "inherit", fontWeight: "inherit", lineHeight: "inherit", letterSpacing: "inherit",
     fontFamily:
         '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    fontSize: "24px",
+
     fontStyle: "normal",
-    fontWeight: 400,
-    lineHeight: "normal",
+
     color: vars.color.text,
     margin: 0,
     textDecorationLine: "none",
     textDecorationColor: vars.color.text,
 })
-globalStyle("a", {
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "20px",
-        }
-    }
-});
 
 // default
 globalStyle("p", {
+    ...typeStyle("body"),
     fontFamily:
         '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    fontSize: "20px",
+
     fontStyle: "normal",
-    fontWeight: 400,
-    lineHeight: "normal",
+
     color: vars.color.text,
 })
-globalStyle("p", {
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "18px", // 12px
-        }
-    }
-});
 
 // linksize
 globalStyle("small", {
+    ...typeStyle("footnote"),
     fontFamily:
         '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    fontSize: "16px",
+
     fontStyle: "normal",
-    fontWeight: 400,
-    lineHeight: "normal",
+
     color: vars.color.text,
 })
-globalStyle("small", {
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "12px", // 10px
-        }
-    }
-});
 
 // githubiconとか
 globalStyle("svg", {
@@ -140,7 +103,7 @@ globalStyle("svg", {
 })
 globalStyle("svg", {
     "@media": {
-        "screen and (max-width: 768px)": {
+        [mobile]: {
             width: "15px",
         }
     }
@@ -148,21 +111,14 @@ globalStyle("svg", {
 
 // 多分defaultと一緒
 globalStyle("li", {
+    ...typeStyle("body"),
     fontFamily:
         '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    fontSize: "20px",
+
     fontStyle: "normal",
-    fontWeight: 400,
-    lineHeight: "normal",
+
     color: vars.color.text,
 })
-globalStyle("li", {
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "18px", // 12px
-        }
-    }
-});
 
 // worksの画像
 globalStyle("img", {
@@ -173,7 +129,7 @@ globalStyle("img", {
 })
 globalStyle("img", {
     "@media": {
-        "screen and (max-width: 768px)": {
+        [mobile]: {
             width: "200px",
             height: "133px",
         }
@@ -182,48 +138,44 @@ globalStyle("img", {
 
 // thumbnail
 globalStyle("span", {
+    fontSize: "inherit", fontWeight: "inherit", lineHeight: "inherit", letterSpacing: "inherit",
     fontFamily:
         '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    fontSize: "96px",
+
     fontStyle: "normal",
-    fontWeight: 400,
-    lineHeight: "normal",
+
     color: vars.color.text,
 })
-globalStyle("span", {
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "48px",
-        }
-    }
-});
 
 // loginのinput
 globalStyle("input", {
+    ...typeStyle("uiBody"),
     maxWidth: "330px",
     height: "30px",
     borderRadius: "10px",
     fontFamily:
         '"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    fontSize: "16px",
+
     fontStyle: "normal",
-    fontWeight: 400,
-    lineHeight: "normal",
+
     color: vars.color.background,
 })
 globalStyle("input", {
+    ...typeStyle("uiBody"),
     "@media": {
-        "screen and (max-width: 768px)": {
+        [mobile]: {
             width: "250px",
         }
     }
 });
 
 globalStyle("button", {
+    ...typeStyle("uiBody"),
+    fontFamily: "inherit",
     display: "flex",
-    padding: "10px 30px",
+    padding: `${space[12]} ${space[32]}`,
     alignItems: "flex-start",
-    gap: "10px",
+    gap: space[12],
     borderRadius: "10px",
     background: vars.color.text,
     color: vars.color.background,
@@ -233,30 +185,23 @@ globalStyle("button", {
 
 // codefont
 globalStyle("code", {
+    ...typeStyle("uiBody"),
     fontFamily:
         'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-    fontSize: "16px",
+
     fontStyle: "normal",
-    fontWeight: 400,
-    lineHeight: "normal",
+
     color: vars.color.text,
 })
-globalStyle("code", {
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "12px", // 11px
-        }
-    }
-});
 
 // PrismJS code block styles
 globalStyle('pre[class*="language-"]', {
     background: vars.color.codeBlock.background,
     border: `1px solid ${vars.color.codeBlock.border}`,
     borderRadius: "10px",
-    padding: "16px 0 16px 0",
+    padding: `${space[16]} 0`,
     overflow: "auto",
-    margin: "16px 0",
+    margin: `${space[16]} 0`,
 });
 
 globalStyle('pre[class*="language-"].line-numbers', {
@@ -264,10 +209,10 @@ globalStyle('pre[class*="language-"].line-numbers', {
 });
 
 globalStyle('code[class*="language-"]', {
+    ...typeStyle("uiBody"),
     fontFamily:
         'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-    fontSize: "16px",
-    lineHeight: "1.8",
+
     color: vars.color.codeBlock.text,
 });
 
@@ -370,122 +315,63 @@ globalStyle('.link-embed-wrapper', {
 
 // 記事本文(.znc)内のコードブロック・引用などの余白調整
 globalStyle(".znc pre", {
-    margin: "24px 0",
-    padding: "12px 16px",
+    margin: `${space[24]} 0`,
+    padding: `${space[12]} ${space[16]}`,
 });
 
 globalStyle(".znc blockquote", {
-    margin: "16px 0",
+    margin: `${space[16]} 0`,
     padding: "0.1em 1em",
     borderLeft: `4px solid ${vars.color.borderColor}`,
 });
 
-// 記事本文(.znc)内のタイポグラフィ調整（Zennライク）
-// PC: 16px / SP: 13px に分ける
+// 記事本文は TOC を含めず、本文サイズを基準とする可読幅にする。
 globalStyle(".znc", {
-    fontSize: "16px",
-    lineHeight: "1.8",
-});
-
-globalStyle(".znc", {
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "13px",
-            lineHeight: "1.8",
-        },
-    },
-});
-
-globalStyle(".znc a", {
-    fontSize: "inherit",
-    lineHeight: "inherit",
-    textDecorationLine: "underline",
-    textDecorationColor: vars.color.text,
-});
-
-// 本文の段落・リスト
-globalStyle(".znc p, .znc li", {
-    fontSize: "16px",
-    lineHeight: "1.8",
-    margin: "0 0 1em 0",
+    ...typeStyle("articleBody"),
+    width: "100%",
+    maxWidth: layout.articleMaxWidth,
+    "@media": { [mobile]: { fontSize: type.articleBody.mobileSize, maxWidth: layout.mobile.articleMaxWidth } },
 });
 
 globalStyle(".znc p, .znc li", {
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "13px",
-            lineHeight: "1.8",
-        },
-    },
+    ...typeStyle("articleBody"),
+    margin: 0,
 });
 
-// インラインコードは本文より一段階小さめ
-globalStyle(".znc code", {
-    fontSize: "0.9em",
+globalStyle(".znc a, .znc span", {
+    fontSize: "inherit", fontWeight: "inherit", lineHeight: "inherit", letterSpacing: "inherit",
 });
+globalStyle(".znc a", { textDecorationLine: "underline", textDecorationColor: vars.color.text });
+globalStyle(".znc code", { ...typeStyle("uiBody"), fontSize: "0.9em" });
+globalStyle(".znc pre code", { fontSize: "0.875em" });
 
-globalStyle(".znc code", {
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "0.9em",
-        },
-    },
-});
-
-// 記事本文内の見出しサイズ（.znc h1〜h4）
-globalStyle(".znc h1", {
-    fontSize: "26px",
-    lineHeight: "1.6",
-    margin: "2em 0 0.75em 0",
-});
-
+globalStyle(".znc h1", { ...typeStyle("title1"), margin: `${space[64]} 0 ${space[24]}` });
 globalStyle(".znc h2", {
-    fontSize: "22px",
-    lineHeight: "1.6",
-    margin: "1.75em 0 0.5em 0",
+    ...typeStyle("articleH2"), margin: `${space[64]} 0 ${space[24]}`,
+    "@media": { [mobile]: { fontSize: type.articleH2.mobileSize, margin: `${space[48]} 0 ${space[16]}` } },
 });
-
 globalStyle(".znc h3", {
-    fontSize: "18px",
-    lineHeight: "1.6",
-    margin: "1.5em 0 0.5em 0",
+    ...typeStyle("articleH3"), margin: `${space[48]} 0 ${space[16]}`,
+    "@media": { [mobile]: { fontSize: type.articleH3.mobileSize, margin: `${space[40]} 0 ${space[12]}` } },
 });
+globalStyle(".znc h4", { ...typeStyle("articleH4"), margin: `${space[32]} 0 ${space[12]}` });
+globalStyle(".znc p + p", { marginTop: "1.5em" });
+globalStyle(".znc ul, .znc ol, .znc ul ul, .znc ul ol, .znc ol ul, .znc ol ol", { marginBlock: space[24], paddingLeft: "1.5em" });
+globalStyle(".znc ul, .znc ol, .znc li", { lineHeight: 1.75 });
+globalStyle(".znc ul > li, .znc ol > li", { margin: 0 });
+globalStyle(".znc li + li", { marginTop: space[8] });
+globalStyle(".znc h1 + p, .znc h2 + p, .znc h3 + p, .znc h4 + p", { marginTop: 0 });
+globalStyle(".znc > :first-child", { marginTop: 0 });
 
-globalStyle(".znc h4", {
-    fontSize: "16px",
-    lineHeight: "1.6",
-    margin: "1.25em 0 0.5em 0",
-});
 
-// スマホ時の見出しサイズは少し小さめに
-globalStyle(".znc h1", {
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "20px",
-        },
-    },
-});
+globalStyle(".znc .link-embed-title", { ...typeStyle("title3"), margin: `0 0 ${layout.cardContentGap}` });
+globalStyle(".znc .link-embed-description", { ...typeStyle("body"), margin: `0 0 ${layout.cardContentGap}` });
+globalStyle(".znc .link-embed-site", typeStyle("caption"));
+globalStyle(".znc .link-embed-url", typeStyle("footnote"));
+globalStyle(".znc li p", { lineHeight: "inherit" });
 
-globalStyle(".znc h2", {
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "18px",
-        },
-    },
+globalStyle(".znc .link-embed-content", {
+    padding: layout.cardPadding, gap: layout.cardContentGap,
+    "@media": { [mobile]: { padding: layout.mobile.cardPadding } },
 });
-
-globalStyle(".znc h3", {
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "15px",
-        },
-    },
-});
-
-globalStyle(".znc h4", {
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "13px",
-        },
-    },
-});
+globalStyle(".znc .link-embed-meta", { gap: space[4] });

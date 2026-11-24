@@ -1,10 +1,11 @@
+import { typeStyle, space } from "~/styles/tokens";
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../styles/theme.css";
 
 export const twitterEmbedContainer = style({
     display: "flex",
     justifyContent: "center",
-    margin: "2rem 0",
+    margin: `${space[32]} 0`,
     width: "100%",
 });
 
@@ -18,22 +19,23 @@ export const twitterEmbed = style({
 });
 
 export const twitterEmbedLoading = style({
+    ...typeStyle("uiBody"),
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: "2rem",
+    padding: space[32],
     color: vars.color.text,
-    fontSize: "1rem",
 });
 
 export const twitterEmbedError = style({
+    ...typeStyle("uiBody"),
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: "1rem",
-    margin: "1rem 0",
+    padding: space[16],
+    margin: `${space[16]} 0`,
     color: "#ff6b6b",
-    fontSize: "0.9rem",
+
     border: `1px solid #ff6b6b`,
     borderRadius: "8px",
     backgroundColor: "rgba(255, 107, 107, 0.1)",
