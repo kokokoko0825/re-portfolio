@@ -61,7 +61,7 @@ export default function AdminWorks() {
         <ProtectedRoute>
             <div className={styles.frame}>
                 <AdminHeader />
-                <div className={styles.adminManagement}>
+                <main className={styles.adminManagement}>
                     <h1>Worksの管理</h1>
                     <div className={styles.newCreate}>
                         <Link to="/work/new">
@@ -90,7 +90,7 @@ export default function AdminWorks() {
                             ))
                         )}
                     </div>
-                </div>
+                </main>
                 <Footer />
             </div>
         </ProtectedRoute>

@@ -1,9 +1,9 @@
+import { space } from "~/styles/tokens";
 import { style } from "@vanilla-extract/css";
-import { vars } from "~/styles/theme.css";
 
 export const footer = style({
     display: "inline-flex",
-    padding: "10px",
+    padding: space[8],
     alignItems: "flex-start",
-    gap: "10px",
+    gap: space[8],
 });

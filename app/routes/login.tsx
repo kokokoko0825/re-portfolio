@@ -1,3 +1,4 @@
+import { typeStyle, space } from "~/styles/tokens";
 import { Header } from "../component/Header/Header";
 import { Footer } from "../component/Footer/Footer";
 import * as styles from "./styles.css";
@@ -24,10 +25,10 @@ export default function Login() {
         setIsSigningIn(true);
         try {
             await login();
-        } catch (err: any) {
-            if (err.message === "unauthorized") {
+        } catch (err: unknown) {
+            if (err instanceof Error && err.message === "unauthorized") {
                 setError("このアカウントにはログイン権限がありません。");
-            } else if (err.code !== "auth/popup-closed-by-user") {
+            } else if (!(err instanceof Error && "code" in err && err.code === "auth/popup-closed-by-user")) {
                 setError("ログインに失敗しました。もう一度お試しください。");
             }
         } finally {
@@ -39,11 +40,12 @@ export default function Login() {
         return (
             <div className={styles.frame}>
                 <Header />
-                <div className={styles.login}>
-                    <div style={{ color: vars.color.text, textAlign: "center", padding: "20px" }}>
+                <main className={styles.login}>
+                    <h1>Login</h1>
+                    <div style={{ color: vars.color.text, textAlign: "center", padding: space[20] }}>
                         読み込み中...
                     </div>
-                </div>
+                </main>
                 <Footer />
             </div>
         );
@@ -52,10 +54,10 @@ export default function Login() {
     return (
         <div className={styles.frame}>
             <Header />
-            <div className={styles.login}>
+            <main className={styles.login}>
                 <h1>Login</h1>
                 <div className={styles.loginCard}>
-                    <p style={{ textAlign: "center", fontSize: "16px" }}>
+                    <p style={{ textAlign: "center", ...typeStyle("uiBody"), }}>
                         管理者アカウントでログインしてください
                     </p>
                     <button
@@ -65,14 +67,14 @@ export default function Login() {
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            gap: "10px",
-                            padding: "12px 24px",
+                            gap: space[12],
+                            padding: `${space[12]} ${space[24]}`,
                             background: vars.color.text,
                             color: vars.color.background,
                             border: `2px solid ${vars.color.borderColor}`,
                             borderRadius: "10px",
                             cursor: isSigningIn ? "not-allowed" : "pointer",
-                            fontSize: "16px",
+                            ...typeStyle("uiBody"),
                             opacity: isSigningIn ? 0.7 : 1,
                             width: "100%",
                         }}
@@ -88,15 +90,15 @@ export default function Login() {
                     {error && (
                         <div style={{
                             color: "#ff6b6b",
-                            fontSize: "0.9rem",
-                            marginTop: "10px",
+                            ...typeStyle("uiBody"),
+                            marginTop: space[12],
                             textAlign: "center"
                         }}>
                             {error}
                         </div>
                     )}
                 </div>
-            </div>
+            </main>
             <Footer />
         </div>
     );

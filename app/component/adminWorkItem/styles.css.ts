@@ -1,17 +1,18 @@
+import { typeStyle, space } from "~/styles/tokens";
 import { style } from "@vanilla-extract/css";
-import { vars } from "../../styles/theme.css";
 
 export const adminWorkItem = style({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    gap: "10px",
+    gap: space[8],
 })
 
 export const adminItemIcon = style({
     display: "flex",
-    padding: "10px",
+    padding: space[8],
     alignItems: "center",
-    gap: "50px",
+    gap: space[48],
 })
+export const editIcon = style(typeStyle("largeTitle"));

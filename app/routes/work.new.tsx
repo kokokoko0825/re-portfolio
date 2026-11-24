@@ -1,3 +1,4 @@
+import { typeStyle, space } from "~/styles/tokens";
 import { AdminHeader } from "../component/adminHeader/adminHeader";
 import { Footer } from "../component/Footer/Footer";
 import * as styles from "./styles.css";
@@ -40,11 +41,11 @@ export default function AdminWorkNew() {
                 orderBy("number", "desc")
             );
             const querySnapshot = await getDocs(worksQuery);
-            
+
             if (querySnapshot.empty) {
                 return 1; // 最初の作品
             }
-            
+
             // 最新の作品のナンバーを取得して+1
             const latestWork = querySnapshot.docs[0];
             const latestNumber = latestWork.data().number || 0;
@@ -59,10 +60,10 @@ export default function AdminWorkNew() {
         const timestamp = Date.now();
         const fileName = `${timestamp}_${file.name}`;
         const storageRef = ref(storage, `thumbnails/${fileName}`);
-        
+
         const snapshot = await uploadBytes(storageRef, file);
         const downloadURL = await getDownloadURL(snapshot.ref);
-        
+
         return downloadURL;
     };
 
@@ -76,7 +77,7 @@ export default function AdminWorkNew() {
         try {
             const nextNumber = await getNextWorkNumber();
             let thumbnailURL = "";
-            
+
             // ファイルが選択されている場合はStorageにアップロード
             if (selectedFile) {
                 thumbnailURL = await uploadFileToStorage(selectedFile);
@@ -95,7 +96,7 @@ export default function AdminWorkNew() {
             const docRef = await addDoc(collection(db, "works"), workData);
             console.log("作品が正常に保存されました。ID: ", docRef.id, "ナンバー: ", nextNumber);
             alert("作品が正常に保存されました！");
-            
+
             // フォームをリセット
             setFormData({
                 thumbnail: "",
@@ -116,7 +117,8 @@ export default function AdminWorkNew() {
         <ProtectedRoute>
             <div className={styles.frame}>
                 <AdminHeader />
-                <div className={styles.adminnewCreate}>
+                <main className={styles.adminnewCreate}>
+                    <h1>Worksを作成</h1>
                     <input 
                         type="file" 
                         placeholder="thumbnail" 
@@ -125,7 +127,7 @@ export default function AdminWorkNew() {
                         style={{width: "auto", height: "auto", textAlign: "center", border: "none", background: "none", color: "#DEDBFF"}} 
                     />
                     {selectedFile && (
-                        <div style={{color: "#DEDBFF", fontSize: "14px", margin: "10px 0"}}>
+                        <div style={{color: "#DEDBFF", ...typeStyle("uiBody"), margin: `${space[12]} 0`}}>
                             選択されたファイル: {selectedFile.name}
                         </div>
                     )}
@@ -153,7 +155,7 @@ export default function AdminWorkNew() {
                         onChange={(e) => handleInputChange("content", e.target.value)}
                         className={styles.adminTextareaInput}
                     />
-                </div>
+                </main>
                 <button 
                     onClick={handleSubmit}
                     disabled={isLoading}

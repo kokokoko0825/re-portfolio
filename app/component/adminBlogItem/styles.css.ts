@@ -1,35 +1,36 @@
+import { typeStyle, space, mobile } from "~/styles/tokens";
 import { style } from "@vanilla-extract/css";
-import { vars } from "../../styles/theme.css";
 
 export const adminBlogItem = style({
     display: "inline-flex",
-    padding: "10px 50px",
+    padding: `${space[8]} ${space[48]}`,
     alignItems: "center",
-    gap: "50px",
+    gap: space[48],
     "@media": {
-        "screen and (max-width: 768px)": {
+        [mobile]: {
             display: "flex",
             width: "100%",
-            padding: "10px 0px",
+            padding: `${space[8]} 0`,
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "flex-end",
             alignSelf: "stretch",
-            gap: "10px",
+            gap: space[8],
         }
     }
 })
 
 export const adminItemIcon = style({
     display: "flex",
-    padding: "10px",
+    padding: space[8],
     alignItems: "flex-start",
-    gap: "50px",
+    gap: space[48],
     "@media": {
-        "screen and (max-width: 768px)": {
-            padding: "0px",
+        [mobile]: {
+            padding: "0",
             justifyContent: "center",
             alignItems: "center",
         }
     }
 })
+export const editIcon = style(typeStyle("largeTitle"));

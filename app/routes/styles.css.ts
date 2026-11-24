@@ -1,87 +1,78 @@
+import { typeStyle, space, layout, mobile } from "~/styles/tokens";
 import { style, globalStyle } from "@vanilla-extract/css";
 import { vars } from "../styles/theme.css";
 import "zenn-content-css";
-
 export const frame = style({
     display: "flex",
     width: "100%",
     flexDirection: "column",
     alignItems: "center",
-    gap: "30px",
-    "@media": {
-        "screen and (max-width: 768px)": {
-            gap: "10px",
-        }
-    }
+    gap: layout.sectionGap,
+    "@media": { [mobile]: { gap: layout.mobile.sectionGap } }
 });
-
 export const about = style({
     display: "flex",
-    padding: "120px 10px 10px 10px",
     flexDirection: "column",
     alignItems: "flex-start",
-    gap: "30px",
+    gap: space[32],
     "@media": {
-        "screen and (max-width: 768px)": {
-            paddingTop: "77px 10px 10px 10px",
-            gap: "10px",
+        [mobile]: {
+            gap: space[8],
             alignSelf: "stretch",
+            padding: `${space[96]} ${layout.mobile.pageInset} ${space[24]}`
         }
-    }
-})
-
+    },
+    boxSizing: "border-box",
+    padding: `${space[96]} ${layout.pageInset} ${space[24]}`
+});
 export const blog = style({
     display: "flex",
-    padding: "120px 0px 0px 10px",
     flexDirection: "column",
     alignItems: "center",
-    gap: "10px",
+    gap: space[8],
     "@media": {
-        "screen and (max-width: 768px)": {
-            paddingTop: "77px 10px 10px 10px",
-            gap: "10px",
+        [mobile]: {
+            gap: space[8],
             alignItems: "center",
             alignSelf: "stretch",
+            padding: `${space[96]} ${layout.mobile.pageInset} ${space[24]}`
         }
-    }
-})
-
+    },
+    boxSizing: "border-box",
+    padding: `${space[96]} ${layout.pageInset} ${space[24]}`
+});
 export const tagFilters = style({
     display: "flex",
     flexWrap: "wrap",
-    gap: "8px",
-    alignItems: "center",
-})
-
+    gap: space[8],
+    alignItems: "center"
+});
 export const tagFilter = style({
-    padding: "6px 12px",
-    fontSize: "14px",
+    ...typeStyle("caption"),
+    padding: `${space[4]} ${space[12]}`,
     border: `1px solid ${vars.color.borderColor}`,
     borderRadius: "9999px",
     background: vars.color.background,
     color: vars.color.text,
-    cursor: "pointer",
-})
-
+    cursor: "pointer"
+});
 export const tagFilterActive = style({
-    padding: "6px 12px",
-    fontSize: "14px",
+    ...typeStyle("caption"),
+    padding: `${space[4]} ${space[12]}`,
     border: `1px solid ${vars.color.tagActive.background}`,
     borderRadius: "9999px",
     background: vars.color.tagActive.background,
     color: vars.color.tagActive.text,
-    cursor: "pointer",
-})
-
+    cursor: "pointer"
+});
 export const tagList = style({
     display: "flex",
     flexWrap: "wrap",
-    gap: "6px",
-})
-
+    gap: space[4]
+});
 export const tagChip = style({
-    fontSize: "12px",
-    padding: "2px 8px",
+    ...typeStyle("caption"),
+    padding: `${space[4]} ${space[8]}`,
     borderRadius: "9999px",
     border: `1px solid ${vars.color.borderColor}`,
     color: vars.color.text,
@@ -90,128 +81,120 @@ export const tagChip = style({
         background: vars.color.tagActive.background,
         color: vars.color.tagActive.text,
         borderColor: vars.color.tagActive.background,
-    },
-})
-
+    }
+});
 export const works = style({
     display: "flex",
-    padding: "120px 10px 10px 10px",
     flexDirection: "column",
     alignItems: "flex-start",
-    gap: "10px",
+    gap: space[8],
     "@media": {
-        "screen and (max-width: 768px)": {
-            paddingTop: "77px 10px 10px 10px",
-            gap: "20px",
+        [mobile]: {
+            gap: space[20],
             alignItems: "center",
             alignSelf: "stretch",
+            padding: `${space[96]} ${layout.mobile.pageInset} ${space[24]}`
         }
-    }
-})
-
+    },
+    boxSizing: "border-box",
+    padding: `${space[96]} ${layout.pageInset} ${space[24]}`
+});
 export const blogId = style({
     display: "flex",
     width: "100%",
     maxWidth: "1060px",
-    padding: "96px 16px 48px 16px",
     flexDirection: "column",
     alignItems: "center",
-    gap: "32px",
-    boxSizing: "border-box",
+    gap: space[32],
     "@media": {
-        "screen and (max-width: 768px)": {
+        [mobile]: {
             width: "100%",
-            padding: "80px 12px 40px 12px",
-            gap: "24px",
+            gap: space[24],
             alignSelf: "stretch",
+            padding: `${space[96]} ${layout.mobile.pageInset} ${space[24]}`
         }
-    }
+    },
+    boxSizing: "border-box",
+    padding: `${space[96]} ${layout.pageInset} ${space[24]}`
 });
-
 export const blogDetailWrapper = style({
     display: "flex",
     width: "100%",
     maxWidth: "1060px",
     flexDirection: "row",
     alignItems: "flex-start",
-    gap: "48px",
+    gap: space[48],
     boxSizing: "border-box",
-    marginTop: "24px",
-    paddingTop: "24px",
+    marginTop: space[24],
+    paddingTop: space[24],
     borderTop: `2px solid ${vars.color.borderColor}`,
     "@media": {
-        "screen and (max-width: 768px)": {
+        [mobile]: {
             flexDirection: "column",
-            gap: "24px",
+            gap: space[24],
             order: 0,
         },
-    },
+    }
 });
-
 export const blogArticle = style({
     flex: 1,
     minWidth: 0,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: "32px",
     boxSizing: "border-box",
     "@media": {
-        "screen and (max-width: 768px)": {
+        [mobile]: {
             order: 1,
-        },
+            gap: layout.mobile.cardContentGap
+        }
     },
+    gap: layout.cardContentGap
 });
-
 export const tocAside = style({
     flexShrink: 0,
     width: "220px",
     position: "sticky",
     top: "100px",
     "@media": {
-        "screen and (max-width: 768px)": {
+        [mobile]: {
             position: "static",
             width: "100%",
             order: -1,
         },
-    },
+    }
 });
-
 export const tocAccordion = style({
     width: "100%",
-    padding: "12px 14px",
     borderRadius: "8px",
     border: `1px solid ${vars.color.borderColor}`,
     backgroundColor: vars.color.codeBlock.background,
     boxSizing: "border-box",
+    gap: layout.cardContentGap,
+    padding: layout.cardPadding,
+    "@media": { [mobile]: { padding: layout.mobile.cardPadding, gap: layout.mobile.cardContentGap } }
 });
-
 export const tocSummary = style({
-    padding: "12px 0",
-    fontSize: "0.875rem",
-    fontWeight: 600,
+    ...typeStyle("caption"),
+    padding: `${space[12]} 0`,
     color: vars.color.text,
     cursor: "pointer",
     listStyle: "none",
-    borderBottom: `1px solid ${vars.color.borderColor}`,
+    borderBottom: `1px solid ${vars.color.borderColor}`
 });
-
 export const tocTitle = style({
-    fontSize: "0.875rem",
-    fontWeight: 600,
+    ...typeStyle("caption"),
     color: vars.color.text,
-    marginBottom: "8px",
+    marginBottom: space[8],
     "@media": {
-        "screen and (max-width: 768px)": {
+        [mobile]: {
             display: "none",
         },
-    },
+    }
 });
-
 globalStyle(`summary.${tocSummary}::-webkit-details-marker`, {
     display: "none",
 });
-
 globalStyle(`${tocAside} details[open] summary.${tocSummary}`, {
     "@media": {
         "screen and (min-width: 769px)": {
@@ -219,145 +202,138 @@ globalStyle(`${tocAside} details[open] summary.${tocSummary}`, {
         },
     },
 });
-
 export const login = style({
     display: "flex",
-    padding: "120px 10px 10px 10px",
     flexDirection: "column",
     alignItems: "center",
-    gap: "50px",
-    "@media": {
-        "screen and (max-width: 768px)": {
-            padding: "100px 10px",
-        }
-    }
-})
-
+    gap: space[48],
+    boxSizing: "border-box",
+    padding: `${space[96]} ${layout.pageInset} ${space[24]}`,
+    "@media": { [mobile]: { padding: `${space[96]} ${layout.mobile.pageInset} ${space[24]}` } }
+});
 export const admin = style({
     display: "flex",
-    padding: "120px 10px",
     flexDirection: "column",
     alignItems: "center",
-    gap: "150px",
-})
-
+    gap: space[96],
+    boxSizing: "border-box",
+    padding: `${space[96]} ${layout.pageInset} ${space[24]}`,
+    "@media": { [mobile]: { padding: `${space[96]} ${layout.mobile.pageInset} ${space[24]}` } }
+});
 export const adminManagement = style({
     display: "flex",
-    padding: "120px 10px",
     flexDirection: "column",
     alignItems: "flex-start",
-    gap: "30px",
+    gap: space[32],
     "@media": {
-        "screen and (max-width: 768px)": {
+        [mobile]: {
             alignItems: "center",
-            gap: "20px",
+            gap: space[20],
             alignSelf: "stretch",
+            padding: `${space[96]} ${layout.mobile.pageInset} ${space[24]}`
         }
-    }
-})
-
+    },
+    boxSizing: "border-box",
+    padding: `${space[96]} ${layout.pageInset} ${space[24]}`
+});
 export const adminnewCreate = style({
     display: "flex",
     width: "760px",
-    padding: "100px 10px 0px 10px",
     flexDirection: "column",
     alignItems: "center",
-    gap: "10px",
+    gap: space[8],
     "@media": {
-        "screen and (max-width: 768px)": {
+        [mobile]: {
             width: "auto",
-            padding: "100px 20px 0px 20px",
             alignSelf: "stretch",
+            padding: `${space[96]} ${layout.mobile.pageInset} ${space[24]}`
         }
-    }
-})
-
+    },
+    boxSizing: "border-box",
+    padding: `${space[96]} ${layout.pageInset} ${space[24]}`
+});
 export const section = style({
     display: "flex",
-    padding: "10px",
+    padding: space[8],
     flexDirection: "column",
     alignItems: "flex-start",
-    gap: "10px",
     "@media": {
-        "screen and (max-width: 768px)": {
-            padding: "10px 30px",
-            gap: "10px",
+        [mobile]: {
+            padding: `${space[8]} ${space[32]}`,
             alignSelf: "stretch",
+            gap: layout.mobile.cardContentGap
         }
-    }
-})
-
+    },
+    gap: layout.cardContentGap
+});
 export const list = style({
     display: "flex",
-    padding: "0px",
+    padding: "0",
     flexDirection: "column",
     alignItems: "flex-start",
-    gap: "10px",
     "@media": {
-        "screen and (max-width: 768px)": {
-            gap: "5px",
+        [mobile]: {
             alignSelf: "stretch",
+            gap: layout.mobile.cardGap
         }
-    }
-})
-
+    },
+    gap: layout.cardGap
+});
 export const workList = style({
     display: "flex",
     maxWidth: "750px",
     alignItems: "flex-start",
     alignContent: "flex-start",
-    gap: "40px",
     flexWrap: "wrap",
     "@media": {
-        "screen and (max-width: 768px)": {
+        [mobile]: {
             width: "100%",
             boxSizing: "border-box",
-            padding: "10px",
-            gap: "20px",
+            padding: space[8],
             flexDirection: "column",
             alignItems: "center",
             alignContent: "center",
+            gap: layout.mobile.cardGap
         }
-    }
-})
-
+    },
+    gap: layout.cardGap
+});
 export const thumbnail = style({
     display: "flex",
-    padding: "24px 0 16px 0",
+    padding: `${space[24]} 0 ${space[16]} 0`,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    gap: "20px",
     alignSelf: "stretch",
     "@media": {
-        "screen and (max-width: 768px)": {
-            padding: "20px 0 12px 0",
-            gap: "20px",
+        [mobile]: {
+            padding: `${space[20]} 0 ${space[12]} 0`,
             alignSelf: "stretch",
+            gap: layout.mobile.cardContentGap
         }
-    }
-})
-
+    },
+    gap: layout.cardContentGap
+});
 export const textFrame = style({
     display: "flex",
     width: "100%",
-    maxWidth: "720px",
+    maxWidth: layout.articleMaxWidth,
     alignItems: "flex-start",
     alignContent: "flex-start",
-    gap: "16px",
+    gap: space[16],
     flexWrap: "wrap",
     boxSizing: "border-box",
     overflowWrap: "break-word",
     wordBreak: "break-word",
     "@media": {
-        "screen and (max-width: 768px)": {
+        [mobile]: {
             width: "100%",
             boxSizing: "border-box",
-            padding: "0px",
+            padding: "0",
         }
-    }
+    },
+    ...typeStyle("articleBody")
 });
-
 // Zenn content CSS用のglobalStyleを追加
 globalStyle(`${textFrame} .znc`, {
     width: "100%",
@@ -366,189 +342,149 @@ globalStyle(`${textFrame} .znc`, {
     overflowWrap: "break-word",
     wordBreak: "break-word",
 });
-
 globalStyle(`${textFrame} .znc *`, {
     maxWidth: "100%",
     boxSizing: "border-box",
 });
-
 globalStyle(`${textFrame} .znc img`, {
     width: "100%",
     height: "auto",
     maxWidth: "100%",
     objectFit: "contain",
 });
-
 globalStyle(`${textFrame} .znc pre`, {
     overflowX: "auto",
     maxWidth: "100%",
     boxSizing: "border-box",
 });
-
 globalStyle(`${textFrame} .znc code`, {
     overflowWrap: "break-word",
     wordBreak: "break-word",
 });
-
 globalStyle(`${textFrame} .znc table`, {
     width: "100%",
     maxWidth: "100%",
     overflowX: "auto",
     display: "block",
 });
-
-globalStyle(
-    `${textFrame} .znc h1[id], ${textFrame} .znc h2[id], ${textFrame} .znc h3[id], ${textFrame} .znc h4[id]`,
-    {
-        scrollMarginTop: "100px",
-    },
-);
-
+globalStyle(`${textFrame} .znc h2[id], ${textFrame} .znc h3[id], ${textFrame} .znc h4[id], ${textFrame} .znc h5[id]`, {
+    scrollMarginTop: "100px",
+});
 export const backFrame = style({
     display: "flex",
-    padding: "24px 0 0 0",
+    padding: `${space[24]} 0 0 0`,
     alignItems: "flex-start",
-    gap: "10px",
+    gap: space[8],
     alignSelf: "stretch",
     "@media": {
-        "screen and (max-width: 768px)": {
-            padding: "32px 0 0 0",
+        [mobile]: {
+            padding: `${space[32]} 0 0 0`,
             alignItems: "flex-start",
         }
     }
-})
-
+});
 export const loginCard = style({
     display: "flex",
-    padding: "50px 30px",
     flexDirection: "column",
     alignItems: "flex-start",
-    gap: "30px",
     borderRadius: "10px",
     border: `2px solid ${vars.color.borderColor}`,
-    "@media": {
-        "screen and (max-width: 768px)": {
-            gap: "30px",
-        }
-    }
-})
-
+    gap: layout.cardContentGap,
+    padding: layout.cardPadding,
+    "@media": { [mobile]: { padding: layout.mobile.cardPadding, gap: layout.mobile.cardContentGap } }
+});
 export const adminSelect = style({
     display: "flex",
-    padding: "10px",
+    padding: space[8],
     justifyContent: "center",
     alignItems: "flex-start",
-    gap: "150px",
     alignSelf: "stretch",
-    "@media": {
-        "screen and (max-width: 768px)": {
-            gap: "80px",
-        }
-    }
-})
-
+    gap: layout.sectionGap,
+    "@media": { [mobile]: { gap: layout.mobile.sectionGap } }
+});
 export const adminSection = style({
     display: "flex",
-    padding: "10px",
+    padding: space[8],
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    gap: "10px",
     alignSelf: "stretch",
-})
-
+    gap: layout.cardContentGap,
+    "@media": { [mobile]: { gap: layout.mobile.cardContentGap } }
+});
 export const newCreate = style({
     display: "flex",
-    padding: "10px",
+    padding: space[8],
     justifyContent: "flex-end",
     alignItems: "flex-start",
-    gap: "10px",
     alignSelf: "stretch",
-})
-
+    gap: layout.cardContentGap,
+    "@media": { [mobile]: { gap: layout.mobile.cardContentGap } }
+});
 export const adminWorksList = style({
     display: "flex",
     width: "750px",
-    padding: "27px 33px",
+    padding: `${space[24]} ${space[32]}`,
     alignItems: "flex-start",
     alignContent: "flex-start",
     flexWrap: "wrap",
-    gap: "40px",
     "@media": {
-        "screen and (max-width: 768px)": {
+        [mobile]: {
             width: "auto",
             flexDirection: "column",
             alignItems: "center",
-            gap: "40px",
+            gap: layout.mobile.cardGap
         }
-    }
-})
-
+    },
+    gap: layout.cardGap
+});
 export const title = style({
+    ...typeStyle("uiBody"),
     display: "flex",
-    padding: "10px",
+    padding: space[8],
     alignItems: "center",
-    gap: "10px",
     alignSelf: "stretch",
     borderBottom: `2px solid ${vars.color.borderColor}`,
-    fontSize: "36px",
-})
-
+    gap: layout.cardContentGap,
+    "@media": { [mobile]: { gap: layout.mobile.cardContentGap } }
+});
 export const description = style({
+    ...typeStyle("uiBody"),
     display: "flex",
-    padding: "10px",
+    padding: space[8],
     alignItems: "center",
-    gap: "10px",
     alignSelf: "stretch",
     borderBottom: `2px solid ${vars.color.borderColor}`,
-    fontSize: "24px",
-})
-
+    gap: layout.cardContentGap,
+    "@media": { [mobile]: { gap: layout.mobile.cardContentGap } }
+});
 export const adminThumbnailInput = style({
-    fontSize: "96px",
+    ...typeStyle("uiBody"),
     width: "auto",
     height: "auto",
     textAlign: "center",
     border: "none",
     background: "none",
-    color: vars.color.text,
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "48px",
-        }
-    }
-})
-
+    color: vars.color.text
+});
 export const adminTitleInput = style({
-    fontSize: "36px",
+    ...typeStyle("uiBody"),
     width: "100%",
     height: "auto",
     background: "none",
     border: "none",
-    color: vars.color.text,
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "24px",
-        }
-    }
-})
-
+    color: vars.color.text
+});
 export const adminDescriptionInput = style({
-    fontSize: "20px",
+    ...typeStyle("uiBody"),
     width: "100%",
     height: "auto",
     background: "none",
     border: "none",
-    color: vars.color.text,
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "12px",
-        }
-    }
-})
-
+    color: vars.color.text
+});
 export const adminTextareaInput = style({
-    fontSize: "20px",
+    ...typeStyle("uiBody"),
     width: "100%",
     height: "700px",
     background: vars.color.codeBlock.background,
@@ -556,75 +492,39 @@ export const adminTextareaInput = style({
     color: vars.color.text,
     borderRadius: "10px",
     "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "12px",
+        [mobile]: {
             height: "500px",
         }
     }
-})
-
+});
 export const titleText = style({
-    fontSize: "36px",
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "24px",
-        }
-    }
-})
-
+    ...typeStyle("largeTitle")
+});
 export const subtitleText = style({
-    fontSize: "24px",
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "20px",
-        }
-    }
-})
-
+    ...typeStyle("title2")
+});
 export const defaultText = style({
-    fontSize: "20px",
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "18px",
-        }
-    }
-})
-
+    ...typeStyle("body")
+});
 export const linkText = style({
-    fontSize: "16px",
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "12px",
-        }
-    }
-})
-
-export const careerText = style({
-    fontSize: "20px",
-    margin: "0",
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "15px",
-        }
-    }
-})
-
-export const linkUnderline = style({
-    textDecoration: "underline",
+    ...typeStyle("footnote"),
     color: vars.color.text,
-    fontSize: "20px",
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "15px",
-        }
-    }
-})
-
+    textDecoration: "none",
+});
+export const careerText = style({
+    ...typeStyle("body"),
+    margin: "0"
+});
+export const linkUnderline = style({
+    ...typeStyle("body"),
+    textDecoration: "underline",
+    color: vars.color.text
+});
 // Timeline styles
 export const timeline = style({
     listStyle: "none",
     margin: 0,
-    padding: "0 0 0 24px",
+    padding: `0 0 0 ${space[24]}`,
     position: "relative",
     "::before": {
         content: '""',
@@ -636,15 +536,14 @@ export const timeline = style({
         background: vars.color.borderColor,
     },
     "@media": {
-        "screen and (max-width: 768px)": {
-            paddingLeft: "20px",
+        [mobile]: {
+            paddingLeft: space[20],
         }
     }
-})
-
+});
 export const timelineItem = style({
     position: "relative",
-    paddingTop: "24px",
+    paddingTop: space[24],
     selectors: {
         "&:first-child": {
             paddingTop: 0,
@@ -663,8 +562,8 @@ export const timelineItem = style({
         boxSizing: "border-box",
     },
     "@media": {
-        "screen and (max-width: 768px)": {
-            paddingTop: "20px",
+        [mobile]: {
+            paddingTop: space[20],
             "::before": {
                 left: "-20px",
                 width: "10px",
@@ -672,26 +571,21 @@ export const timelineItem = style({
             },
         }
     }
-})
-
+});
 export const timelineYear = style({
-    fontSize: "14px",
+    ...typeStyle("footnote"),
     color: vars.color.muted.foreground,
-    marginBottom: "4px",
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "12px",
-        }
-    }
-})
-
+    marginBottom: space[4]
+});
 export const timelineTitle = style({
-    fontSize: "20px",
+    ...typeStyle("title3"),
     color: vars.color.text,
-    margin: 0,
-    "@media": {
-        "screen and (max-width: 768px)": {
-            fontSize: "15px",
-        }
-    }
-})
+    margin: 0
+});
+globalStyle(`${thumbnail} > span`, typeStyle("heroName"));
+globalStyle(`${adminnewCreate} p, ${adminnewCreate} label, ${adminManagement} button, ${loginCard} p`, typeStyle("uiBody"));
+
+export const sectionTitle = style({ ...typeStyle("largeTitle"), margin: 0 });
+export const subsectionTitle = style({ ...typeStyle("title2"), margin: 0 });
+export const backLink = style({ ...typeStyle("footnote"), color: vars.color.text, textDecoration: "none" });
+globalStyle(`${adminSelect} a, ${newCreate} a`, { color: vars.color.text, textDecoration: "none" });

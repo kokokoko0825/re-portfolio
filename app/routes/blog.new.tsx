@@ -94,7 +94,8 @@ export default function AdminBlogNew() {
         <ProtectedRoute>
             <div className={styles.frame}>
                 <AdminHeader />
-                <div className={styles.adminnewCreate}>
+                <main className={styles.adminnewCreate}>
+                    <h1>Blogを作成</h1>
                     <input 
                         type="text" 
                         placeholder="thumbnail (絵文字)" 
@@ -144,7 +145,7 @@ export default function AdminBlogNew() {
                         onChange={(e) => handleInputChange("content", e.target.value)}
                         className={styles.adminTextareaInput}
                     />
-                </div>
+                </main>
                 <button 
                     onClick={handleSubmit}
                     disabled={isLoading}

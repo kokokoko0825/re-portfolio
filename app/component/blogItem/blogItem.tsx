@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { Timestamp } from "firebase/firestore";
 import * as styles from "./styles.css";
 import { Link } from "@remix-run/react";
+import { DateText } from "../DateText";
 
 interface BlogItemProps {
     id: string;
@@ -12,22 +13,16 @@ interface BlogItemProps {
 }
 
 export function BlogItem({ id, title, createdAt, externalUrl, tags = [] }: BlogItemProps): ReactNode {
-    // FirestoreのTimestampを日付文字列に変換
-    const formatDate = (timestamp: Timestamp | null) => {
-        if (!timestamp) return "";
-
-        const date = timestamp.toDate();
-        return date.toLocaleDateString('ja-JP', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit'
-        });
-    };
-
-    const content = (
+    return (
         <div className={styles.blogItem}>
-            <small>{formatDate(createdAt)}</small>
-            <h2>{title}</h2>
+            <DateText value={createdAt} />
+            <h2 className={styles.title}>
+                {externalUrl ? (
+                    <a className={styles.titleLink} href={externalUrl} target="_blank" rel="noopener noreferrer">{title}</a>
+                ) : (
+                    <Link className={styles.titleLink} to={`/blog/${id}`}>{title}</Link>
+                )}
+            </h2>
             {tags.length > 0 && (
                 <div className={styles.tagList}>
                     {tags.map((tag) => (
@@ -35,7 +30,6 @@ export function BlogItem({ id, title, createdAt, externalUrl, tags = [] }: BlogI
                             key={tag}
                             to={`/blog?tag=${encodeURIComponent(tag)}`}
                             className={styles.tagChip}
-                            onClick={(e) => e.stopPropagation()}
                         >
                             {tag}
                         </Link>
@@ -45,17 +39,4 @@ export function BlogItem({ id, title, createdAt, externalUrl, tags = [] }: BlogI
         </div>
     );
 
-    if (externalUrl) {
-        return (
-            <a href={externalUrl} target="_blank" rel="noopener noreferrer" style={{ width: "100%", textDecoration: "none", display: "block" }}>
-                {content}
-            </a>
-        );
-    }
-
-    return (
-        <Link to={`/blog/${id}`} style={{ width: "100%", textDecoration: "none", display: "block" }}>
-            {content}
-        </Link>
-    );
 }

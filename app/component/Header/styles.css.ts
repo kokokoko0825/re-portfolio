@@ -1,3 +1,4 @@
+import { typeStyle, space, layout, mobile } from "~/styles/tokens";
 import { vars } from "~/styles/theme.css";
 import { style, globalStyle } from "@vanilla-extract/css";
 
@@ -19,32 +20,34 @@ export const mobileView = style({
 
 export const homeIcon = style({
     display: "flex",
-    padding: "10px 0px 10px 30px",
+    padding: `${space[8]} 0 ${space[8]} ${layout.pageInset}`,
+    "@media": { [mobile]: { paddingLeft: layout.mobile.pageInset } },
 })
 
 export const linkList = style({
     display: "flex",
-    padding: "10px 50px",
+    padding: `${space[8]} ${layout.pageInset}`,
     alignItems: "flex-start",
-    gap: "30px",
+    gap: space[32],
     "@media": {
-        "screen and (max-width: 768px)": {
+        [mobile]: {
             display: "none"
         }
     }
 })
 
 export const themeToggle = style({
+    background: "none", border: "none", borderRadius: 0, gap: 0,
     display: "flex",
-    padding: "10px 20px",
+    padding: `${space[8]} ${space[20]}`,
     cursor: "pointer",
     color: vars.color.text,
     alignItems: "center",
     justifyContent: "center",
     transition: "opacity 0.2s ease",
     "@media": {
-        "screen and (max-width: 768px)": {
-            padding: "10px 15px"
+        [mobile]: {
+            padding: `${space[8]} ${space[16]}`
         }
     }
 })
@@ -71,14 +74,15 @@ globalStyle(`:root[data-theme='light'] ${themeToggle} svg`, {
 })
 
 export const hamburgerIcon = style({
+    background: "none", border: "none", borderRadius: 0, gap: 0,
     display: "none",
-    padding: "10px 30px",
+    padding: `${space[8]} ${space[32]}`,
     cursor: "pointer",
     color: vars.color.text,
     alignItems: "center",
     justifyContent: "center",
     "@media": {
-        "screen and (max-width: 768px)": {
+        [mobile]: {
             display: "flex"
         }
     }
@@ -94,7 +98,7 @@ export const mobileMenu = style({
     borderLeft: `2px solid ${vars.color.borderColor}`,
     display: "flex",
     flexDirection: "column",
-    padding: "20px",
+    padding: space[20],
     transform: "translateX(100%)",
     transition: "transform 0.3s ease-in-out",
     zIndex: 1000,
@@ -111,28 +115,32 @@ export const mobileMenuOpen = style({
 })
 
 export const closeButton = style({
+    ...typeStyle("uiBody"),
     alignSelf: "flex-end",
     background: "none",
     border: "none",
     color: vars.color.text,
-    fontSize: "24px",
+
     cursor: "pointer",
-    marginBottom: "20px"
+    marginBottom: space[20]
 })
 
 export const mobileMenuLinks = style({
     display: "flex",
     flexDirection: "column",
-    gap: "20px",
-    padding: "20px"
+    gap: space[20],
+    padding: space[20]
 })
 
 // グローバルスタイルでリンクのスタイリングを行う
 globalStyle(`${mobileMenuLinks} a`, {
     color: vars.color.text,
     textDecoration: "none",
-    fontSize: "20px",
-    fontWeight: "bold",
+    ...typeStyle("subheadline"),
+    fontSize: "1.25rem",
+    display: "flex",
+    alignItems: "center",
+    minHeight: space[48],
     transition: "opacity 0.2s ease"
 })
 
@@ -165,3 +173,12 @@ export const mobileMenuOverlayOpen = style({
         }
     }
 })
+globalStyle(`${linkList} a`, {
+    ...typeStyle("subheadline"), display: "flex", alignItems: "center", minHeight: "2.75rem",
+});
+
+export const logo = style(typeStyle("largeTitle"));
+globalStyle(`${homeIcon} a, ${linkList} a`, { color: vars.color.text, textDecoration: "none" });
+globalStyle(`${themeToggle} svg`, { width: "25px", height: "25px", "@media": { [mobile]: { width: "15px" } } });
+
+globalStyle("[hidden]", { display: "none !important" });

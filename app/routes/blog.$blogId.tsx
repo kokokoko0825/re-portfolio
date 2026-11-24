@@ -1,3 +1,4 @@
+import { DateText } from "../component/DateText";
 import { Header } from "../component/Header/Header";
 import { Footer } from "../component/Footer/Footer";
 import { TableOfContents } from "../component/TableOfContents";
@@ -14,6 +15,7 @@ import { MetaFunction } from "@remix-run/cloudflare";
 
 export const meta: MetaFunction = () => {
   return [
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
     { name: "description", content: "Koshi Tanakaのブログ記事" },
     { name: "robots", content: "noindex, nofollow" },
   ];
@@ -119,27 +121,17 @@ export default function BlogId() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [theme]);
 
-    // FirestoreのTimestampを日付文字列に変換
-    const formatDate = (timestamp: Timestamp | null) => {
-        if (!timestamp) return "";
-        
-        const date = timestamp.toDate();
-        return date.toLocaleDateString('ja-JP', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit'
-        });
-    };
 
     if (isLoading) {
         return (
             <div className={styles.frame}>
                 <Header />
-                <div className={styles.blogId}>
+                <main className={styles.blogId}>
+                    <h1>Blog</h1>
                     <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
                         読み込み中...
                     </div>
-                </div>
+                </main>
                 <Footer />
             </div>
         );
@@ -149,16 +141,15 @@ export default function BlogId() {
         return (
             <div className={styles.frame}>
                 <Header />
-                <div className={styles.blogId}>
+                <main className={styles.blogId}>
+                    <h1>Blog</h1>
                     <div style={{color: "#ff6b6b", textAlign: "center", padding: "20px"}}>
                         {error || "エラーが発生しました"}
                     </div>
                     <div className={styles.backFrame}>
-                        <Link to="/blog">
-                            <small>Back</small>
-                        </Link>
+                        <Link to="/blog" className={styles.backLink}>Back</Link>
                     </div>
-                </div>
+                </main>
                 <Footer />
             </div>
         );
@@ -167,8 +158,8 @@ export default function BlogId() {
     return (
         <div className={styles.frame}>
             <Header />
-            <div className={styles.blogId}>
-                <small>投稿日: {formatDate(blogData.createdAt)},  編集日: {formatDate(blogData.updatedAt)}</small>
+            <main className={styles.blogId}>
+                <small>投稿日: <DateText value={blogData.createdAt} />,  編集日: <DateText value={blogData.updatedAt} /></small>
                 <div className={styles.thumbnail}>
                     <span>{blogData.thumbnail}</span>
                     <h1>{blogData.title}</h1>
@@ -196,9 +187,7 @@ export default function BlogId() {
                             />
                         </div>
                         <div className={styles.backFrame}>
-                            <Link to="/blog">
-                                <small>Back</small>
-                            </Link>
+                            <Link to="/blog" className={styles.backLink}>Back</Link>
                         </div>
                     </article>
                     <aside className={styles.tocAside}>
@@ -209,7 +198,7 @@ export default function BlogId() {
                         </details>
                     </aside>
                 </div>
-            </div>
+            </main>
             <Footer />
         </div>
     );

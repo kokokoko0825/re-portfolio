@@ -19,15 +19,15 @@ export function TableOfContents({ contentRef, contentKey }: TableOfContentsProps
         const container = contentRef.current;
         if (!container) return;
 
-        // h1〜h4 を目次対象にする
-        const headings = container.querySelectorAll("h1, h2, h3, h4");
+        // h2〜h5 を目次対象にする
+        const headings = container.querySelectorAll("h2, h3, h4, h5");
         const tocItems: TocItem[] = [];
 
         headings.forEach((el) => {
             const id = el.id;
             if (!id) return;
             const text = el.textContent?.trim() ?? "";
-            const level = parseInt(el.tagName.charAt(1), 10);
+            const level = parseInt(el.tagName.charAt(1), 10) - 1;
             tocItems.push({ id, text, level });
         });
 

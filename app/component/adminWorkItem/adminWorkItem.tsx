@@ -1,3 +1,4 @@
+import { typeStyle } from "~/styles/tokens";
 import { ReactNode } from "react";
 import * as styles from "./styles.css";
 import { Link } from "@remix-run/react";
@@ -16,13 +17,13 @@ interface AdminWorkItemProps {
 export function AdminWorkItem({ id, thumbnail, title, description, onDelete }: AdminWorkItemProps): ReactNode {
     const handleDelete = async () => {
         const isConfirmed = window.confirm(`「${title}」を削除しますか？\nこの操作は取り消せません。`);
-        
+
         if (isConfirmed) {
             try {
                 await deleteDoc(doc(db, "works", id));
                 console.log("作品が正常に削除されました。ID: ", id);
                 alert("作品が正常に削除されました！");
-                
+
                 // 親コンポーネントに削除完了を通知
                 onDelete(id);
             } catch (error) {
@@ -36,8 +37,8 @@ export function AdminWorkItem({ id, thumbnail, title, description, onDelete }: A
         <div className={styles.adminWorkItem}>
             <WorksItem id={id} thumbnail={thumbnail} title={title} description={description} />
             <div className={styles.adminItemIcon}>
-                <Link to={`/work/edit/${id}`}>
-                    <h1>✏️</h1>
+                <Link to={`/work/edit/${id}`} aria-label="編集">
+                    <span aria-hidden="true" className={styles.editIcon}>✏️</span>
                 </Link>
                 <button 
                     onClick={handleDelete} 
@@ -45,7 +46,7 @@ export function AdminWorkItem({ id, thumbnail, title, description, onDelete }: A
                         cursor: "pointer", 
                         background: "none", 
                         border: "none", 
-                        fontSize: "36px",
+                        ...typeStyle("uiBody"),
                         padding: "0",
                         margin: "0"
                     }}

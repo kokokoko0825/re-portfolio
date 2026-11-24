@@ -52,15 +52,12 @@ function slugify(text: string): string {
     return slug || "section";
 }
 
-const originalHeadingOpen = md.renderer.rules.heading_open;
-md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
+md.renderer.rules.heading_open = (tokens, idx, _options, env) => {
     const token = tokens[idx];
-    const tag = token.tag;
-    // h1〜h4 に id を付与して目次対象にする
-    if (tag !== "h1" && tag !== "h2" && tag !== "h3" && tag !== "h4") {
-        return originalHeadingOpen
-            ? originalHeadingOpen(tokens, idx, options, env, self)
-            : self.renderToken(tokens, idx, options);
+    const tag = `h${Math.min(Number(token.tag.slice(1)) + 1, 6)}`;
+    // 元の #〜#### を h2〜h5 にして目次対象にする
+    if (tag === "h6") {
+        return "<h6>";
     }
     const nextToken = tokens[idx + 1];
     const text =
@@ -73,6 +70,9 @@ md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
     const id = count === 0 ? baseSlug : `${baseSlug}-${count}`;
     return `<${tag} id="${id}">`;
 };
+
+md.renderer.rules.heading_close = (tokens, idx) =>
+    `</h${Math.min(Number(tokens[idx].tag.slice(1)) + 1, 6)}>\n`;
 
 // Twitter/X URLを検出する正規表現（x.comとtwitter.comの両方に対応）
 const TWITTER_URL_REGEX = /https?:\/\/(?:www\.)?(?:twitter\.com|x\.com)\/\w+\/status\/\d+/g;
@@ -343,33 +343,24 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                             flex: 1;
                             width: 100%;
                             box-sizing: border-box;
-                            padding: 1rem;
                             display: flex;
                             flex-direction: column;
                             justify-content: space-between;
                         ">
                             <div>
                                 <h3 class="link-embed-title" style="
-                                    font-size: 1.1em;
-                                    font-weight: 600;
-                                    margin: 0 0 0.5rem 0;
+
                                     color: ${vars.color.text};
-                                    line-height: 1.4;
                                 ">リンクを読み込み中...</h3>
                                 <p class="link-embed-description" style="
-                                    font-size: 0.9em;
                                     color: ${vars.color.muted.foreground};
-                                    margin: 0 0 0.5rem 0;
-                                    line-height: 1.4;
                                 ">メタデータを取得中...</p>
                             </div>
                             <div class="link-embed-meta" style="
                                 display: flex;
                                 flex-direction: column;
-                                gap: 0.25rem;
                             ">
                                 <span class="link-embed-url" style="
-                                    font-size: 0.75em;
                                     color: ${vars.color.muted.foreground};
                                     word-break: break-all;
                                 ">${url}</span>
@@ -503,15 +494,11 @@ export function initializeLinkEmbeds(): void {
                                 }
                                 if (metaElement) {
                                     metaElement.innerHTML = `
-                                        <span style="
-                                            font-size: 0.8em;
-                                            font-weight: 500;
+                                        <span class="link-embed-site" style="
                                             color: ${vars.color.primary.DEFAULT};
                                             text-transform: uppercase;
-                                            letter-spacing: 0.5px;
                                         ">${linkData.siteName}</span>
-                                        <span style="
-                                            font-size: 0.75em;
+                                        <span class="link-embed-url" style="
                                             color: ${vars.color.muted.foreground};
                                             word-break: break-all;
                                         ">${url}</span>
@@ -548,4 +535,4 @@ export function initializeLinkEmbeds(): void {
 export function initializeAllEmbeds(): void {
     initializeTwitterEmbeds();
     initializeLinkEmbeds();
-} 
+}

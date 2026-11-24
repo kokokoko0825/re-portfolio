@@ -9,7 +9,7 @@ export default function Admin() {
         <ProtectedRoute>
             <div className={styles.frame}>
                 <AdminHeader />
-                <div className={styles.admin}>
+                <main className={styles.admin}>
                     <h1>Admin</h1>
                     <div className={styles.adminSelect}>
                         <Link to="/admin/blog">
@@ -25,7 +25,7 @@ export default function Admin() {
                             </div>
                         </Link>
                     </div>
-                </div>
+                </main>
                 <Footer />
             </div>
         </ProtectedRoute>

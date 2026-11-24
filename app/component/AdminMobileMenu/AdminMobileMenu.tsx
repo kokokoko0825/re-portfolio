@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import * as styles from "../adminHeader/styles.css";
 import { Link, useNavigate } from "@remix-run/react";
 import { useAdminMenu } from "../../contexts/AdminMenuContext";
@@ -10,6 +10,15 @@ export function AdminMobileMenu(): ReactNode {
     const { logout } = useAuth();
     const navigate = useNavigate();
     const { isMobile } = useDevice();
+
+    useEffect(() => {
+        if (!isMenuOpen) return;
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") closeMenu();
+        };
+        document.addEventListener("keydown", handleKeyDown);
+        return () => document.removeEventListener("keydown", handleKeyDown);
+    }, [isMenuOpen, closeMenu]);
     
     // モバイルでない場合は何も表示しない
     if (!isMobile) {
@@ -29,34 +38,29 @@ export function AdminMobileMenu(): ReactNode {
                 <div 
                     className={styles.adminMobileMenuOverlay} 
                     onClick={closeMenu}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Escape') closeMenu();
-                    }}
-                    role="button"
-                    tabIndex={0}
-                    aria-label="Close menu overlay"
+                    aria-hidden="true"
                     style={{ display: isMenuOpen ? "block" : "none" }}
                 />
             )}
             
             {/* メニュー本体 */}
-            <div className={`${styles.adminMobileMenu} ${isMenuOpen ? styles.adminMobileMenuOpen : ""}`}>
-                <button 
+            <div id="admin-mobile-menu" hidden={!isMenuOpen} className={`${styles.adminMobileMenu} ${isMenuOpen ? styles.adminMobileMenuOpen : ""}`}>
+                <button type="button"
                     className={styles.adminCloseButton} 
                     onClick={closeMenu}
                     aria-label="Close menu"
                 >
                     ✕
                 </button>
-                <div className={styles.adminMobileMenuLinks}>
+                <nav aria-label="メイン" className={styles.adminMobileMenuLinks}>
                     <Link to="/admin" onClick={closeMenu}>Admin</Link>
                     <Link to="/admin/blog" onClick={closeMenu}>Blog</Link>
                     <Link to="/admin/works" onClick={closeMenu}>Works</Link>
-                    <button onClick={handleLogout}>
+                    <button type="button" onClick={handleLogout}>
                         ログアウト
                     </button>
-                </div>
+                </nav>
             </div>
         </>
     );
-} 
+}
