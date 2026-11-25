@@ -1,4 +1,4 @@
-import { useEffect, useState, type RefObject } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { Link } from "@remix-run/react";
 import * as styles from "./TableOfContents.css";
 
@@ -15,6 +15,7 @@ interface TableOfContentsProps {
 
 export function TableOfContents({ contentRef, contentKey }: TableOfContentsProps) {
     const [items, setItems] = useState<TocItem[]>([]);
+    const accordionRef = useRef<HTMLDetailsElement>(null);
     const [activeId, setActiveId] = useState<string | null>(null);
 
     useEffect(() => {
@@ -66,34 +67,59 @@ export function TableOfContents({ contentRef, contentKey }: TableOfContentsProps
         };
     }, [contentRef, contentKey]);
 
+    useEffect(() => {
+        const desktop = window.matchMedia("(min-width: 769px)");
+        const syncOpen = () => {
+            if (accordionRef.current) accordionRef.current.open = desktop.matches;
+        };
+        syncOpen();
+        desktop.addEventListener("change", syncOpen);
+        return () => desktop.removeEventListener("change", syncOpen);
+    }, [items.length, contentKey]);
+
     if (items.length === 0) return null;
 
     return (
-        <nav className={styles.tocNav} aria-label="目次">
-            <ul className={styles.tocList}>
-                {items.map((item) => (
-                    <li key={item.id} className={styles.tocListItem}>
-                        <Link
-                            to={`#${encodeURIComponent(item.id)}`}
-                            aria-current={activeId === item.id ? "location" : undefined}
-                            onClick={(event) => {
-                                if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) setActiveId(item.id);
-                            }}
-                            className={`${styles.tocLink} ${item.level > 1 ? styles.tocLinkNested : ""} ${activeId === item.id ? styles.tocLinkActive : ""} ${
-                                item.level === 1
-                                    ? styles.tocLinkLevel1
-                                    : item.level === 2
-                                      ? styles.tocLinkLevel2
-                                      : item.level === 3
-                                        ? styles.tocLinkLevel3
-                                        : styles.tocLinkLevel4
-                            }`}
-                        >
-                            {item.text}
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-        </nav>
+        <details ref={accordionRef} className={styles.tocAccordion}>
+            <summary className={styles.tocSummary}>
+                <span>目次 · {items.length}項目</span>
+                <svg className={styles.tocChevron} width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <path d="m5 7.5 5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+            </summary>
+            <div className={styles.tocTitle}>目次</div>
+            <nav className={styles.tocNav} aria-label="目次">
+                <ul className={styles.tocList}>
+                    {items.map((item) => (
+                        <li key={item.id} className={styles.tocListItem}>
+                            <Link
+                                to={`#${encodeURIComponent(item.id)}`}
+                                aria-current={activeId === item.id ? "location" : undefined}
+                                onClick={(event) => {
+                                    if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+                                        setActiveId(item.id);
+                                        // 閉じた後の本文位置をRemixのハッシュ遷移に使わせる。
+                                        if (window.matchMedia("(max-width: 768px)").matches && accordionRef.current) {
+                                            accordionRef.current.open = false;
+                                        }
+                                    }
+                                }}
+                                className={`${styles.tocLink} ${item.level > 1 ? styles.tocLinkNested : ""} ${activeId === item.id ? styles.tocLinkActive : ""} ${
+                                    item.level === 1
+                                        ? styles.tocLinkLevel1
+                                        : item.level === 2
+                                          ? styles.tocLinkLevel2
+                                          : item.level === 3
+                                            ? styles.tocLinkLevel3
+                                            : styles.tocLinkLevel4
+                                }`}
+                            >
+                                {item.text}
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+        </details>
     );
 }

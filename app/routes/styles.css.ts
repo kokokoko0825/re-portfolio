@@ -170,52 +170,6 @@ export const tocAside = style({
         },
     }
 });
-export const tocAccordion = style({
-    width: "100%",
-    border: 0,
-    backgroundColor: "transparent",
-    boxSizing: "border-box",
-    gap: layout.cardContentGap,
-    padding: 0,
-    "@media": {
-        [mobile]: {
-            padding: `${space[12]} ${space[16]}`,
-            gap: layout.mobile.cardContentGap,
-            borderRadius: "8px",
-            border: `1px solid ${vars.color.borderColor}`,
-            backgroundColor: vars.color.tocBackground,
-        },
-    }
-});
-export const tocSummary = style({
-    ...typeStyle("caption"),
-    padding: `${space[12]} 0 ${space[12]} calc(2px + ${space[12]})`,
-    color: vars.color.text,
-    cursor: "pointer",
-    listStyle: "none",
-    borderBottom: `1px solid ${vars.color.borderColor}`
-});
-export const tocTitle = style({
-    ...typeStyle("caption"),
-    paddingLeft: `calc(2px + ${space[12]})`,
-    color: vars.color.text,
-    marginBottom: space[8],
-    "@media": {
-        [mobile]: {
-            display: "none",
-        },
-    }
-});
-globalStyle(`summary.${tocSummary}::-webkit-details-marker`, {
-    display: "none",
-});
-globalStyle(`${tocAside} details[open] summary.${tocSummary}`, {
-    "@media": {
-        "screen and (min-width: 769px)": {
-            display: "none",
-        },
-    },
-});
 export const login = style({
     display: "flex",
     flexDirection: "column",
