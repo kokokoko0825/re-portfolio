@@ -56,22 +56,7 @@ globalStyle(`${themeToggle}:hover`, {
     opacity: 0.8
 })
 
-// ダークモードの時にテーマカラーボタンの色をtextcolorに設定
-globalStyle(`:root[data-theme='dark'] ${themeToggle}`, {
-    color: vars.color.text
-})
-
-// MUIアイコンの色を確実に適用（ダークモード）
-globalStyle(`:root[data-theme='dark'] ${themeToggle} svg`, {
-    color: vars.color.text,
-    fill: vars.color.text
-})
-
-// ライトモードの時も明示的に設定
-globalStyle(`:root[data-theme='light'] ${themeToggle} svg`, {
-    color: vars.color.text,
-    fill: vars.color.text
-})
+globalStyle(`${themeToggle} svg`, { fill: "currentColor" });
 
 export const adminHamburgerIcon = style({
     background: "none", border: "none", borderRadius: 0, gap: 0,

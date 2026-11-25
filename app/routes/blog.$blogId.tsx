@@ -10,6 +10,7 @@ import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { renderMarkdownWithEmbeds, initializeAllEmbeds, initializeTwitterEmbeds } from "../utils/markdownRenderer";
 import { useTheme } from "../contexts/ThemeContext";
+import { vars } from "../styles/theme.css";
 import { normalizeBlogTags } from "../utils/blogTags";
 // Prism はクライアント側でのみ動的に読み込む
 import { MetaFunction } from "@remix-run/cloudflare";
@@ -117,7 +118,7 @@ export default function BlogId() {
                 <Header />
                 <main className={styles.blogId}>
                     <h1>Blog</h1>
-                    <div style={{color: "#DEDBFF", textAlign: "center", padding: "20px"}}>
+                    <div style={{color: vars.color.text, textAlign: "center", padding: "20px"}}>
                         読み込み中...
                     </div>
                 </main>

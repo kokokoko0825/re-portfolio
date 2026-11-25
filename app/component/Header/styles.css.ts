@@ -63,19 +63,6 @@ globalStyle(`${iconButton} svg`, {
     width: "24px", height: "24px", flexShrink: 0, fill: "currentColor",
 });
 
-export const sunIcon = style({});
-export const moonIcon = style({});
-globalStyle(`:root ${sunIcon}`, { display: "block" });
-globalStyle(`:root ${moonIcon}`, { display: "none" });
-globalStyle(`:root[data-theme=light] ${sunIcon}`, { display: "none" });
-globalStyle(`:root[data-theme=light] ${moonIcon}`, { display: "block" });
-globalStyle(`:root:not([data-theme]) ${sunIcon}`, {
-    "@media": { "(prefers-color-scheme: light)": { display: "none" } },
-});
-globalStyle(`:root:not([data-theme]) ${moonIcon}`, {
-    "@media": { "(prefers-color-scheme: light)": { display: "block" } },
-});
-
 export const mobileMenu = style({
     position: "fixed",
     top: 0,

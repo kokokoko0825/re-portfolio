@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import * as styles from "./styles.css";
+import { getHttpUrl } from "../../utils/httpUrl";
 
 interface LinkEmbedProps {
     url: string;
@@ -17,10 +18,13 @@ export function LinkEmbed({ url }: LinkEmbedProps): ReactNode {
     const [metadata, setMetadata] = useState<LinkMetadata | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const safeUrl = getHttpUrl(url);
+    const imageUrl = metadata ? getHttpUrl(metadata.image) : undefined;
 
     useEffect(() => {
         const fetchMetadata = async () => {
             try {
+                if (!getHttpUrl(url)) throw new Error('無効なリンクURLです');
                 // プロキシAPIを使用してメタデータを取得
                 const response = await fetch(`/api/link-preview?url=${encodeURIComponent(url)}`);
                 
@@ -56,7 +60,7 @@ export function LinkEmbed({ url }: LinkEmbedProps): ReactNode {
             <div className={styles.linkEmbedContainer}>
                 <div className={styles.linkEmbedError}>
                     <p>{error || 'リンクの情報を取得できませんでした'}</p>
-                    <a href={url} target="_blank" rel="noopener noreferrer" className={styles.fallbackLink}>
+                    <a href={safeUrl} target="_blank" rel="noopener noreferrer" className={styles.fallbackLink}>
                         {url}
                     </a>
                 </div>
@@ -66,10 +70,10 @@ export function LinkEmbed({ url }: LinkEmbedProps): ReactNode {
 
     return (
         <div className={styles.linkEmbedContainer}>
-            <a href={url} target="_blank" rel="noopener noreferrer" className={styles.linkEmbed}>
-                {metadata.image && (
+            <a href={safeUrl} target="_blank" rel="noopener noreferrer" className={styles.linkEmbed}>
+                {imageUrl && (
                     <div className={styles.linkEmbedImage}>
-                        <img src={metadata.image} alt={metadata.title} />
+                        <img src={imageUrl} alt={metadata.title} />
                     </div>
                 )}
                 <div className={styles.linkEmbedContent}>
@@ -85,4 +89,4 @@ export function LinkEmbed({ url }: LinkEmbedProps): ReactNode {
             </a>
         </div>
     );
-} 
+}

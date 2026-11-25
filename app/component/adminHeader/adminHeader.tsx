@@ -7,16 +7,14 @@ import { vars } from "../../styles/theme.css";
 import { useAdminMenu } from "../../contexts/AdminMenuContext";
 import { AdminMobileMenu } from "../AdminMobileMenu/AdminMobileMenu";
 import { useDevice } from "../../contexts/DeviceContext";
-import { useTheme } from "../../contexts/ThemeContext";
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
+import * as icons from "../ThemeToggle/themeIcons.css";
 
 export function AdminHeader(): ReactNode {
     const { logout } = useAuth();
     const navigate = useNavigate();
     const { isMenuOpen, toggleMenu } = useAdminMenu();
     const { isMobile } = useDevice();
-    const { theme, toggleTheme } = useTheme();
 
     const handleLogout = () => {
         logout();
@@ -25,13 +23,6 @@ export function AdminHeader(): ReactNode {
 
     // モバイル用のクラス名
     const mobileClass = isMobile ? styles.mobileView : '';
-    const hamburgerIconSrc = isMenuOpen
-        ? theme === "light"
-            ? "/images/light_humberger-close.svg"
-            : "/images/humberger-close.svg"
-        : theme === "light"
-            ? "/images/light_humberger.svg"
-            : "/images/humberger.svg";
     const hamburgerAriaLabel = isMenuOpen ? "Close menu" : "Open menu";
 
     return (
@@ -44,16 +35,7 @@ export function AdminHeader(): ReactNode {
                 </div>
                 <div style={{display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "row"}}>
                     {/* テーマ切り替えボタン */}
-                    <button type="button" className={styles.themeToggle}
-                        onClick={toggleTheme} 
-                        aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"} 
-                    >
-                        {theme === "light" ? (
-                            <DarkModeOutlinedIcon sx={{ color: "#03031B" }} />
-                        ) : (
-                            <LightModeOutlinedIcon sx={{ color: "#DEDBFF" }} />
-                        )}
-                    </button>
+                    <ThemeToggle className={styles.themeToggle} />
 
                     <nav aria-label="メイン" className={styles.adminLinkList} style={{textDecoration: "none"}}>
                         <Link to="/admin">Admin</Link>
@@ -86,7 +68,14 @@ export function AdminHeader(): ReactNode {
                         aria-controls="admin-mobile-menu"
                     >
                         <img 
-                            src={hamburgerIconSrc}
+                            className={icons.lightIcon}
+                            src={isMenuOpen ? "/images/light_humberger-close.svg" : "/images/light_humberger.svg"}
+                            alt=""
+                            style={{width: "25.9px", height: "17px"}}
+                        />
+                        <img
+                            className={icons.darkIcon}
+                            src={isMenuOpen ? "/images/humberger-close.svg" : "/images/humberger.svg"}
                             alt=""
                             style={{width: "25.9px", height: "17px"}}
                         />

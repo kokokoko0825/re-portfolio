@@ -2,6 +2,7 @@ import MarkdownIt from "markdown-it";
 import { splitPhrases } from "./phraseText";
 import { phrase as phraseClass } from "~/component/PhraseText.css";
 import { vars } from "../styles/theme.css";
+import { getHttpUrl } from "./httpUrl";
 
 // Twitter埋め込みAPIの型定義
 declare global {
@@ -185,7 +186,7 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                     </div>
                 `;
                 
-                html = html.replace(regex, embedHtml);
+                html = html.replace(regex, () => embedHtml);
             }
         });
     }
@@ -211,7 +212,7 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                     box-sizing: border-box;
                     margin: 2rem 0;
                 ">
-                    <a href="${fullUrl}" target="_blank" rel="noopener noreferrer" class="youtube-embed" style="
+                    <a href="${md.utils.escapeHtml(fullUrl)}" target="_blank" rel="noopener noreferrer" class="youtube-embed" style="
                         position: relative;
                         display: block;
                         width: 100%;
@@ -258,7 +259,7 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                 </div>
             `;
 
-            html = html.replace(regex, embedHtml);
+            html = html.replace(regex, () => embedHtml);
         });
     }
 
@@ -300,7 +301,7 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                 </div>
             `;
 
-            html = html.replace(regex, embedHtml);
+            html = html.replace(regex, () => embedHtml);
         });
     }
 
@@ -323,7 +324,7 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
             }
             
             // URLをエスケープしてHTML内で安全に使用
-            const escapedUrl = url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const escapedUrl = md.utils.escapeHtml(url).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             const regex = new RegExp(`<p>${escapedUrl}</p>`, 'g');
             
             // リンク埋め込みコンポーネントを挿入
@@ -371,14 +372,14 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                                 <span class="link-embed-url" style="
                                     color: ${vars.color.muted.foreground};
                                     word-break: break-all;
-                                ">${url}</span>
+                                ">${md.utils.escapeHtml(url)}</span>
                             </div>
                         </div>
                     </div>
                 </div>
             `;
             
-            html = html.replace(regex, embedHtml);
+            html = html.replace(regex, () => embedHtml);
         });
     }
     
@@ -480,7 +481,7 @@ export function initializeLinkEmbeds(): void {
                 const urlElement = embed.querySelector('.link-embed-url');
                 if (urlElement) {
                     const url = urlElement.textContent;
-                    if (url) {
+                    if (url && getHttpUrl(url)) {
                         // APIからメタデータを取得
                         fetch(`/api/link-preview?url=${encodeURIComponent(url)}`)
                             .then(response => response.json())
@@ -501,16 +502,17 @@ export function initializeLinkEmbeds(): void {
                                     descriptionElement.textContent = linkData.description;
                                 }
                                 if (metaElement) {
-                                    metaElement.innerHTML = `
-                                        <span class="link-embed-site" style="
-                                            color: ${vars.color.primary.DEFAULT};
-                                            text-transform: uppercase;
-                                        ">${linkData.siteName}</span>
-                                        <span class="link-embed-url" style="
-                                            color: ${vars.color.muted.foreground};
-                                            word-break: break-all;
-                                        ">${url}</span>
-                                    `;
+                                    const site = document.createElement('span');
+                                    site.className = 'link-embed-site';
+                                    site.style.color = vars.color.primary.DEFAULT;
+                                    site.style.textTransform = 'uppercase';
+                                    site.textContent = linkData.siteName;
+                                    const link = document.createElement('span');
+                                    link.className = 'link-embed-url';
+                                    link.style.color = vars.color.muted.foreground;
+                                    link.style.wordBreak = 'break-all';
+                                    link.textContent = url;
+                                    metaElement.replaceChildren(site, link);
                                 }
                                 
                                 // リンクをクリック可能にする
