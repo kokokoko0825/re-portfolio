@@ -177,8 +177,8 @@ export const tocAccordion = style({
     backgroundColor: vars.color.codeBlock.background,
     boxSizing: "border-box",
     gap: layout.cardContentGap,
-    padding: layout.cardPadding,
-    "@media": { [mobile]: { padding: layout.mobile.cardPadding, gap: layout.mobile.cardContentGap } }
+    padding: space[16],
+    "@media": { [mobile]: { padding: `${space[12]} ${space[16]}`, gap: layout.mobile.cardContentGap } }
 });
 export const tocSummary = style({
     ...typeStyle("caption"),
@@ -595,6 +595,7 @@ globalStyle(`${thumbnail} > span`, typeStyle("heroName"));
 globalStyle(`${adminnewCreate} p, ${adminnewCreate} label, ${adminManagement} button, ${loginCard} p`, typeStyle("uiBody"));
 
 export const sectionTitle = style({ ...typeStyle("largeTitle"), margin: 0 });
+export const articleTitle = style({ ...typeStyle("articleTitle"), margin: 0, maxWidth: "56rem" });
 export const subsectionTitle = style({ ...typeStyle("title2"), margin: 0 });
 export const backLink = style({ ...typeStyle("footnote"), color: vars.color.text, textDecoration: "none" });
 globalStyle(`${adminSelect} a, ${newCreate} a`, { color: vars.color.text, textDecoration: "none" });

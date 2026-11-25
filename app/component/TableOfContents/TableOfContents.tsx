@@ -1,4 +1,5 @@
 import { useEffect, useState, type RefObject } from "react";
+import { Link } from "@remix-run/react";
 import * as styles from "./TableOfContents.css";
 
 interface TocItem {
@@ -31,7 +32,12 @@ export function TableOfContents({ contentRef, contentKey }: TableOfContentsProps
             tocItems.push({ id, text, level });
         });
 
-        setItems(tocItems);
+        if (tocItems.length === 0) {
+            setItems([]);
+            return;
+        }
+        const minLevel = Math.min(...tocItems.map(item => item.level));
+        setItems(tocItems.map(item => ({ ...item, level: item.level - minLevel + 1 })));
     }, [contentRef, contentKey]);
 
     if (items.length === 0) return null;
@@ -41,8 +47,8 @@ export function TableOfContents({ contentRef, contentKey }: TableOfContentsProps
             <ul className={styles.tocList}>
                 {items.map((item) => (
                     <li key={item.id} className={styles.tocListItem}>
-                        <a
-                            href={`#${item.id}`}
+                        <Link
+                            to={`#${encodeURIComponent(item.id)}`}
                             className={`${styles.tocLink} ${
                                 item.level === 1
                                     ? styles.tocLinkLevel1
@@ -54,7 +60,7 @@ export function TableOfContents({ contentRef, contentKey }: TableOfContentsProps
                             }`}
                         >
                             {item.text}
-                        </a>
+                        </Link>
                     </li>
                 ))}
             </ul>

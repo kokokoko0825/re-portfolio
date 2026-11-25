@@ -36,24 +36,6 @@ export function Layout({ children }: { children: React.ReactNode }): ReactNode {
   // クリティカルCSSを取得
   const criticalCss = getCriticalCss();
   
-  // デバイス検出スクリプト（インライン版）
-  const deviceDetectionScript = `
-    // デバイス検出と即時スタイル適用のためのスクリプト
-    (function() {
-      function isMobileDevice() {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
-              window.innerWidth <= 768;
-      }
-      
-      if (isMobileDevice()) {
-        document.documentElement.classList.add('mobile-device');
-        document.documentElement.classList.add('mobile-view');
-      } else {
-        document.documentElement.classList.add('desktop-device');
-      }
-    })();
-  `;
-
   // 初回描画前にdata-themeを設定（localStorage優先、なければデバイスのprefers-color-scheme）
   const themeScript = `
     (function() {
@@ -64,13 +46,12 @@ export function Layout({ children }: { children: React.ReactNode }): ReactNode {
   `;
   
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
+        <meta name="emotion-insertion-point" content="" />
         <meta name="google-site-verification" content="LQ31apSdI1TM-XP0eZ0Bdbv7eoBFrndb8pwSpCPhg2c" />
         <Meta />
-        {/* デバイス検出スクリプトを早期に実行 */}
-        <script dangerouslySetInnerHTML={{ __html: deviceDetectionScript }} />
         {/* 初回描画前にテーマを適用（デバイス設定 or localStorage） */}
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         {/* 最小限のクリティカルCSS */}
@@ -82,8 +63,6 @@ export function Layout({ children }: { children: React.ReactNode }): ReactNode {
         {children}
         <ScrollRestoration />
         <Scripts />
-        {/* 完全版のデバイス検出スクリプトを読み込み */}
-        <script src="/scripts/device-detection.js"></script>
       </body>
     </html>
   );
@@ -107,12 +86,6 @@ export default function App(): ReactNode {
 
 export const links: LinksFunction = () => {
   return [
-    // デバイス検出スクリプトを早期に読み込む
-    {
-      rel: "preload",
-      href: "/scripts/device-detection.js",
-      as: "script"
-    },
     { rel: "icon", href: "/images/icon.png", type: "image/png" },
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
     {

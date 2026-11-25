@@ -25,13 +25,8 @@ interface LinkPreviewData {
     error?: string;
 }
 
-const md = new MarkdownIt({
-    highlight: (code) => {
-        // SSRではハイライトしない（クライアントで highlightAllUnder を実行）
-        // markdown-it が自動でエスケープしてくれるため生のコードを返す
-        return code;
-    },
-});
+// フェンス内のコードは markdown-it の既定処理でエスケープする。
+const md = new MarkdownIt();
 
 // Ensure <pre> gets line-numbers class for Prism plugin
 const originalFence = md.renderer.rules.fence;

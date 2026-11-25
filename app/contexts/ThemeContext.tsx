@@ -10,18 +10,13 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-    const [theme, setTheme] = useState<Theme>(() => {
-        if (typeof window === "undefined") return "dark";
-        const t = document.documentElement.getAttribute("data-theme");
-        if (t === "light" || t === "dark") return t;
-        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    });
+    const [theme, setTheme] = useState<Theme>("dark");
 
     // 初期化時にlocalStorageからテーマを読み込む、またはOS設定を確認
     useEffect(() => {
         if (typeof window !== "undefined") {
             const savedTheme = localStorage.getItem("theme") as Theme | null;
-            if (savedTheme) {
+            if (savedTheme === "light" || savedTheme === "dark") {
                 setTheme(savedTheme);
                 document.documentElement.setAttribute("data-theme", savedTheme);
             } else {
