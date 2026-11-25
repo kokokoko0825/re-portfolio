@@ -1,4 +1,4 @@
-import { typeStyle, space, layout, mobile } from "~/styles/tokens";
+import { typeStyle, type, space, layout, mobile } from "~/styles/tokens";
 import { style, globalStyle } from "@vanilla-extract/css";
 import { vars } from "../styles/theme.css";
 import "zenn-content-css";
@@ -45,7 +45,8 @@ export const tagFilters = style({
     display: "flex",
     flexWrap: "wrap",
     gap: space[8],
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "center"
 });
 export const tagFilter = style({
     ...typeStyle("caption"),
@@ -86,7 +87,7 @@ export const tagChip = style({
 export const works = style({
     display: "flex",
     flexDirection: "column",
-    alignItems: "flex-start",
+    alignItems: "center",
     gap: space[8],
     "@media": {
         [mobile]: {
@@ -120,7 +121,9 @@ export const blogId = style({
 export const blogDetailWrapper = style({
     display: "flex",
     width: "100%",
-    maxWidth: "1060px",
+    maxWidth: `calc(${layout.articleMaxWidth} + ${space[48]} + 220px)`,
+    marginInline: "auto",
+    fontSize: type.articleBody.fontSize,
     flexDirection: "row",
     alignItems: "flex-start",
     gap: space[48],
@@ -131,6 +134,7 @@ export const blogDetailWrapper = style({
     "@media": {
         [mobile]: {
             flexDirection: "column",
+            fontSize: type.articleBody.mobileSize,
             gap: space[24],
             order: 0,
         },
@@ -138,6 +142,8 @@ export const blogDetailWrapper = style({
 });
 export const blogArticle = style({
     flex: 1,
+    width: "100%",
+    maxWidth: layout.articleMaxWidth,
     minWidth: 0,
     display: "flex",
     flexDirection: "column",
@@ -259,7 +265,7 @@ export const section = style({
     alignItems: "flex-start",
     "@media": {
         [mobile]: {
-            padding: `${space[8]} ${space[32]}`,
+            padding: `${space[8]} 0`,
             alignSelf: "stretch",
             gap: layout.mobile.cardContentGap
         }
@@ -282,6 +288,7 @@ export const list = style({
 export const workList = style({
     display: "flex",
     maxWidth: "750px",
+    justifyContent: "center",
     alignItems: "flex-start",
     alignContent: "flex-start",
     flexWrap: "wrap",
@@ -299,6 +306,7 @@ export const workList = style({
     gap: layout.cardGap
 });
 export const thumbnail = style({
+    textAlign: "center",
     display: "flex",
     padding: `${space[24]} 0 ${space[16]} 0`,
     flexDirection: "column",
@@ -325,6 +333,7 @@ export const textFrame = style({
     boxSizing: "border-box",
     overflowWrap: "break-word",
     wordBreak: "break-word",
+    marginInline: "auto",
     "@media": {
         [mobile]: {
             width: "100%",
@@ -589,3 +598,7 @@ export const sectionTitle = style({ ...typeStyle("largeTitle"), margin: 0 });
 export const subsectionTitle = style({ ...typeStyle("title2"), margin: 0 });
 export const backLink = style({ ...typeStyle("footnote"), color: vars.color.text, textDecoration: "none" });
 globalStyle(`${adminSelect} a, ${newCreate} a`, { color: vars.color.text, textDecoration: "none" });
+
+globalStyle(`${textFrame} .znc h2, ${textFrame} .znc h3, ${textFrame} .znc h4, ${textFrame} .znc h5`, {
+    wordBreak: "keep-all", overflowWrap: "anywhere",
+});

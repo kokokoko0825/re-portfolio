@@ -1,3 +1,4 @@
+import { PhraseText } from "~/component/PhraseText";
 import { ReactNode } from "react";
 import { Timestamp } from "firebase/firestore";
 import * as styles from "./styles.css";
@@ -18,9 +19,9 @@ export function BlogItem({ id, title, createdAt, externalUrl, tags = [] }: BlogI
             <DateText value={createdAt} />
             <h2 className={styles.title}>
                 {externalUrl ? (
-                    <a className={styles.titleLink} href={externalUrl} target="_blank" rel="noopener noreferrer">{title}</a>
+                    <a className={styles.titleLink} href={externalUrl} target="_blank" rel="noopener noreferrer"><PhraseText>{title}</PhraseText></a>
                 ) : (
-                    <Link className={styles.titleLink} to={`/blog/${id}`}>{title}</Link>
+                    <Link className={styles.titleLink} to={`/blog/${id}`}><PhraseText>{title}</PhraseText></Link>
                 )}
             </h2>
             {tags.length > 0 && (

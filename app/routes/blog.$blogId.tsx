@@ -1,3 +1,4 @@
+import { PhraseText } from "~/component/PhraseText";
 import { DateText } from "../component/DateText";
 import { Header } from "../component/Header/Header";
 import { Footer } from "../component/Footer/Footer";
@@ -162,7 +163,7 @@ export default function BlogId() {
                 <small>投稿日: <DateText value={blogData.createdAt} />,  編集日: <DateText value={blogData.updatedAt} /></small>
                 <div className={styles.thumbnail}>
                     <span>{blogData.thumbnail}</span>
-                    <h1>{blogData.title}</h1>
+                    <h1><PhraseText>{blogData.title}</PhraseText></h1>
                     {blogData.tags.length > 0 && (
                         <div className={styles.tagList}>
                             {blogData.tags.map((tag) => (

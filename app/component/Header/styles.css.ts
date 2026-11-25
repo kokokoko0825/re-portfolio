@@ -9,7 +9,7 @@ export const header = style ({
     alignItems: "center",
     borderBottom: `2px solid ${vars.color.borderColor}`,
     background: vars.color.background,
-    boxSizing: "content-box",
+    boxSizing: "border-box",
     position: "fixed",
     zIndex: 1001,
 })
@@ -26,7 +26,7 @@ export const homeIcon = style({
 
 export const linkList = style({
     display: "flex",
-    padding: `${space[8]} ${layout.pageInset}`,
+    padding: `${space[8]} 0 ${space[8]} ${space[20]}`,
     alignItems: "flex-start",
     gap: space[32],
     "@media": {
@@ -36,57 +36,45 @@ export const linkList = style({
     }
 })
 
-export const themeToggle = style({
+export const controls = style({
+    display: "flex",
+    alignItems: "center",
+    paddingRight: layout.pageInset,
+    "@media": { [mobile]: { paddingRight: layout.mobile.pageInset } },
+});
+
+const iconButton = style({
     background: "none", border: "none", borderRadius: 0, gap: 0,
     display: "flex",
-    padding: `${space[8]} ${space[20]}`,
-    cursor: "pointer",
-    color: vars.color.text,
-    alignItems: "center",
-    justifyContent: "center",
-    transition: "opacity 0.2s ease",
-    "@media": {
-        [mobile]: {
-            padding: `${space[8]} ${space[16]}`
-        }
-    }
-})
+    width: "44px", height: "44px", minWidth: "44px", minHeight: "44px",
+    flexShrink: 0, boxSizing: "border-box", padding: 0,
+    cursor: "pointer", color: vars.color.text,
+    alignItems: "center", justifyContent: "center",
+    ":hover": { opacity: 0.8 },
+});
 
-globalStyle(`${themeToggle}:hover`, {
-    opacity: 0.8
-})
-
-// ダークモードの時にテーマカラーボタンの色をtextcolorに設定
-globalStyle(`:root[data-theme='dark'] ${themeToggle}`, {
-    color: vars.color.text
-})
-
-// MUIアイコンの色を確実に適用（ダークモード）
-globalStyle(`:root[data-theme='dark'] ${themeToggle} svg`, {
-    color: vars.color.text,
-    fill: vars.color.text
-})
-
-// ライトモードの時も明示的に設定
-globalStyle(`:root[data-theme='light'] ${themeToggle} svg`, {
-    color: vars.color.text,
-    fill: vars.color.text
-})
-
-export const hamburgerIcon = style({
-    background: "none", border: "none", borderRadius: 0, gap: 0,
+export const themeToggle = style([iconButton]);
+export const hamburgerIcon = style([iconButton, {
     display: "none",
-    padding: `${space[8]} ${space[32]}`,
-    cursor: "pointer",
-    color: vars.color.text,
-    alignItems: "center",
-    justifyContent: "center",
-    "@media": {
-        [mobile]: {
-            display: "flex"
-        }
-    }
-})
+    "@media": { [mobile]: { display: "flex" } },
+}]);
+
+globalStyle(`${iconButton} svg`, {
+    width: "24px", height: "24px", flexShrink: 0, fill: "currentColor",
+});
+
+export const sunIcon = style({});
+export const moonIcon = style({});
+globalStyle(`:root ${sunIcon}`, { display: "block" });
+globalStyle(`:root ${moonIcon}`, { display: "none" });
+globalStyle(`:root[data-theme=light] ${sunIcon}`, { display: "none" });
+globalStyle(`:root[data-theme=light] ${moonIcon}`, { display: "block" });
+globalStyle(`:root:not([data-theme]) ${sunIcon}`, {
+    "@media": { "(prefers-color-scheme: light)": { display: "none" } },
+});
+globalStyle(`:root:not([data-theme]) ${moonIcon}`, {
+    "@media": { "(prefers-color-scheme: light)": { display: "block" } },
+});
 
 export const mobileMenu = style({
     position: "fixed",
@@ -179,6 +167,5 @@ globalStyle(`${linkList} a`, {
 
 export const logo = style(typeStyle("largeTitle"));
 globalStyle(`${homeIcon} a, ${linkList} a`, { color: vars.color.text, textDecoration: "none" });
-globalStyle(`${themeToggle} svg`, { width: "25px", height: "25px", "@media": { [mobile]: { width: "15px" } } });
 
 globalStyle("[hidden]", { display: "none !important" });

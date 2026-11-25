@@ -1,4 +1,6 @@
 import MarkdownIt from "markdown-it";
+import { splitPhrases } from "./phraseText";
+import { phrase as phraseClass } from "~/component/PhraseText.css";
 import { vars } from "../styles/theme.css";
 
 // Twitter埋め込みAPIの型定義
@@ -62,6 +64,10 @@ md.renderer.rules.heading_open = (tokens, idx, _options, env) => {
     const nextToken = tokens[idx + 1];
     const text =
         nextToken?.type === "inline" ? nextToken.content : "";
+    // 見出しのテキストだけを処理し、リンク・強調・コードと目次のIDを保つ。
+    for (const child of nextToken?.children ?? []) {
+        if (child.type === "text") child.meta = { phraseHeading: true };
+    }
     const baseSlug = slugify(text);
     const headingIds = (env as { headingIds?: Record<string, number> })
         .headingIds ??= {};
@@ -73,6 +79,13 @@ md.renderer.rules.heading_open = (tokens, idx, _options, env) => {
 
 md.renderer.rules.heading_close = (tokens, idx) =>
     `</h${Math.min(Number(tokens[idx].tag.slice(1)) + 1, 6)}>\n`;
+
+md.renderer.rules.text = (tokens, idx) => {
+    const token = tokens[idx];
+    return token.meta?.phraseHeading
+        ? splitPhrases(token.content).map((phrase) => `<span class="${phraseClass}">${md.utils.escapeHtml(phrase)}</span>`).join("<wbr>")
+        : md.utils.escapeHtml(token.content);
+};
 
 // Twitter/X URLを検出する正規表現（x.comとtwitter.comの両方に対応）
 const TWITTER_URL_REGEX = /https?:\/\/(?:www\.)?(?:twitter\.com|x\.com)\/\w+\/status\/\d+/g;
