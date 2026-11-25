@@ -76,35 +76,23 @@ export default function BlogId() {
         fetchWorkData();
     }, [workId]);
 
-    // コンテンツが更新された後に埋め込みを初期化
+    // DOM更新後に埋め込みとコード表示を初期化する。
     useEffect(() => {
-        if (workData && contentRef.current) {
-            // 少し遅延を入れてDOMが更新されるのを待つ
-            setTimeout(async () => {
-                // コンテンツが変更された場合は強制再初期化
-                initializeAllEmbeds();
-                if (contentRef.current) {
-                    const Prism = (await import("prismjs")).default;
-                    await Promise.all([
-                        import("prismjs/plugins/line-numbers/prism-line-numbers"),
-                        import("prismjs/components/prism-markup"),
-                        import("prismjs/components/prism-css"),
-                        import("prismjs/components/prism-javascript"),
-                        import("prismjs/components/prism-jsx"),
-                        import("prismjs/components/prism-typescript"),
-                        import("prismjs/components/prism-tsx"),
-                        import("prismjs/components/prism-json"),
-                        import("prismjs/components/prism-bash"),
-                        import("prismjs/components/prism-python"),
-                        import("prismjs/components/prism-clike"),
-                        import("prismjs/components/prism-c"),
-                        import("prismjs/components/prism-cpp"),
-                        import("prismjs/components/prism-yaml"),
-                    ]);
-                    Prism.highlightAllUnder(contentRef.current as unknown as ParentNode);
+        if (!workData || !contentRef.current) return;
+        initializeAllEmbeds();
+        let cancelled = false;
+        void (async () => {
+            try {
+                const { loadPrism } = await import("../utils/prism.client");
+                const Prism = await loadPrism();
+                if (!cancelled && contentRef.current) {
+                    Prism.highlightAllUnder(contentRef.current);
                 }
-            }, 100);
-        }
+            } catch (error) {
+                console.error("Prism initialization failed:", error);
+            }
+        })();
+        return () => { cancelled = true; };
     }, [workData]);
 
     // テーマが変更されたときにTwitter埋め込みを再初期化（テーマ変更時のみ）
@@ -162,7 +150,7 @@ export default function BlogId() {
                 <small>投稿日: <DateText value={workData.createdAt} />,  編集日: <DateText value={workData.updatedAt} /></small>
                 <div className={styles.thumbnail}>
                     <img src={workData.thumbnail || "/images/icon.jpg"} alt="" className={workThumbnail} />
-                    <h1><PhraseText>{workData.title}</PhraseText></h1>
+                    <h1 className={styles.articleTitle}><PhraseText>{workData.title}</PhraseText></h1>
                 </div>
                 <div className={styles.textFrame}>
                     <div 

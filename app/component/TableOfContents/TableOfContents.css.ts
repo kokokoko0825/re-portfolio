@@ -15,7 +15,7 @@ export const tocList = style({
 });
 
 export const tocListItem = style({
-    marginBottom: space[4],
+    marginBottom: "0.125rem",
 });
 
 export const tocLink = style({
@@ -25,6 +25,10 @@ export const tocLink = style({
     boxSizing: "border-box",
     paddingBlock: space[8],
     minHeight: "2.75rem",
+    "@media": {
+        "(pointer: fine)": { minHeight: "2rem", paddingBlock: space[4] },
+        "(any-pointer: coarse)": { minHeight: "2.75rem", paddingBlock: space[8] },
+    },
 
     color: vars.color.muted.foreground,
     textDecoration: "none",
@@ -41,15 +45,15 @@ export const tocLinkLevel1 = style({
 });
 
 export const tocLinkLevel2 = style({
-    paddingLeft: space[16],
+    paddingLeft: space[12],
 });
 
 export const tocLinkLevel3 = style({
-    paddingLeft: space[32],
+    paddingLeft: space[24],
 });
 
 export const tocLinkLevel4 = style({
-    paddingLeft: space[48],
+    paddingLeft: "2.25rem",
 });
 
 export const tocLinkActive = style({

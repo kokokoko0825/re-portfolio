@@ -19,6 +19,7 @@ export const layout = {
 export const type = {
     heroName: { fontSize: "3rem", mobileSize: "2.25rem", fontWeight: 500, lineHeight: 1.15, letterSpacing: "-0.01em" },
     largeTitle: { fontSize: "2rem", mobileSize: "1.75rem", fontWeight: 500, lineHeight: 1.4, letterSpacing: 0 },
+    articleTitle: { fontSize: "1.75rem", mobileSize: "1.5rem", fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 },
     title1: { fontSize: "1.75rem", mobileSize: "1.625rem", fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 },
     title2: { fontSize: "1.5rem", mobileSize: "1.25rem", fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 },
     title3: { fontSize: "1.25rem", mobileSize: "1.125rem", fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 },

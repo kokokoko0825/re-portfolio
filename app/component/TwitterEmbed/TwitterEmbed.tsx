@@ -27,18 +27,26 @@ export function TwitterEmbed({ url }: TwitterEmbedProps): ReactNode {
             return;
         }
 
+        let cancelled = false;
         // Twitter埋め込みスクリプトを動的に読み込み
         const script = document.createElement('script');
         script.src = 'https://platform.twitter.com/widgets.js';
         script.async = true;
         script.onload = () => {
+            if (cancelled) return;
+            const container = document.getElementById(`tweet-${tweetId}`);
+            if (!container) return;
+            // 初回stateはdark固定なので、描画済みCSSと同じテーマを参照する。
+            const currentTheme = document.documentElement.dataset.theme
+                ?? (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
             // [at]ts-expect-error - Twitter埋め込みAPIはグローバルに定義される
             if (window.twttr) {
-                // @ts-expect-error - Twitter埋め込みAPIの型定義
-                window.twttr.widgets.createTweet(tweetId, document.getElementById(`tweet-${tweetId}`), {
+                container.replaceChildren();
+                window.twttr.widgets.createTweet(tweetId, container, {
                     conversation: 'none',
-                    theme: theme
+                    theme: currentTheme
                 }).then((el: HTMLElement | null) => {
+                    if (cancelled) return;
                     if (el) {
                         setIsLoading(false);
                     } else {
@@ -49,6 +57,7 @@ export function TwitterEmbed({ url }: TwitterEmbedProps): ReactNode {
             }
         };
         script.onerror = () => {
+            if (cancelled) return;
             setError("Twitter埋め込みの読み込みに失敗しました");
             setIsLoading(false);
         };
@@ -56,11 +65,8 @@ export function TwitterEmbed({ url }: TwitterEmbedProps): ReactNode {
         document.head.appendChild(script);
 
         return () => {
-            // クリーンアップ
-            const existingScript = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
-            if (existingScript) {
-                document.head.removeChild(existingScript);
-            }
+            cancelled = true;
+            script.remove();
         };
     }, [tweetId, theme]);
 
@@ -90,4 +96,4 @@ export function TwitterEmbed({ url }: TwitterEmbedProps): ReactNode {
             <div id={`tweet-${tweetId}`} className={styles.twitterEmbed} />
         </div>
     );
-} 
+}

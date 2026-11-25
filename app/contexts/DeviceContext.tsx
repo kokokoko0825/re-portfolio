@@ -49,25 +49,10 @@ export function DeviceProvider({ children, serverDeviceInfo }: DeviceProviderPro
                 }));
             };
             
-            // device-detection.jsからのカスタムイベントを受け取る
-            const handleDeviceDetection = (event: Event) => {
-                const customEvent = event as CustomEvent;
-                if (customEvent.detail) {
-                    setDeviceInfo(prev => ({
-                        ...prev,
-                        ...customEvent.detail,
-                        screenWidth: window.innerWidth,
-                        screenHeight: window.innerHeight
-                    }));
-                }
-            };
-
             window.addEventListener('resize', handleResize);
-            window.addEventListener('deviceDetection', handleDeviceDetection);
             
             return () => {
                 window.removeEventListener('resize', handleResize);
-                window.removeEventListener('deviceDetection', handleDeviceDetection);
             };
         }
     }, []);

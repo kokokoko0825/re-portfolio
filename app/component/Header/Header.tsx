@@ -1,25 +1,16 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
 import * as styles from "./styles.css";
 import { Link } from "@remix-run/react";
 import { useMenu } from "../../contexts/MenuContext";
 import { MobileMenu } from "../MobileMenu/MobileMenu";
 import { useDevice } from "../../contexts/DeviceContext";
-import { useTheme } from "../../contexts/ThemeContext";
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 
 export function Header(): ReactNode {
     const { isMenuOpen, toggleMenu } = useMenu();
     const { isMobile } = useDevice();
-    const { theme, toggleTheme } = useTheme();
-    
-    const [isDark, setIsDark] = useState<boolean>();
-    useEffect(() => {
-        setIsDark(document.documentElement.dataset.theme === "dark");
-    }, [theme]);
-
     // モバイル用のクラス名
     const mobileClass = isMobile ? styles.mobileView : '';
     const hamburgerAriaLabel = isMenuOpen ? "Close menu" : "Open menu";
@@ -33,14 +24,7 @@ export function Header(): ReactNode {
                 </div>
                 <div className={styles.controls}>
                     {/* テーマ切り替えボタン */}
-                    <button type="button" className={styles.themeToggle}
-                        onClick={toggleTheme} 
-                        aria-label="テーマを切り替え"
-                        aria-pressed={isDark}
-                    >
-                        <DarkModeOutlinedIcon className={styles.moonIcon} />
-                        <LightModeOutlinedIcon className={styles.sunIcon} />
-                    </button>
+                    <ThemeToggle className={styles.themeToggle} />
 
                     <nav aria-label="メイン" className={styles.linkList}>
                     <Link to="/">Home</Link>
