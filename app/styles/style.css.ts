@@ -296,3 +296,13 @@ globalStyle(".znc .link-embed-content", {
 globalStyle(".znc .link-embed-meta", { gap: space[4] });
 
 globalStyle("button, input, textarea, select", { fontFamily: "inherit" });
+
+// 画像の大きさはカードとサムネイルを基準にし、外部メタデータからCSSを作らない。
+globalStyle(".znc .link-embed img.link-embed-image", {
+    display: "block", width: "100%", height: "auto", aspectRatio: "16 / 9", objectFit: "cover", margin: 0,
+});
+globalStyle(".znc .link-embed-site", { display: "flex", alignItems: "center", gap: "6px", overflowWrap: "anywhere" });
+globalStyle(".znc .link-embed img.link-embed-favicon", { width: "16px", height: "16px", flexShrink: 0, objectFit: "contain", margin: 0 });
+globalStyle(".youtube-play", { width: "clamp(56px, 18%, 96px)", height: "auto" });
+globalStyle(".youtube-play-background", { fill: "#212121", fillOpacity: 0.8 });
+globalStyle(".youtube-embed:hover .youtube-play-background, .youtube-embed:focus-visible .youtube-play-background", { fill: "#FF0000", fillOpacity: 1 });

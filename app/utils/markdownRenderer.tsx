@@ -23,6 +23,8 @@ interface LinkPreviewData {
     title: string;
     description: string;
     siteName: string;
+    image?: string;
+    favicon?: string;
     error?: string;
 }
 
@@ -83,65 +85,17 @@ md.renderer.rules.text = (tokens, idx) => {
         : md.utils.escapeHtml(token.content);
 };
 
-// Twitter/X URLを検出する正規表現（x.comとtwitter.comの両方に対応）
-const TWITTER_URL_REGEX = /https?:\/\/(?:www\.)?(?:twitter\.com|x\.com)\/\w+\/status\/\d+/g;
-
-// 通常のURLを検出する正規表現（Twitter URLを除く）
-const GENERAL_URL_REGEX = /https?:\/\/(?!.*(?:twitter\.com|x\.com)\/\w+\/status\/)[^\s<>"{}|\\^`[\]]+/g;
-
-// YouTube URL を検出する正規表現（youtube.com / youtu.be / shorts に対応）
-const YOUTUBE_URL_REGEX = /https?:\/\/(?:www\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/g;
-
-// Google Slides URL を検出する正規表現
-const GOOGLE_SLIDES_URL_REGEX = /https?:\/\/docs\.google\.com\/presentation\/d\/([a-zA-Z0-9_-]+)/g;
-
-// <p>URL</p> または <p><a href="URL">URL</a></p> 双方にマッチする段落置換用の正規表現を生成
-// 汎用URL段落マッチ（現在未使用）
-
-function isYouTubeUrl(url: string): boolean {
-    // g フラグのない使い捨て正規表現で安定評価
-    const re = /https?:\/\/(?:www\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/;
-    return re.test(url);
-}
-
-// YouTubeの段落置換用: videoId を含むURL（生テキスト or a要素）を段落単位で検出
-function buildYouTubeParagraphRegex(videoId: string): RegExp {
-    const id = videoId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const baseUrlPattern = `https?:\\/\\/(?:www\\.)?(?:youtube\\.com\\/(?:watch\\?v=|shorts\\/)|youtu\\.be\\/)${id}`;
-    // テキストURLはクエリ・フラグメント付きも許容。a要素はhrefが上記ベースパターンを含めばOK。
-    const textUrl = `${baseUrlPattern}(?:[^<\\s]*)?`;
-    const anchor = `<a[^>]*href=["']${baseUrlPattern}[^"']*["'][^>]*>[^<]*<\\/a>`;
-    return new RegExp(`<p>(?:${textUrl}|${anchor})<\\/p>`, 'g');
-}
-
-// Google Slides 段落置換用: presentationId を含むURL（生テキスト or a要素）を段落単位で検出
-function buildGoogleSlidesParagraphRegex(presentationId: string): RegExp {
-    const id = presentationId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const baseUrlPattern = `https?:\\/\\/docs\\.google\\.com\\/presentation\\/d\\/${id}`;
-    const textUrl = `${baseUrlPattern}(?:[^<\\s]*)?`;
-    const anchor = `<a[^>]*href=["']${baseUrlPattern}[^"']*["'][^>]*>[^<]*<\\/a>`;
-    return new RegExp(`<p>(?:${textUrl}|${anchor})<\\/p>`, 'g');
-}
-
-function isGoogleSlidesUrl(url: string): boolean {
-    const re = /https?:\/\/docs\.google\.com\/presentation\/d\/[a-zA-Z0-9_-]+/;
-    return re.test(url);
-}
-
-// URLを正規化する関数（x.comをtwitter.comに変換）
-function normalizeTwitterUrl(url: string): string {
-    return url.replace(/^https?:\/\/(?:www\.)?x\.com/, 'https://twitter.com');
-}
-
-// ツイートIDを抽出する関数
-function extractTweetId(url: string): string | null {
-    const match = url.match(/(?:twitter\.com|x\.com)\/\w+\/status\/(\d+)/);
-    return match ? match[1] : null;
-}
-
-// URLがTwitter URLかどうかを判定する関数
-function isTwitterUrl(url: string): boolean {
-    return TWITTER_URL_REGEX.test(url);
+// 段落全体がURLまたは単一リンクのときだけ埋め込む。クエリとfragmentもURL APIで扱う。
+function getEmbedParagraphs(content: string) {
+    return md.parse(content, {}).flatMap((token, index, tokens) => {
+        if (token.type !== "inline" || tokens[index - 1]?.type !== "paragraph_open") return [];
+        const children = token.children ?? [];
+        const linked = children.length === 3 && children[0].type === "link_open" && children[1].type === "text" && children[2].type === "link_close";
+        const value = linked ? children[0].attrGet("href") : token.content.trim();
+        const url = value && getHttpUrl(value);
+        if (!url || /\s/.test(value)) return [];
+        return [{ url: new URL(url), linked, paragraph: `<p>${md.renderer.renderInline(children, md.options, {})}</p>` }];
+    });
 }
 
 // Markdownコンテンツをレンダリングし、URLを埋め込みコンポーネントに変換する関数
@@ -155,20 +109,17 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
     // 既に class がある <pre> には追記
     html = html.replace(/<pre([^>]*class=")([^"]*)"/g, '<pre$1$2 line-numbers"');
     
-    // Twitter/X URLを検出して埋め込みコンポーネントに変換
-    const twitterUrls = content.match(TWITTER_URL_REGEX);
-    
-    if (twitterUrls) {
-        twitterUrls.forEach((url) => {
-            // URLを正規化
-            const normalizedUrl = normalizeTwitterUrl(url);
-            const tweetId = extractTweetId(normalizedUrl);
-            
-            if (tweetId) {
-                // URLをエスケープしてHTML内で安全に使用
-                const escapedUrl = url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                const regex = new RegExp(`<p>${escapedUrl}</p>`, 'g');
-                
+    for (const { url: parsed, linked, paragraph } of getEmbedParagraphs(content)) {
+        const url = parsed.href;
+        const hostname = parsed.hostname;
+        const tweetId = ["x.com", "www.x.com", "twitter.com", "www.twitter.com", "mobile.twitter.com", "www.mobile.twitter.com"].includes(hostname)
+            ? parsed.pathname.match(/^\/\w+\/status\/(\d+)\/?$/)?.[1] : undefined;
+        const youtubeId = ["youtube.com", "www.youtube.com", "m.youtube.com"].includes(hostname)
+            ? (parsed.pathname === "/watch" ? parsed.searchParams.get("v") : parsed.pathname.match(/^\/shorts\/([\w-]+)\/?$/)?.[1])
+            : ["youtu.be", "www.youtu.be"].includes(hostname) ? parsed.pathname.slice(1).replace(/\/$/, "") : undefined;
+        const videoId = youtubeId && /^[\w-]{6,}$/.test(youtubeId) ? youtubeId : undefined;
+        const presId = hostname === "docs.google.com" ? parsed.pathname.match(/^\/presentation\/d\/([\w-]+)(?:\/|$)/)?.[1] : undefined;
+        if (tweetId) {
                 // Twitter埋め込みウィジェットを挿入
                 const embedHtml = `
                     <div class="twitter-embed-wrapper" style="
@@ -186,22 +137,9 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                     </div>
                 `;
                 
-                html = html.replace(regex, () => embedHtml);
-            }
-        });
-    }
-    
-    // YouTube URL を検出してサムネイル埋め込みに変換
-    const youtubeMatches = Array.from(content.matchAll(YOUTUBE_URL_REGEX));
-    if (youtubeMatches.length > 0) {
-        youtubeMatches.forEach((match) => {
-            const fullUrl = match[0];
-            const videoId = match[1];
-            if (!videoId) return;
-
-            // URLをエスケープしてHTML内で安全に使用
-            const regex = buildYouTubeParagraphRegex(videoId);
-
+            html = html.replaceAll(paragraph, () => embedHtml);
+        } else if (videoId) {
+            const fullUrl = url;
             const thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
 
             const embedHtml = `
@@ -212,7 +150,7 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                     box-sizing: border-box;
                     margin: 2rem 0;
                 ">
-                    <a href="${md.utils.escapeHtml(fullUrl)}" target="_blank" rel="noopener noreferrer" class="youtube-embed" style="
+                    <a href="${md.utils.escapeHtml(fullUrl)}" target="_blank" rel="noopener noreferrer" class="youtube-embed" aria-label="YouTube で動画を見る: ${videoId}" style="
                         position: relative;
                         display: block;
                         width: 100%;
@@ -240,37 +178,17 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                             justify-content: center;
                             background: radial-gradient(transparent, rgba(0,0,0,0.35));
                         ">
-                            <div style="
-                                width: 68px;
-                                height: 48px;
-                                background: rgba(0,0,0,0.6);
-                                border-radius: 12px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                            ">
-                                <svg viewBox="0 0 68 48" width="38" aria-hidden="true">
-                                    <path d="M66.52 7.74a8 8 0 0 0-5.64-5.66C56.62 1 34 1 34 1S11.38 1 7.12 2.08a8 8 0 0 0-5.64 5.66A84.2 84.2 0 0 0 0 24a84.2 84.2 0 0 0 1.48 16.26 8 8 0 0 0 5.64 5.66C11.38 47 34 47 34 47s22.62 0 26.88-1.08a8 8 0 0 0 5.64-5.66A84.2 84.2 0 0 0 68 24a84.2 84.2 0 0 0-1.48-16.26z" fill="#212121" fill-opacity="0.8"></path>
-                                    <path d="M45 24 27 14v20" fill="#fff"></path>
-                                </svg>
-                            </div>
+                            <svg class="youtube-play" viewBox="0 0 68 48" aria-hidden="true">
+                                <path class="youtube-play-background" d="M66.52 7.74a8 8 0 0 0-5.64-5.66C56.62 1 34 1 34 1S11.38 1 7.12 2.08a8 8 0 0 0-5.64 5.66A84.2 84.2 0 0 0 0 24a84.2 84.2 0 0 0 1.48 16.26 8 8 0 0 0 5.64 5.66C11.38 47 34 47 34 47s22.62 0 26.88-1.08a8 8 0 0 0 5.64-5.66A84.2 84.2 0 0 0 68 24a84.2 84.2 0 0 0-1.48-16.26z"></path>
+                                <path d="M45 24 27 14v20" fill="#fff"></path>
+                            </svg>
                         </div>
                     </a>
                 </div>
             `;
 
-            html = html.replace(regex, () => embedHtml);
-        });
-    }
-
-    // Google Slides を検出して簡易埋め込みに変換
-    const slidesMatches = Array.from(content.matchAll(GOOGLE_SLIDES_URL_REGEX));
-    if (slidesMatches.length > 0) {
-        slidesMatches.forEach((match) => {
-            const presId = match[1];
-            if (!presId) return;
-
-            const regex = buildGoogleSlidesParagraphRegex(presId);
+            html = html.replaceAll(paragraph, () => embedHtml);
+        } else if (presId) {
             // Google Slides のプレゼンは preview 埋め込みにする（操作は最小限で簡易表示）
             const embedSrc = `https://docs.google.com/presentation/d/${presId}/preview`;
             const embedHtml = `
@@ -301,32 +219,8 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                 </div>
             `;
 
-            html = html.replace(regex, () => embedHtml);
-        });
-    }
-
-    // 通常のURLを検出して埋め込みコンポーネントに変換
-    const generalUrls = content.match(GENERAL_URL_REGEX);
-    
-    if (generalUrls) {
-        generalUrls.forEach((url) => {
-            // Twitter URLは既に処理済みなのでスキップ
-            if (isTwitterUrl(url)) {
-                return;
-            }
-            // YouTube URL は別途処理済みなのでスキップ（gフラグのない検査）
-            if (isYouTubeUrl(url)) {
-                return;
-            }
-            // Google Slides は別途処理済みなのでスキップ
-            if (isGoogleSlidesUrl(url)) {
-                return;
-            }
-            
-            // URLをエスケープしてHTML内で安全に使用
-            const escapedUrl = md.utils.escapeHtml(url).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            const regex = new RegExp(`<p>${escapedUrl}</p>`, 'g');
-            
+            html = html.replaceAll(paragraph, () => embedHtml);
+        } else if (!linked) {
             // リンク埋め込みコンポーネントを挿入
             const embedHtml = `
                 <div class="link-embed-wrapper" style="
@@ -338,6 +232,7 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                 ">
                     <div class="link-embed" style="
                         display: flex;
+                        flex-direction: column;
                         max-width: 540px;
                         width: 100%;
                         border-radius: 12px;
@@ -350,6 +245,8 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                     " onmouseover="this.style.transform='translateY(-2px)';this.styleBoxShadow='0 8px 25px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='';this.styleBoxShadow=''">
                         <div class="link-embed-content" style="
                             flex: 1;
+                            min-width: 0;
+                            overflow-wrap: anywhere;
                             width: 100%;
                             box-sizing: border-box;
                             display: flex;
@@ -379,10 +276,10 @@ export function renderMarkdownWithEmbeds(content: string): { __html: string } {
                 </div>
             `;
             
-            html = html.replace(regex, () => embedHtml);
-        });
+            html = html.replaceAll(paragraph, () => embedHtml);
+        }
     }
-    
+
     return { __html: html };
 }
 
@@ -478,6 +375,9 @@ export function initializeLinkEmbeds(): void {
         setTimeout(() => {
             const linkEmbeds = document.querySelectorAll('.link-embed');
             linkEmbeds.forEach((embed) => {
+                const element = embed as HTMLElement;
+                if (element.dataset.linkInitialized) return;
+                element.dataset.linkInitialized = "true";
                 const urlElement = embed.querySelector('.link-embed-url');
                 if (urlElement) {
                     const url = urlElement.textContent;
@@ -515,6 +415,20 @@ export function initializeLinkEmbeds(): void {
                                     metaElement.replaceChildren(site, link);
                                 }
                                 
+                                for (const [field, className] of [["image", "link-embed-image"], ["favicon", "link-embed-favicon"]] as const) {
+                                    const value = linkData[field];
+                                    const src = typeof value === "string" ? getHttpUrl(value) : undefined;
+                                    if (!src) continue;
+                                    const img = document.createElement("img");
+                                    img.className = className;
+                                    img.alt = "";
+                                    img.loading = "lazy";
+                                    img.addEventListener("error", () => img.remove());
+                                    img.src = src;
+                                    const parent = field === "image" ? embed : metaElement?.querySelector(".link-embed-site");
+                                    parent?.insertBefore(img, parent.firstChild);
+                                }
+
                                 // リンクをクリック可能にする
                                 embed.addEventListener('click', () => {
                                     window.open(url, '_blank', 'noopener,noreferrer');

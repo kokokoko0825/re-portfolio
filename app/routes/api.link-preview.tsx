@@ -1,10 +1,12 @@
 import { json } from "@remix-run/cloudflare";
+import { getHttpUrl } from "../utils/httpUrl";
 import type { LoaderFunctionArgs } from "@remix-run/cloudflare";
 
 interface LinkMetadata {
     title: string;
     description: string;
     image: string;
+    favicon: string;
     siteName: string;
     url: string;
 }
@@ -16,6 +18,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
     if (!targetUrl) {
         return json({ error: 'URL parameter is required' }, { status: 400 });
     }
+
+    if (!getHttpUrl(targetUrl)) return json({ error: "Invalid HTTP(S) URL" }, { status: 400 });
 
     try {
         // 外部サイトからメタデータを取得
@@ -30,6 +34,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
         }
 
         const html = await response.text();
+        const pageUrl = response.url || targetUrl;
         
         // メタデータを抽出
         const title = extractMetaContent(html, 'title') || 
@@ -53,7 +58,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
         const metadata: LinkMetadata = {
             title,
             description,
-            image,
+            image: resolveMetadataUrl(image, pageUrl),
+            favicon: resolveMetadataUrl(extractFavicon(html) || "/favicon.ico", pageUrl),
             siteName,
             url: targetUrl,
         };
@@ -79,4 +85,21 @@ function extractMetaContent(html: string, property: string): string | null {
     
     const match = html.match(regex);
     return match ? match[1] : null;
-} 
+}
+function resolveMetadataUrl(value: string, pageUrl: string): string {
+    if (!value) return "";
+    try {
+        return getHttpUrl(new URL(value, pageUrl).href) ?? "";
+    } catch {
+        return "";
+    }
+}
+
+function extractFavicon(html: string): string | undefined {
+    for (const tag of html.match(/<link\b[^>]*>/gi) ?? []) {
+        const rel = tag.match(/\brel\s*=\s*["']([^"']*)["']/i)?.[1];
+        if (!rel || !/(?:^|\s)(?:icon|apple-touch-icon)(?:\s|$)/i.test(rel)) continue;
+        const href = tag.match(/\bhref\s*=\s*["']([^"']*)["']/i)?.[1];
+        if (href) return href;
+    }
+}
