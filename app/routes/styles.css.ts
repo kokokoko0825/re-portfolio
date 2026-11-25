@@ -189,7 +189,7 @@ export const tocAccordion = style({
 });
 export const tocSummary = style({
     ...typeStyle("caption"),
-    padding: `${space[12]} 0`,
+    padding: `${space[12]} 0 ${space[12]} calc(2px + ${space[12]})`,
     color: vars.color.text,
     cursor: "pointer",
     listStyle: "none",
@@ -197,6 +197,7 @@ export const tocSummary = style({
 });
 export const tocTitle = style({
     ...typeStyle("caption"),
+    paddingLeft: `calc(2px + ${space[12]})`,
     color: vars.color.text,
     marginBottom: space[8],
     "@media": {

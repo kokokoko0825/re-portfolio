@@ -22,6 +22,7 @@ export const tocListItem = style({
 export const tocLink = style({
     ...typeStyle("footnote"),
     display: "flex",
+    position: "relative",
     alignItems: "center",
     boxSizing: "border-box",
     paddingBlock: space[8],
@@ -40,22 +41,21 @@ export const tocLink = style({
 });
 
 export const tocLinkLevel1 = style({
-    paddingLeft: 0,
-    color: vars.color.text,
+    paddingLeft: space[12],
 });
 
 export const tocLinkNested = style({ ...typeStyle("tocNested") });
 
 export const tocLinkLevel2 = style({
-    paddingLeft: space[12],
-});
-
-export const tocLinkLevel3 = style({
     paddingLeft: space[24],
 });
 
-export const tocLinkLevel4 = style({
+export const tocLinkLevel3 = style({
     paddingLeft: "2.25rem",
+});
+
+export const tocLinkLevel4 = style({
+    paddingLeft: space[48],
 });
 
 export const tocLinkActive = style({
