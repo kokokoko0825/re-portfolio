@@ -1,3 +1,4 @@
+import { PhraseText } from "~/component/PhraseText";
 import { DateText } from "../component/DateText";
 import { thumbnail as workThumbnail } from "../component/worksItem/styles.css";
 import { Header } from "../component/Header/Header";
@@ -161,7 +162,7 @@ export default function BlogId() {
                 <small>投稿日: <DateText value={workData.createdAt} />,  編集日: <DateText value={workData.updatedAt} /></small>
                 <div className={styles.thumbnail}>
                     <img src={workData.thumbnail || "/images/icon.jpg"} alt="" className={workThumbnail} />
-                    <h1>{workData.title}</h1>
+                    <h1><PhraseText>{workData.title}</PhraseText></h1>
                 </div>
                 <div className={styles.textFrame}>
                     <div 

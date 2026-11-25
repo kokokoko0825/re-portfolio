@@ -46,7 +46,7 @@ export const tagChip = style({
     },
 });
 // カード内の余白と文字階層。
-export const title = style({ ...typeStyle("title3"), margin: 0 });
+export const title = style({ ...typeStyle("title3"), margin: 0, wordBreak: "keep-all", overflowWrap: "anywhere", textWrap: "balance" });
 export const titleLink = style({
     color: vars.color.text,
     textDecoration: "none",

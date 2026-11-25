@@ -17,7 +17,9 @@ globalStyle("html, body", {
 globalStyle("body", typeStyle("body"));
 
 // 見出しの最終行に1〜2文字だけ残る折り返し（例:「…作っ／た」）を防ぐ
-globalStyle("h1, h2, h3, h4, h5, h6", { textWrap: "pretty" });
+globalStyle("h1, h2, h3, h4, h5, h6", { wordBreak: "keep-all", overflowWrap: "anywhere", textWrap: "pretty" });
+
+globalStyle("h1", { textWrap: "balance" });
 
 // title
 globalStyle("h1", {

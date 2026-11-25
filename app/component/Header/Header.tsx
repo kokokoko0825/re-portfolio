@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import * as styles from "./styles.css";
 import { Link } from "@remix-run/react";
 import { useMenu } from "../../contexts/MenuContext";
@@ -6,6 +6,8 @@ import { MobileMenu } from "../MobileMenu/MobileMenu";
 import { useDevice } from "../../contexts/DeviceContext";
 import { useTheme } from "../../contexts/ThemeContext";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 
 export function Header(): ReactNode {
@@ -13,15 +15,13 @@ export function Header(): ReactNode {
     const { isMobile } = useDevice();
     const { theme, toggleTheme } = useTheme();
     
+    const [isDark, setIsDark] = useState<boolean>();
+    useEffect(() => {
+        setIsDark(document.documentElement.dataset.theme === "dark");
+    }, [theme]);
+
     // モバイル用のクラス名
     const mobileClass = isMobile ? styles.mobileView : '';
-    const hamburgerIconSrc = isMenuOpen
-        ? theme === "light"
-            ? "/images/light_humberger-close.svg"
-            : "/images/humberger-close.svg"
-        : theme === "light"
-            ? "/images/light_humberger.svg"
-            : "/images/humberger.svg";
     const hamburgerAriaLabel = isMenuOpen ? "Close menu" : "Open menu";
     return (
         <>
@@ -31,17 +31,15 @@ export function Header(): ReactNode {
                         <span className={styles.logo}>🐶🐱</span>
                     </Link>
                 </div>
-                <div style={{display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "row"}}>
+                <div className={styles.controls}>
                     {/* テーマ切り替えボタン */}
                     <button type="button" className={styles.themeToggle}
                         onClick={toggleTheme} 
-                        aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"} 
+                        aria-label="テーマを切り替え"
+                        aria-pressed={isDark}
                     >
-                        {theme === "light" ? (
-                            <DarkModeOutlinedIcon sx={{ color: "#03031B" }} />
-                        ) : (
-                            <LightModeOutlinedIcon sx={{ color: "#DEDBFF" }} />
-                        )}
+                        <DarkModeOutlinedIcon className={styles.moonIcon} />
+                        <LightModeOutlinedIcon className={styles.sunIcon} />
                     </button>
 
                     <nav aria-label="メイン" className={styles.linkList}>
@@ -58,11 +56,7 @@ export function Header(): ReactNode {
                         aria-expanded={isMenuOpen}
                         aria-controls="mobile-menu"
                     >
-                        <img 
-                            src={hamburgerIconSrc}
-                            alt=""
-                            style={{width: "25.9px", height: "17px"}}
-                        />
+                        {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
                     </button>
                 </div>
             </header>

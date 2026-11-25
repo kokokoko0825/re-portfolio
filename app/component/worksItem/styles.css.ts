@@ -15,7 +15,7 @@ export const worksItem = style({
     boxSizing: "border-box"
 });
 export const cardLink = style({ color: "inherit", textDecoration: "none" });
-export const title = style({ ...typeStyle("title3"), margin: 0, wordBreak: "break-word" });
+export const title = style({ ...typeStyle("title3"), margin: 0, wordBreak: "keep-all", overflowWrap: "anywhere", textWrap: "balance" });
 export const description = style({ ...typeStyle("body"), margin: 0, wordBreak: "break-word" });
 export const thumbnail = style({
     width: "300px", height: "200px", objectFit: "cover",

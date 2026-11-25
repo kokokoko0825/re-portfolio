@@ -1,3 +1,4 @@
+import { PhraseText } from "~/component/PhraseText";
 import { ReactNode, useState } from "react";
 import * as styles from "./styles.css";
 import { Link } from "@remix-run/react";
@@ -29,7 +30,7 @@ export function WorksItem({ id, thumbnail, title, description }: WorksItemProps)
                     onLoad={handleImageLoad}
                     style={{ display: isLoading ? "none" : "block" }}
                 />
-                <h2 className={styles.title}>{title}</h2>
+                <h2 className={styles.title}><PhraseText>{title}</PhraseText></h2>
                 <p className={styles.description}>{description}</p>
             </div>
         </Link>
