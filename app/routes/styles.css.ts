@@ -172,13 +172,20 @@ export const tocAside = style({
 });
 export const tocAccordion = style({
     width: "100%",
-    borderRadius: "8px",
-    border: `1px solid ${vars.color.borderColor}`,
-    backgroundColor: vars.color.codeBlock.background,
+    border: 0,
+    backgroundColor: "transparent",
     boxSizing: "border-box",
     gap: layout.cardContentGap,
-    padding: space[16],
-    "@media": { [mobile]: { padding: `${space[12]} ${space[16]}`, gap: layout.mobile.cardContentGap } }
+    padding: 0,
+    "@media": {
+        [mobile]: {
+            padding: `${space[12]} ${space[16]}`,
+            gap: layout.mobile.cardContentGap,
+            borderRadius: "8px",
+            border: `1px solid ${vars.color.borderColor}`,
+            backgroundColor: vars.color.tocBackground,
+        },
+    }
 });
 export const tocSummary = style({
     ...typeStyle("caption"),
