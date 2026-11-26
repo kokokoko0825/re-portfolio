@@ -28,6 +28,7 @@ export const type = {
     subheadline: { fontSize: "1rem", mobileSize: "1rem", fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 },
     uiBody: { fontSize: "1rem", mobileSize: "1rem", fontWeight: 400, lineHeight: 1.5, letterSpacing: 0 },
     footnote: { fontSize: "0.875rem", mobileSize: "0.875rem", fontWeight: 400, lineHeight: 1.6, letterSpacing: 0 },
+    tocNested: { fontSize: "0.8125rem", mobileSize: "0.8125rem", fontWeight: 400, lineHeight: 1.6, letterSpacing: 0 },
     caption: { fontSize: "0.875rem", mobileSize: "0.875rem", fontWeight: 500, lineHeight: 1.6, letterSpacing: 0 },
     articleBody: { fontSize: "1.125rem", mobileSize: "1rem", fontWeight: 400, lineHeight: 1.9, letterSpacing: 0 },
     articleH2: { fontSize: "1.75rem", mobileSize: "1.5rem", fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 },

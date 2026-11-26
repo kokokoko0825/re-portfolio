@@ -181,11 +181,7 @@ export default function BlogId() {
                         </div>
                     </article>
                     <aside className={styles.tocAside}>
-                        <details className={styles.tocAccordion} open>
-                            <summary className={styles.tocSummary}>目次</summary>
-                            <div className={styles.tocTitle}>目次</div>
-                            <TableOfContents contentRef={contentRef} contentKey={blogId} />
-                        </details>
+                        <TableOfContents contentRef={contentRef} contentKey={blogId} />
                     </aside>
                 </div>
             </main>
